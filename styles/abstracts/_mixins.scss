@@ -1,0 +1,53 @@
+$breakpoints: (
+  'mob': 'screen and (min-width: 320px)',
+  'sm': 'screen and (min-width: 640px)',
+  'tab': 'screen and (min-width: 768px)',
+  'spc': 'screen and (min-width: 1024px)',
+  'pc': 'screen and (min-width: 1280px)',
+  'xl': 'screen and (min-width: 1536px)',
+  'xs': 'screen and (max-width: 375px)',
+) !default;
+
+@mixin mq($breakpoint) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+@mixin centerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin textOverflow {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin noUserSelect {
+  user-select: none;
+}
+
+@mixin container {
+  width: var(--width-mob);
+  margin: 0 auto;
+  max-width: 60rem;
+
+  @include mq(tab) {
+    width: var(--width-tab);
+    max-width: var(--max-width-tab);
+  }
+
+  @include mq(pc) {
+    width: var(--width-pc);
+    max-width: var(--max-width-pc);
+  }
+}
+
+@mixin headingFont {
+  font-family: var(--font-family-secondary), sans-serif;
+  font-weight: 700;
+}

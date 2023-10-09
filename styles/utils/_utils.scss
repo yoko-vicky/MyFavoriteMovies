@@ -1,0 +1,11 @@
+.container {
+  width: 94%;
+  margin: 0 auto;
+}
+
+@include mq(tab) {
+  .container {
+    width: 100%;
+    max-width: 80rem;
+  }
+}
