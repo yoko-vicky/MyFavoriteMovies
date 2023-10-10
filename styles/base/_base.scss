@@ -1,0 +1,38 @@
+html {
+  font-size: 62.5%; // 10px
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+body {
+  font-size: var(--font-size-regular);
+  font-family: var(--font-family-primary), sans-serif;
+  line-height: var(--line-height-regular);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-default);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  background-color: var(--color-black);
+  position: relative;
+}
+
+.main {
+  min-height: 60vh;
+}
+
+button,
+a {
+  user-select: none;
+}
+
+img {
+  object-fit: contain;
+  height: auto;
+}
+
+@include mq(spc) {
+  .main {
+    min-height: 80vh;
+  }
+}

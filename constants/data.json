@@ -1,0 +1,31 @@
+{
+  "messages": {
+    "error": {
+      "general": "Sorry... Something went wrong."
+    },
+    "success": {
+      "general": "Succeeded!"
+    }
+  },
+  "imageAlt": {
+    "profile": "Profile Image"
+  },
+  "movieListVariant": {
+    "topRated": {
+      "key": "topRated",
+      "title": "Top Rated"
+    },
+    "upcoming": {
+      "key": "upcoming",
+      "title": "Upcoming"
+    },
+    "trending": {
+      "key": "trending",
+      "title": "Trending Now"
+    },
+    "popular": {
+      "key": "popular",
+      "title": "Popular"
+    }
+  }
+}
