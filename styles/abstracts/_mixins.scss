@@ -51,3 +51,7 @@ $breakpoints: (
   font-family: var(--font-family-secondary), sans-serif;
   font-weight: 700;
 }
+
+@mixin blackGradientBg {
+  background: var(--black-gradient);
+}
