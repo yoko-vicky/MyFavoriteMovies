@@ -1,0 +1,106 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.modal {
+  width: 90%;
+  min-height: 24rem;
+  padding: 4rem 2rem 2rem 2rem;
+  background-color: white;
+  border-radius: 1.6rem;
+  max-height: 85%;
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 99999;
+
+  &.circle {
+    border-radius: 8px;
+  }
+
+  &.scrollable {
+    overflow-y: scroll;
+  }
+
+  &.fullWidth {
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+    padding: 0 0 2.6rem 0;
+    @include scroll-y;
+  }
+}
+
+.closeButton {
+  width: 3.6rem;
+  height: 3.6rem;
+  @include centerContent;
+  border-radius: 50%;
+  position: absolute;
+  right: 1.6rem;
+  top: 1.6rem;
+  cursor: pointer;
+  transition: var(--transition-default);
+
+  svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  &:hover,
+  &.active {
+    background-color: var(--color-gray-light-secondary);
+  }
+}
+
+.modal.circle {
+  .closeButton {
+    top: 2.4rem;
+    right: 2.4rem;
+  }
+}
+
+@include mq(tab) {
+  .modal {
+    width: var(--width-container-tab);
+    &.fixedWidth {
+      width: 100%;
+      max-width: 34rem;
+    }
+    &.circle {
+      border-radius: 1.6rem;
+    }
+
+    &.fullWidth {
+      max-height: 85%;
+      width: var(--max-width-content-tab);
+      padding: 0 0 3.2rem 0;
+    }
+  }
+
+  .closeButton {
+    svg {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+}
+
+@include mq(spc) {
+  .modal {
+    width: 84rem;
+
+    &.fixedWidth {
+      width: 100%;
+      max-width: 36rem;
+    }
+    &.wide {
+      width: 94.4rem;
+    }
+
+    &.fullWidth {
+      width: var(--max-width-content-pc);
+    }
+  }
+}

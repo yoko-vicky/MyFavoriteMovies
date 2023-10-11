@@ -1,0 +1,11 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.errorBoundary {
+  height: 100vh;
+  border: 1px solid;
+  @include centerContent;
+}
+
+.title {
+  font-size: 3rem;
+}

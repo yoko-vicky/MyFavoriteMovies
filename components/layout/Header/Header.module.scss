@@ -1,0 +1,40 @@
+@import '@/styles/abstracts/_mixins.scss';
+
+.header {
+  position: relative;
+  padding: 0.8rem 0;
+  z-index: 1;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-lg);
+  position: relative;
+
+  @include container;
+}
+
+.mobMenu {
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  svg {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.logo {
+  position: relative;
+  width: 10rem;
+  height: 4rem;
+}
+
+@include mq(spc) {
+  .mobMenu {
+    display: none;
+  }
+}

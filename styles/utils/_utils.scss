@@ -1,6 +1,7 @@
 .container {
   width: 94%;
   margin: 0 auto;
+  position: relative;
 }
 
 @include mq(tab) {

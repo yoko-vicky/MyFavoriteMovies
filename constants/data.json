@@ -7,6 +7,16 @@
       "general": "Succeeded!"
     }
   },
+  "og": {
+    "siteName": "My Favorite Movies",
+    "title": "My Favorite Movies - Find and share your lovely movies!",
+    "description": "Find and share your favorite movies with everyone!",
+    "url": "http://localhost:3000/",
+    "imageUrl": "http://localhost:3000/",
+    "imageWidth": 1200,
+    "imageHeight": 630,
+    "twitterUsername": ""
+  },
   "imageAlt": {
     "profile": "Profile Image"
   },
