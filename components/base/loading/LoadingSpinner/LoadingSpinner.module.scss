@@ -1,0 +1,30 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.container {
+  width: 100%;
+  height: 100%;
+  min-height: 50vh;
+  @include centerContent;
+
+  &.h-xsm {
+    min-height: 10vh;
+  }
+  &.h-sm {
+    min-height: 20vh;
+  }
+  &.h-md {
+    min-height: 50vh;
+  }
+  &.h-lg {
+    min-height: 80vh;
+  }
+  &.w-sm {
+    width: 30%;
+  }
+  &.w-half {
+    width: 50%;
+  }
+  &.w-full {
+    width: 100%;
+  }
+}

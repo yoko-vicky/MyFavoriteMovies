@@ -15,6 +15,7 @@ module.exports = {
   },
   rules: {
     'react-hooks/rules-of-hooks': 'error',
+    '@typescript-eslint/no-explicit-any': 'warn',
     'react-hooks/exhaustive-deps': 'warn',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     quotes: [2, 'single', { avoidEscape: true }],
@@ -54,14 +55,12 @@ module.exports = {
             position: 'before',
           },
           {
-            pattern:
-              '{next-auth,next-auth/**,wagmi,wagmi/**,@wagmi,@wagmi/**,@thirdweb-dev,@thirdweb-dev/**}',
+            pattern: '{next-auth,next-auth/**}',
             group: 'external',
             position: 'before',
           },
           {
-            pattern:
-              '{html-react-parser,uuid,clsx,@coreui/**,@types/**,react-toastify,react-toastify/**,}',
+            pattern: '{uuid,clsx,@types/**,react-toastify,react-toastify/**,}',
             group: 'external',
             position: 'before',
           },

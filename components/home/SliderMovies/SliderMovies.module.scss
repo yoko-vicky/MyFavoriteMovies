@@ -1,0 +1,13 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.title {
+  // @include headingFont;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.slider {
+  // border: 1px solid salmon;
+  margin-bottom: 2rem;
+}

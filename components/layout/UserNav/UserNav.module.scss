@@ -1,0 +1,21 @@
+.container {
+  // position: relative;
+  z-index: 999;
+  position: absolute;
+  right: 0;
+  top: 0.4rem;
+}
+.userMenu {
+  position: absolute;
+  width: 16rem;
+  right: 1rem;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: lemonchiffon;
+  color: var(--color-black);
+  border-radius: var(--border-radius);
+}
+.link {
+  padding: 1rem;
+}
