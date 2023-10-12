@@ -11,11 +11,16 @@ export interface VideoState {
   type: string;
 }
 
+export interface MovieGenreState {
+  id: number;
+  name: string;
+}
+
 export interface MovieState {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
-  genres?: { id: number; name: string }[];
+  genres?: MovieGenreState[];
   id: number;
   imdb_id?: string;
   original_language: string;

@@ -9,9 +9,9 @@
 .title {
   position: relative;
   align-self: flex-start;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), transparent);
   padding: 1rem 2rem;
+  font-size: 2rem;
   font-weight: var(--font-weight-bold);
   @include headingFont;
-  font-size: 2rem;
+  @include blackGradientBg;
 }

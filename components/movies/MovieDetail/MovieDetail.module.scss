@@ -1,5 +1,36 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.mainVisual {
+  display: none;
+  border: 1px solid yellow;
+  height: 30vh;
+  position: relative;
+  z-index: 0;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    @include blackGradientBg;
+    z-index: 1;
+  }
+}
+
+.posterImageWrapper {
+  width: 100%;
+  height: 80vh;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
 .title {
-  font-size: 2.6rem;
+  font-size: 3rem;
   font-weight: var(--font-weight-bold);
 }
 
@@ -8,6 +39,41 @@
   font-weight: bold;
 }
 
+.content {
+  // border: 1px solid pink;
+}
+
+.details {
+  width: var(--width-mob);
+  margin: 0 auto;
+  max-width: 60rem;
+  border: 1px solid pink;
+}
+
+.right {
+  width: var(--width-mob);
+  margin: 0 auto;
+  max-width: 60rem;
+}
+
 .comment {
   border: 1px solid;
+}
+
+.authorIcon {
+  font-size: 4rem;
+}
+
+.authorImageWrapper {
+  width: 3.4rem;
+  height: 3.4rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+@include mq(tab) {
+  .mainVisual {
+    display: block;
+  }
 }

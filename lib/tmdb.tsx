@@ -9,7 +9,7 @@ const getTmdbOptions = () => ({
 });
 
 const tmdbApiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-const baseImageUrl = 'https://image.tmdb.org/t/p';
+const baseImageUrl = process.env.NEXT_PUBLIC_TMDB_IMAGE_URL;
 // const movieId = 634649;
 // const japanese = 'ja-JP';
 const defaultLang = 'en-US';
@@ -30,19 +30,38 @@ export const getApiUrl = ({
       ? `&append_to_response=${appends.join(',')}`
       : '';
 
-  return `https://api.themoviedb.org/3${path}?api_key=${tmdbApiKey}?language=${lang}${appendToResponse}`;
+  return `${process.env.NEXT_PUBLIC_TMDB_API_URL}${path}?api_key=${tmdbApiKey}?language=${lang}${appendToResponse}`;
+};
+
+export const getApiUrlToDiscoverByGenreId = ({
+  genreId,
+  appends = ['images', 'videos', 'credits', 'reviews', 'recommendations'],
+}: {
+  genreId: number;
+  appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
+}) => {
+  const appendToResponse =
+    appends && appends.length > 0
+      ? `&append_to_response=${appends.join(',')}`
+      : '';
+
+  return `${process.env.NEXT_PUBLIC_TMDB_API_URL}/discover/movie?api_key=${tmdbApiKey}&with_genres=${genreId}${appendToResponse}`;
 };
 
 const getApiData = async ({
   path,
   appends,
   lang = defaultLang,
+  genreId,
 }: {
-  path: string;
+  path?: string;
   appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
   lang?: string;
+  genreId?: number;
 }) => {
-  const url = getApiUrl({ path, appends, lang });
+  const url = genreId
+    ? getApiUrlToDiscoverByGenreId({ genreId, appends })
+    : getApiUrl({ path: path ?? '', appends, lang });
 
   try {
     const res = await fetch(url, getTmdbOptions());
@@ -121,6 +140,16 @@ export const getSimilarMoviesById = async (movieId: number) =>
 export const getPopularMovies = async () => {
   try {
     const data = await getApiData({ path: paths.popularMovies() });
+    return data.results;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getMoviesByGenreId = async (genreId: number) => {
+  try {
+    const data = await getApiData({ genreId });
+    logger.log({ data });
     return data.results;
   } catch (error) {
     return error;

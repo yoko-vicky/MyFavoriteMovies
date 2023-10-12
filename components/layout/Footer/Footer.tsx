@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './Footer.module.scss';
+import Link from 'next/link';
 import { AiFillYoutube, AiOutlineInstagram } from 'react-icons/ai';
 import { FaXTwitter } from 'react-icons/fa6';
-import Link from 'next/link';
+import styles from './Footer.module.scss';
 
 export const Footer = () => {
   return (
