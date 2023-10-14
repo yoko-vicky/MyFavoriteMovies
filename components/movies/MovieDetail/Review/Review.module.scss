@@ -1,0 +1,68 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.review {
+  // border: 1px solid;
+  margin-bottom: 1.4rem;
+  // border: 1px solid yellow;
+}
+
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.author {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.authorName {
+  font-size: 80%;
+  opacity: 0.8;
+}
+
+.authorIcon {
+  font-size: 2.2rem;
+}
+
+.date {
+  font-size: 70%;
+  opacity: 0.6;
+  letter-spacing: 0.6px;
+}
+
+.message {
+  font-style: italic;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.messageContent {
+  margin-bottom: 0.2rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.quoteIcon {
+  opacity: 0.4;
+  &.close {
+    align-self: flex-end;
+  }
+}
+
+.authorImageWrapper {
+  width: 1.8rem;
+  height: 1.8rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 0.3rem;
+  border: 1px solid white;
+}
