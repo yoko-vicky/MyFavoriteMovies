@@ -8,6 +8,7 @@ import uuid from '@/lib/uuid';
 import { MovieState } from '@/types/movies';
 import { getReleaseYear } from '@/utils';
 import styles from './MovieDetail.module.scss';
+import { UserNotes } from './UserNotes';
 import { Vote } from './Vote';
 
 const Reviews = dynamic(() => import('./Reviews/Reviews'), { ssr: false });
@@ -45,26 +46,20 @@ export const MovieDetail = ({ movie }: MovieDetailPropsType) => {
           </div>
           <div className={styles.details}>
             <h1 className={styles.title}>{movie?.title}</h1>
-            <div className={styles.release}>{getReleaseYear(movie.release_date)}</div>
+            <div className={styles.release}>
+              {getReleaseYear(movie.release_date)}
+            </div>
             <GenrePills genres={movie.genres} />
             <Vote voteAvg={movie.vote_average} voteCount={movie.vote_count} />
             {!!movie.reviews?.results?.length && (
               <Reviews reviews={movie.reviews.results} />
             )}
-            <div>他にこの映画をお気に入りに登録しているユーザー(β)</div>
-            <div>User1, user2, user3...</div>
+            {/* <div>他にこの映画をお気に入りに登録しているユーザー(β)</div>
+            <div>User1, user2, user3...</div> */}
           </div>
         </div>
         <div className={styles.right}>
-          {session && (
-            <div className={styles.comment}>
-              <div>Your Comment</div>
-              <div>📎 Add to my Clips</div>
-              <div>☑️ Watched</div>
-              <div>⭐️⭐️⭐️⭐️⭐️</div>
-              <input type="textarea" placeholder="So nice!" />
-            </div>
-          )}
+          {session && <UserNotes />}
           <div className={styles.storyCredits}>
             <div className={styles.story}>{movie.overview}</div>
             <div>original Language: {movie.original_language}</div>
