@@ -1,15 +1,16 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { GenrePills } from '@/components/base/GenrePills';
 import { createImageUrl } from '@/lib/tmdb';
 import uuid from '@/lib/uuid';
 import { MovieState } from '@/types/movies';
 import { getReleaseYear } from '@/utils';
-import { BiSolidUserCircle } from 'react-icons/bi';
 import styles from './MovieDetail.module.scss';
-import { GenrePills } from '@/components/base/GenrePills';
+import { Vote } from './Vote';
 
+const Reviews = dynamic(() => import('./Reviews/Reviews'), { ssr: false });
 interface MovieDetailPropsType {
   movie: MovieState;
 }
@@ -44,33 +45,12 @@ export const MovieDetail = ({ movie }: MovieDetailPropsType) => {
           </div>
           <div className={styles.details}>
             <h1 className={styles.title}>{movie?.title}</h1>
-            <div>{getReleaseYear(movie.release_date)}</div>
+            <div className={styles.release}>{getReleaseYear(movie.release_date)}</div>
             <GenrePills genres={movie.genres} />
-            <div>Vote Avarage: {movie.vote_average}</div>
-            <div>Vote Count: {movie.vote_count}</div>
-
-            <div>Reviews</div>
-            {movie.reviews?.results.map((review) => (
-              <div key={uuid()}>
-                <div>{review.author}</div>
-                <div>{review.content}</div>
-                <div>{review.author_details.avatar_path}</div>
-
-                {review.author_details.avatar_path ? (
-                  <div className={styles.authorImageWrapper}>
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_TMDB_AUTHOR_IMAGE_URL}${review.author_details.avatar_path}`}
-                      alt={review.author}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw"
-                    />
-                  </div>
-                ) : (
-                  <BiSolidUserCircle className={styles.authorIcon} />
-                )}
-              </div>
-            ))}
+            <Vote voteAvg={movie.vote_average} voteCount={movie.vote_count} />
+            {!!movie.reviews?.results?.length && (
+              <Reviews reviews={movie.reviews.results} />
+            )}
             <div>他にこの映画をお気に入りに登録しているユーザー(β)</div>
             <div>User1, user2, user3...</div>
           </div>

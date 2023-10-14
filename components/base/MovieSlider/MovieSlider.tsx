@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
 import { MovieState } from '@/types/movies';
 import { logger } from '@/utils/logger';
@@ -11,7 +12,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import styles from './MovieSlider.module.scss';
-import Link from 'next/link';
 
 interface MovieSliderPropsType {
   orient?: 'horizontal' | 'vertical';
