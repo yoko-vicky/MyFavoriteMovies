@@ -4,7 +4,7 @@
   width: 90%;
   min-height: 24rem;
   padding: 4rem 2rem 2rem 2rem;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 1.6rem;
   max-height: 85%;
   position: relative;
@@ -14,6 +14,7 @@
   align-items: center;
   justify-content: flex-start;
   z-index: 99999;
+  color: var(--color-black);
 
   &.circle {
     border-radius: 8px;
@@ -44,13 +45,13 @@
   transition: var(--transition-default);
 
   svg {
-    width: 1.2rem;
-    height: 1.2rem;
+    font-size: 2rem;
+    fill: var(--color-black);
   }
 
   &:hover,
   &.active {
-    background-color: var(--color-gray-light-secondary);
+    background-color: var(--color-grey-light);
   }
 }
 
@@ -63,7 +64,7 @@
 
 @include mq(tab) {
   .modal {
-    width: var(--width-container-tab);
+    width: var(--width-tab);
     &.fixedWidth {
       width: 100%;
       max-width: 34rem;
@@ -74,15 +75,15 @@
 
     &.fullWidth {
       max-height: 85%;
-      width: var(--max-width-content-tab);
+      width: var(--max-width-tab);
       padding: 0 0 3.2rem 0;
     }
   }
 
   .closeButton {
     svg {
-      width: 1.4rem;
-      height: 1.4rem;
+      // width: 1.4rem;
+      // height: 1.4rem;
     }
   }
 }

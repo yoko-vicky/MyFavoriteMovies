@@ -65,8 +65,24 @@
   font-weight: bold;
 }
 
-.content {
-  // border: 1px solid pink;
+// .content {
+//   // border: 1px solid pink;
+// }
+.showYoutubeModalBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+  transition: var(--transition-default);
+
+  svg {
+    font-size: 3rem;
+  }
+
+  &:hover {
+    color: var(--color-yellow);
+  }
 }
 
 .overview {
