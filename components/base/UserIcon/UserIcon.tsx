@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { imageAlt } from '@/constants';
 import DummyImage from '@/public/images/profile.jpg';
 import styles from './UserIcon.module.scss';
@@ -10,6 +11,7 @@ interface UserIconPropsType {
   userName?: string;
   onClick?: () => void;
   href?: string;
+  active?: boolean;
 }
 
 export const UserIcon = ({
@@ -17,15 +19,22 @@ export const UserIcon = ({
   userName,
   onClick,
   href,
+  active,
 }: UserIconPropsType) => {
   const alt = userName ? `${userName} ${imageAlt.profile}` : imageAlt.profile;
 
   return href ? (
-    <Link href={href} className={styles.image}>
+    <Link
+      href={href}
+      className={clsx(styles.image, active ? styles.active : '')}
+    >
       <Image src={DummyImage} alt={alt} fill />
     </Link>
   ) : (
-    <div className={styles.image} onClick={onClick}>
+    <div
+      className={clsx(styles.image, active ? styles.active : '')}
+      onClick={onClick}
+    >
       <Image src={DummyImage} alt={alt} fill />
     </div>
   );

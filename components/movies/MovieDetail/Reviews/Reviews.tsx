@@ -4,8 +4,8 @@ import uuid from '@/lib/uuid';
 import { ReviewState } from '@/types/movies';
 import { logger } from '@/utils/logger';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
-import styles from './Reviews.module.scss';
 import { Review } from './Review';
+import styles from './Reviews.module.scss';
 
 export const Reviews = ({ reviews }: { reviews: ReviewState[] }) => {
   const [showFullReviews, setShowFullReviews] = useState<boolean>(false);

@@ -2,14 +2,15 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import clsx from 'clsx';
 import { GenrePills } from '@/components/base/GenrePills';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { createImageUrl } from '@/lib/tmdb';
-import uuid from '@/lib/uuid';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
 import { getReleaseYear } from '@/utils';
 import { Credits } from './Credits';
 import styles from './MovieDetail.module.scss';
+import { Story } from './Story';
 import { UserComment } from './UserComment';
 import { Vote } from './Vote';
 
@@ -26,35 +27,54 @@ export const MovieDetail = () => {
   return (
     <div className={styles.container}>
       {movie?.backdrop_path && (
-        <div className={styles.mainVisual}>
-          <Image
-            src={createImageUrl(movie.backdrop_path)}
-            alt={movie.title}
-            fill
-            style={{ objectFit: 'cover' }}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
-          />
+        <div className={styles.mainVisualWrapper}>
+          <div className={styles.mainVisual}>
+            <Image
+              src={createImageUrl(movie.backdrop_path, 'w1280')}
+              alt={movie.title}
+              fill
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
+            />
+          </div>
+          <div className={styles.logoWrapper}>
+            {movie.images?.logos[0] ? (
+              <Image
+                src={createImageUrl(movie.images?.logos[0].file_path, 'w500')}
+                alt={movie.title}
+                // fill
+                // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
+                className={styles.logoImage}
+                width={300}
+                height={40}
+              />
+            ) : (
+              'TITLE'
+            )}
+          </div>
         </div>
       )}
 
       <div className={styles.content}>
         <div className={styles.left}>
+          <h1 className={clsx(styles.title, styles.tab)}>{movie?.title}</h1>
           <div className={styles.posterImageWrapper}>
             <Image
               src={createImageUrl(movie?.poster_path)}
               fill
-              style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
               alt={movie.title}
+              className={styles.posterImage}
             />
           </div>
           <div className={styles.overview}>
-            <h1 className={styles.title}>{movie?.title}</h1>
+            <h1 className={clsx(styles.title, styles.mob)}>{movie?.title}</h1>
             <div className={styles.release}>
-              {getReleaseYear(movie.release_date)}
+              <span>{getReleaseYear(movie.release_date) || ''}</span>
             </div>
             <GenrePills genres={movie.genres} />
             <Vote voteAvg={movie.vote_average} voteCount={movie.vote_count} />
+
             {!!movie.reviews?.results?.length && (
               <Reviews reviews={movie.reviews.results} />
             )}
@@ -65,11 +85,8 @@ export const MovieDetail = () => {
         <div className={styles.right}>
           {session && <UserComment />}
           <div className={styles.storyCredits}>
-            <div className={styles.story}>
-              <div className="title">Story</div>
-              <div>{movie.overview}</div>
-            </div>
-            <div>original Language: {movie.original_language}</div>
+            <Story story={movie.overview} />
+            {/* <div>original Language: {movie.original_language}</div> */}
             <Credits credits={movie.credits} />
           </div>
         </div>

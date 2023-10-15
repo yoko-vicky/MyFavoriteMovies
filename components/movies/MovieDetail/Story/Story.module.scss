@@ -1,0 +1,9 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.story {
+  margin-bottom: 2rem;
+}
+
+.title {
+  @include subTitle;
+}

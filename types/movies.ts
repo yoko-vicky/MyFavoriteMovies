@@ -145,6 +145,7 @@ export interface CreditItemState {
   original_name: string;
   popularity: number; // decimal
   profile_path: string;
+  job?: string;
 }
 
 export enum SliderDelay {
