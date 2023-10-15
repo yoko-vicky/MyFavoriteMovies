@@ -26,6 +26,7 @@
   font-style: italic;
   letter-spacing: 0.6px;
   opacity: 0.9;
+  margin: 0 0 1.6rem;
 }
 .posterImageWrapper {
   width: 100%;
@@ -37,6 +38,8 @@
 .title {
   font-size: 3.2rem;
   font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-heading);
+  margin: 0 0 1rem;
 }
 
 .subTitle {

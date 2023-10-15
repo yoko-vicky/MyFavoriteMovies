@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import styles from './Button.module.scss';
 
 type ButtonVariantType = 'outlined' | 'simple';
-type ButtonActiveColorType = 'yellow' | 'green' | 'white';
+type ButtonActiveColorType = 'yellow' | 'green' | 'blue' | 'white' | 'pink';
 
 interface ButtonPropsType {
   variant: ButtonVariantType;

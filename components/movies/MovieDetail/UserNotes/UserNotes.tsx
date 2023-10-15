@@ -25,7 +25,7 @@ export const UserNotes = () => {
           label={'Clip this movie'}
           onClick={handleClipedStatus}
           Icon={AiOutlinePaperClip}
-          activeColor="yellow"
+          activeColor="pink"
           activeFlag={cliped}
         />
         <Button
@@ -33,7 +33,7 @@ export const UserNotes = () => {
           label={'Watched'}
           onClick={handleWatchedStatus}
           Icon={watched ? AiFillCheckSquare : AiOutlineCheckSquare}
-          activeColor="green"
+          activeColor="blue"
           activeFlag={watched}
         />
       </div>
