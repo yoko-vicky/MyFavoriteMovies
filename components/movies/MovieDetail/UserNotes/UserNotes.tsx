@@ -6,6 +6,7 @@ import {
   AiOutlinePaperClip,
 } from 'react-icons/ai';
 import styles from './UserNotes.module.scss';
+import { Stars } from '../Stars';
 
 export const UserNotes = () => {
   const [watched, setWacthed] = useState<boolean>(false);
@@ -38,7 +39,7 @@ export const UserNotes = () => {
         />
       </div>
 
-      <div>⭐️⭐️⭐️⭐️⭐️</div>
+      <Stars />
       <input type="textarea" placeholder="So nice!" />
     </div>
   );

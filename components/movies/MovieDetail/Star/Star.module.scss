@@ -1,0 +1,17 @@
+.star {
+  font-size: 4rem;
+
+  .fillStar {
+    display: none;
+  }
+
+  &.active,
+  &:hover {
+    .fillStar {
+      display: block;
+    }
+    .outlineStar {
+      display: none;
+    }
+  }
+}
