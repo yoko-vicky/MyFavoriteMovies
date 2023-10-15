@@ -1,5 +1,3 @@
-'use client';
-
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { MovieState } from '@/types/movies';
 import { getRandomNum } from '@/utils';

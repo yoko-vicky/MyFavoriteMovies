@@ -3,21 +3,24 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { GenrePills } from '@/components/base/GenrePills';
+import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { createImageUrl } from '@/lib/tmdb';
 import uuid from '@/lib/uuid';
-import { MovieState } from '@/types/movies';
+import { useMovieDetailContext } from '@/store/MovieDetailContext';
 import { getReleaseYear } from '@/utils';
 import styles from './MovieDetail.module.scss';
-import { UserNotes } from './UserNotes';
+import { UserComment } from './UserComment';
 import { Vote } from './Vote';
 
 const Reviews = dynamic(() => import('./Reviews/Reviews'), { ssr: false });
-interface MovieDetailPropsType {
-  movie: MovieState;
-}
 
-export const MovieDetail = ({ movie }: MovieDetailPropsType) => {
+export const MovieDetail = () => {
   const { data: session } = useSession();
+  const { movie } = useMovieDetailContext();
+
+  if (!movie) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className={styles.container}>
@@ -37,7 +40,7 @@ export const MovieDetail = ({ movie }: MovieDetailPropsType) => {
         <div className={styles.left}>
           <div className={styles.posterImageWrapper}>
             <Image
-              src={createImageUrl(movie.poster_path)}
+              src={createImageUrl(movie?.poster_path)}
               fill
               style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
@@ -59,7 +62,7 @@ export const MovieDetail = ({ movie }: MovieDetailPropsType) => {
           </div>
         </div>
         <div className={styles.right}>
-          {session && <UserNotes />}
+          {session && <UserComment />}
           <div className={styles.storyCredits}>
             <div className={styles.story}>{movie.overview}</div>
             <div>original Language: {movie.original_language}</div>

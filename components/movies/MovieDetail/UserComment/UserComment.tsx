@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/base/Button';
+import { useMovieDetailContext } from '@/store/MovieDetailContext';
 import {
   AiFillCheckSquare,
   AiOutlineCheckSquare,
   AiOutlinePaperClip,
 } from 'react-icons/ai';
-import styles from './UserNotes.module.scss';
-import { Stars } from '../Stars';
+import styles from './UserComment.module.scss';
+import { UserCommentForm } from '../UserCommentForm';
 
-export const UserNotes = () => {
-  const [watched, setWacthed] = useState<boolean>(false);
-  const [cliped, setCliped] = useState<boolean>(false);
+export const UserComment = () => {
+  const { cliped, watched, handleClipedStatus, handleWatchedStatus } =
+    useMovieDetailContext();
 
-  const handleClipedStatus = () => {
-    setCliped((prev) => !prev);
-  };
-  const handleWatchedStatus = () => {
-    setWacthed((prev) => !prev);
-  };
   return (
     <div className={styles.comment}>
       <div className={styles.btns}>
@@ -39,10 +34,9 @@ export const UserNotes = () => {
         />
       </div>
 
-      <Stars />
-      <input type="textarea" placeholder="So nice!" />
+      {watched && <UserCommentForm />}
     </div>
   );
 };
 
-export default UserNotes;
+export default UserComment;

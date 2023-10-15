@@ -8,9 +8,9 @@
 }
 
 .genre {
-  background-color: var(--color-yellow);
-  color: var(--color-black);
-  border: 2px solid transparent;
+  color: var(--color-white);
+  background-color: transparent;
+  border: 1px solid var(--color-white);
   border-radius: var(--border-radius);
   padding: 0.4rem 1.2rem;
   cursor: pointer;
@@ -18,8 +18,8 @@
 
   &:hover,
   &:active {
-    border-color: var(--color-yellow);
-    color: var(--color-yellow);
-    background-color: transparent;
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border-color: transparent;
   }
 }

@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from 'react';
+import { Button } from '@/components/base/Button';
 import uuid from '@/lib/uuid';
 import { ReviewState } from '@/types/movies';
 import { logger } from '@/utils/logger';
+import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import styles from './Reviews.module.scss';
 import { Review } from '../Review';
-import { Button } from '@/components/base/Button';
-import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 
 export const Reviews = ({ reviews }: { reviews: ReviewState[] }) => {
   const [showFullReviews, setShowFullReviews] = useState<boolean>(false);
@@ -42,12 +42,14 @@ export const Reviews = ({ reviews }: { reviews: ReviewState[] }) => {
         return <Review key={uuid()} review={review} updateDate={updateDate} />;
       })}
 
-      <Button
-        variant={'simple'}
-        label={showFullReviews ? 'See less reviews' : 'See More Reviews'}
-        onClick={() => setShowFullReviews((prev) => !prev)}
-        Icon={showFullReviews ? AiFillCaretUp : AiFillCaretDown}
-      />
+      {reviewsToShow.length > 4 && (
+        <Button
+          variant={'simple'}
+          label={showFullReviews ? 'See less reviews' : 'See More Reviews'}
+          onClick={() => setShowFullReviews((prev) => !prev)}
+          Icon={showFullReviews ? AiFillCaretUp : AiFillCaretDown}
+        />
+      )}
     </div>
   );
 };
