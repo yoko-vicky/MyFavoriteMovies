@@ -7,7 +7,7 @@ import {
   AiOutlinePaperClip,
 } from 'react-icons/ai';
 import styles from './UserComment.module.scss';
-import { UserCommentForm } from '../UserCommentForm';
+import { UserCommentForm } from './UserCommentForm';
 
 export const UserComment = () => {
   const { cliped, watched, handleClipedStatus, handleWatchedStatus } =
