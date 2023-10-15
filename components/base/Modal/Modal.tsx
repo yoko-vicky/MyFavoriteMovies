@@ -1,12 +1,8 @@
 import React, { ReactNode } from 'react';
-import dynamic from 'next/dynamic';
 import clsx from 'clsx';
+import { AiOutlineClose } from 'react-icons/ai';
 import styles from './Modal.module.scss';
 import { Overlay } from '../Overlay';
-
-const CloseIcon = dynamic(() => import('@/public/assets/icons/close.svg'), {
-  ssr: false,
-});
 
 interface ModalPropsType {
   closeModal: () => void;
@@ -48,7 +44,7 @@ export const Modal = ({
       >
         {showCloseIcon && (
           <div className={styles.closeButton} onClick={closeModal}>
-            <CloseIcon />
+            <AiOutlineClose />
           </div>
         )}
         {children}
