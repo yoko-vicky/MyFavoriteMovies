@@ -14,7 +14,8 @@ export const UserNav = () => {
     <div className={styles.container}>
       <UserIcon
         userName={session?.user?.name ?? ''}
-        onClick={() => setOpenUserMenu((prev) => !prev)}
+        onClick={() => setOpenUserMenu( ( prev ) => !prev )}
+        active={openUserMenu}
       />
       {openUserMenu && (
         <nav className={styles.userMenu}>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const getRandomNum = (max = 10) => Math.floor(Math.random() * max);
 export const shapeData = (data: any) => JSON.parse(JSON.stringify(data));
-export const getReleaseYear = (date: string) => date.split('-')[0];
+export const getReleaseYear = (date: string) => date && date.split('-')[0];
 export const excerptText = (text: string, maxLength = 40) => {
   const tail = '...';
   if (text.length > maxLength) {
@@ -13,3 +13,8 @@ export const excerptText = (text: string, maxLength = 40) => {
 export const excerptReview = (text: string, maxLength: number) => {
   return `"${excerptText(text, maxLength)}"`;
 };
+
+const distinct = (value: any, index: number, self: any) =>
+  self.indexOf(value) === index;
+
+export const getUniqueArr = (arr: any[]) => arr.filter(distinct);

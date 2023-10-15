@@ -1,0 +1,62 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.title {
+  @include subTitle;
+}
+
+.content {
+  margin-bottom: 2rem;
+
+  &.isCast {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+.credit {
+  &.isCast {
+    @include centerContent;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}
+
+.name {
+  &.isCast {
+    font-size: 80%;
+    text-align: center;
+    line-height: var(--line-height-heading);
+    @include centerContent;
+  }
+}
+
+.container {
+  margin-bottom: 3rem;
+}
+
+.imageWrapper {
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.job {
+  font-size: 80%;
+  opacity: 80%;
+  &::after {
+    content: ': ';
+    margin-right: 0.6rem;
+  }
+}
+
+@include mq(pc) {
+  .content {
+    &.isCast {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+  }
+}

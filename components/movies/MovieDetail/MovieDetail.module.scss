@@ -7,27 +7,30 @@
 
 .mainVisual {
   display: none;
-  border: 1px solid yellow;
-  height: 30vh;
-  position: relative;
-  z-index: 0;
-
-  &::after {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    @include blackGradientBg;
-    z-index: 1;
-  }
 }
 
 .release {
   font-style: italic;
   letter-spacing: 0.6px;
-  opacity: 0.9;
+  opacity: 0.5;
   margin: 0 0 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  &::before {
+    content: '';
+    width: 2.4rem;
+    height: 1px;
+    background-color: var(--color-white);
+    margin-right: 0.6rem;
+  }
 }
+
+.mainVisualWrapper {
+  position: relative;
+}
+
 .posterImageWrapper {
   width: 100%;
   height: 80vh;
@@ -35,11 +38,26 @@
   margin-bottom: 2rem;
 }
 
+.posterImage {
+  object-fit: cover;
+}
+
+.logoImage {
+  // object-fit: contain;
+  position: absolute;
+  z-index: 1;
+  bottom: 2rem;
+  left: 2rem;
+}
+
 .title {
   font-size: 3.2rem;
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-heading);
   margin: 0 0 1rem;
+  &.tab {
+    display: none;
+  }
 }
 
 .subTitle {
@@ -71,5 +89,47 @@
 @include mq(tab) {
   .mainVisual {
     display: block;
+    height: 80vh;
+    position: relative;
+    z-index: 0;
+    margin-bottom: 4rem;
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      @include blackGradientBg;
+      z-index: 1;
+    }
+  }
+
+  .content {
+    display: flex;
+    align-items: flex-start;
+    @include container;
+    gap: 2rem;
+  }
+
+  .posterImageWrapper {
+    width: 100%;
+    height: 40rem;
+    position: relative;
+    margin: 0 auto 1rem;
+  }
+
+  .posterImage {
+    object-fit: contain;
+  }
+
+  .title {
+    &.mob {
+      display: none;
+    }
+    &.tab {
+      display: block;
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+    }
   }
 }

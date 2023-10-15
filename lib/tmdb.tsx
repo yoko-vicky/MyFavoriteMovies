@@ -9,7 +9,15 @@ const getTmdbOptions = () => ({
 });
 
 const tmdbApiKey = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-const baseImageUrl = process.env.NEXT_PUBLIC_TMDB_IMAGE_URL;
+// https://www.themoviedb.org/talk/5aeaaf56c3a3682ddf0010de
+// ## Add Supported Image Sizes
+//                                  Min Res      Max Res
+// poster   = Poster ............  500 x 750   2000 x 3000
+// backdrop = Fanart ............ 1280 x 720   3840 x 2160
+// still    = TV Show Episode ... 1280 x 720   3840 x 2160
+// profile  = Actors Actresses ..  300 x 450   2000 x 3000
+// logo     = TMDb Logo
+export const baseImageUrl = process.env.NEXT_PUBLIC_TMDB_IMAGE_URL;
 // const movieId = 634649;
 // const japanese = 'ja-JP';
 const defaultLang = 'en-US';

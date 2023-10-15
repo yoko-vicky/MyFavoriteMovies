@@ -10,3 +10,19 @@
   gap: 1.2rem;
   margin: 1rem auto 2rem;
 }
+
+@include mq(tab) {
+  .comment {
+    margin: 0 auto 3rem;
+  }
+
+  .btns {
+    margin: 0 auto 2rem;
+  }
+}
+
+@include mq(pc) {
+  .btns {
+    flex-direction: row;
+  }
+}

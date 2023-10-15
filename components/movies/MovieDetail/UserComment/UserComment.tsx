@@ -29,7 +29,7 @@ export const UserComment = () => {
           label={'Watched'}
           onClick={handleWatchedStatus}
           Icon={watched ? AiFillCheckSquare : AiOutlineCheckSquare}
-          activeColor="blue"
+          activeColor="green"
           activeFlag={watched}
         />
       </div>
