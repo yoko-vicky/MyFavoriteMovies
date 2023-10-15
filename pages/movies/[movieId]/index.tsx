@@ -3,6 +3,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { MovieDetail } from '@/components/movies/MovieDetail';
 import { getMovieById } from '@/lib/tmdb';
+import { MovieDetailContextProvider } from '@/store/MovieDetailContext';
 import { MovieState } from '@/types/movies';
 import { shapeData } from '@/utils';
 
@@ -31,12 +32,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MovieDetailPage = ({
-  movie,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      movie,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   if (!movie) {
     return <LoadingSpinner />;
   }
-  return <MovieDetail movie={movie} />;
+
+  return (
+    <MovieDetailContextProvider movie={movie}>
+      <MovieDetail />
+    </MovieDetailContextProvider>
+  );
 };
 
 export default MovieDetailPage;

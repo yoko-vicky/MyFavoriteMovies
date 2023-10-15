@@ -48,11 +48,19 @@ export const useUserRate = () => {
   ];
 
   const onClickStar = (rate: UserRateType) => {
+    if (userRate === rate) {
+      setUserRate(0);
+      return;
+    }
     setUserRate(rate);
   };
 
   const onHoverStar = (rate: UserRateType) => {
     setUserHoverRate(rate);
+  };
+
+  const resetRate = () => {
+    setUserRate(0);
   };
 
   useEffect(() => {
@@ -63,6 +71,9 @@ export const useUserRate = () => {
     isActiveStars,
     onClickStar,
     onHoverStar,
+    userRate,
+    userHoverRate,
+    resetRate,
   };
 };
 

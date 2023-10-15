@@ -1,13 +1,20 @@
 import React from 'react';
-import useUserRate from '@/hooks/useUserRate';
 import uuid from '@/lib/uuid';
 import { UserRateType } from '@/types';
 import styles from './Stars.module.scss';
 import { Star } from '../Star';
 
-export const Stars = () => {
-  const { isActiveStars, onClickStar, onHoverStar } = useUserRate();
+interface StarsPropsType {
+  isActiveStars: boolean[];
+  onClickStar: (rate: UserRateType) => void;
+  onHoverStar: (rate: UserRateType) => void;
+}
 
+export const Stars = ({
+  isActiveStars,
+  onClickStar,
+  onHoverStar,
+}: StarsPropsType) => {
   return (
     <div className={styles.stars}>
       {isActiveStars.map((isActiveStar, index) => (

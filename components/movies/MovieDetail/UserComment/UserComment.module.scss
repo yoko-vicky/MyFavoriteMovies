@@ -1,3 +1,9 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.comment {
+  margin: 0 0 2rem;
+}
+
 .btns {
   display: flex;
   flex-direction: column;

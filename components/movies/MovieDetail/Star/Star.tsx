@@ -13,7 +13,7 @@ interface StarPropsType {
 
 export const Star = ({ active, rate, onClick, onHover }: StarPropsType) => {
   return (
-    <button
+    <div
       className={clsx(styles.star, active ? styles.active : '')}
       onClick={() => onClick(rate)}
       onMouseEnter={() => onHover(rate)}
@@ -21,7 +21,7 @@ export const Star = ({ active, rate, onClick, onHover }: StarPropsType) => {
     >
       <AiOutlineStar className={styles.outlineStar} />
       <AiFillStar className={styles.fillStar} />
-    </button>
+    </div>
   );
 };
 
