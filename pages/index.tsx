@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import dynamic from 'next/dynamic';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { HomeMovies } from '@/components/home/HomeMovies';
-import { OgHead } from '@/components/layout/OgHead';
+import { OgHead } from '@/layout/OgHead';
 import {
   getPopularMovies,
   getTopRatedMovies,

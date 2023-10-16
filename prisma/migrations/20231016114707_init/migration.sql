@@ -12,14 +12,14 @@ CREATE TABLE "accounts" (
     "scope" TEXT,
     "id_token" TEXT,
     "session_state" TEXT,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "accounts_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
     "image" TEXT,
@@ -59,7 +59,7 @@ CREATE TABLE "Genre" (
 -- CreateTable
 CREATE TABLE "UserMovie" (
     "id" SERIAL NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
     "movieId" INTEGER NOT NULL,
     "listed" BOOLEAN NOT NULL DEFAULT false,
     "watched" BOOLEAN NOT NULL DEFAULT false,
