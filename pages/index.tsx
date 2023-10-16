@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import dynamic from 'next/dynamic';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
-import { Hero } from '@/components/home/Hero';
 import { HomeMovies } from '@/components/home/HomeMovies';
 import { OgHead } from '@/components/layout/OgHead';
 import {
@@ -13,6 +13,10 @@ import { MoviesContextProvider } from '@/store/MoviesContext';
 import { MovieState } from '@/types/movies';
 import { shapeData } from '@/utils';
 import { logger } from '@/utils/logger';
+
+const Hero = dynamic(() => import('@/components/home/Hero/Hero'), {
+  ssr: false,
+});
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   let topRatedMovies: MovieState[] = [];

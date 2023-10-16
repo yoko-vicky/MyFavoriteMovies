@@ -2,21 +2,38 @@
 import NextAuth, { AuthOptions, Session, User } from 'next-auth';
 import { AdapterUser } from 'next-auth/adapters';
 import { JWT } from 'next-auth/jwt';
+import FacebookProvider from 'next-auth/providers/facebook';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
-// import { prisma } from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
+import { UserState } from '@/types/user';
+import { logger } from '@/utils/logger';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+      allowDangerousEmailAccountLinking: true,
     }),
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID ?? '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
+      allowDangerousEmailAccountLinking: true,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID ?? '',
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET ?? '',
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
+  theme: {
+    colorScheme: 'auto', // "auto" | "dark" | "light"
+    brandColor: '#151a23', // Hex color code
+    // logo: '', // Absolute URL to image
+    // buttonText: '', // Hex color code
+  },
   session: {
     strategy: 'jwt',
     maxAge: 3 * 24 * 60 * 60, // 3days (you can change it to 30 to make it 30 days)
@@ -25,6 +42,7 @@ export const authOptions: AuthOptions = {
     secret: process.env.JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  adapter: PrismaAdapter(prisma),
   callbacks: {
     jwt: async ({
       token,
@@ -46,45 +64,36 @@ export const authOptions: AuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      // console.log('session in callbacks', { session });
-      // console.log('token in callbacks', { token });
+      console.log('session in callbacks', { session });
+      console.log('token in callbacks', { token });
 
-      // TODO: ADD implementation of user register or login custom method and
-      // add user data(clips, and others) to session!
+      let dbUser: UserState | null = null;
 
-      // GITHUB token (* included in session)
-      // * name: 'Yoko Saka ',
-      // * email: 'sakayoco55@gmail.com',
-      // picture: 'https://avatars.githubusercontent.com/u/53027195?v=4',
-      // sub: '53027195',
-      // id: '53027195',
-      // * image: 'https://avatars.githubusercontent.com/u/53027195?v=4',
-      // iat: 1695710029,
-      // exp: 1698302029,
-      // jti: 'cd962896-2dfc-438f-8e62-7fde0b5158bb'
+      try {
+        dbUser = await prisma.user.findUnique({
+          where: {
+            email: session.user.email,
+          },
+        });
+      } catch (error) {
+        logger.log({ error });
+      }
 
-      // GOOGLE token
-      //   name: 'Yoko S',
-      // email: 'sakayoco55@gmail.com',
-      // picture: 'https://lh3.googleusercontent.com/a/ACg8ocKqb4aNbD0qPQoyBV_hePf9g-_7yTSc_Y0QGZkOfKceKQ=s96-c',
-      // sub: '109261989974336490528',
-      // id: '109261989974336490528',
-      // image: 'https://lh3.googleusercontent.com/a/ACg8ocKqb4aNbD0qPQoyBV_hePf9g-_7yTSc_Y0QGZkOfKceKQ=s96-c',
-      // iat: 1695710112,
-      // exp: 1698302112,
-      // jti: '39613ac6-9292-47a9-9836-6caa8052cb16
+      if (!dbUser) {
+        if (session.user.name && session.user.email) {
+          dbUser = await prisma.user.create({
+            data: {
+              name: session.user.name,
+              email: session.user.email,
+              image: session.user.image,
+            },
+          });
+        } else {
+          throw new Error('Error in AOuth process.');
+        }
+      }
 
-      // const dbUser = await prisma.user.findUnique( {
-      //   where: {
-
-      //   }
-      // })
-      // session.user = {
-      //   id: dbUser.id,
-      //   name: dbUser.name,
-      //   image: dbUser.image,
-      // };
-
+      session.user = dbUser;
       return session;
     },
   },

@@ -8,11 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "clean:db": "rm -rf ./prisma/migrations && rm -rf ./prisma/dev.db",
-    "init:db": "npx prisma migrate dev --name init",
+    "init:db:seed": "npx prisma migrate dev --name init",
+    "init:db": "npx prisma migrate dev --name init --skip-seed",
+    "init:seed": "npm run clean:db && npm run init:db:seed",
     "init": "npm run clean:db && npm run init:db",
     "clean:next": "rm -rf ./.next",
     "seed": "npx prisma db seed",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "push": "npx prisma db push"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",
