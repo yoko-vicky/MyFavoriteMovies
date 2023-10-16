@@ -10,7 +10,7 @@ import styles from './UserComment.module.scss';
 import { UserCommentForm } from './UserCommentForm';
 
 export const UserComment = () => {
-  const { cliped, watched, handleClipedStatus, handleWatchedStatus } =
+  const { listed, watched, handleListedStatus, handleWatchedStatus } =
     useMovieDetailContext();
 
   return (
@@ -18,11 +18,11 @@ export const UserComment = () => {
       <div className={styles.btns}>
         <Button
           variant={'outlined'}
-          label={'Clip this movie'}
-          onClick={handleClipedStatus}
+          label={'Add this movie to my List'}
+          onClick={handleListedStatus}
           Icon={AiOutlinePaperClip}
           activeColor="pink"
-          activeFlag={cliped}
+          activeFlag={listed}
         />
         <Button
           variant={'outlined'}

@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext } from 'react';
 import { MovieState } from '@/types/movies';
 import { getRandomNum } from '@/utils';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 
 interface MoviesContextType {
   topRatedMovies: MovieState[];
@@ -54,7 +54,7 @@ export const MoviesContextProvider = ({
     allMovies,
   };
 
-  logger.log({ heroMovie, allMovies });
+  // logger.log({ heroMovie, allMovies });
 
   return (
     <MoviesContext.Provider value={context}>{children}</MoviesContext.Provider>

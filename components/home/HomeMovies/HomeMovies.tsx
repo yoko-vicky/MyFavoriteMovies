@@ -15,13 +15,13 @@ export const HomeMovies = () => {
         movies={topRatedMovies}
       />
       <SliderMovies
+        title={movieListVariant.trending.title}
+        movies={trendingMovies}
+      />
+      <SliderMovies
         reverse={true}
         title={movieListVariant.upcoming.title}
         movies={upcomingMovies}
-      />
-      <SliderMovies
-        title={movieListVariant.trending.title}
-        movies={trendingMovies}
       />
       <SliderMovies
         reverse={true}

@@ -23,9 +23,9 @@ interface MovieDetailContextType {
   handleFormSubmit: (e: FormEvent) => void;
   handleResetBtnClick: () => void;
   userNoteInputRef: RefObject<HTMLTextAreaElement> | undefined;
-  cliped: boolean;
+  listed: boolean;
   watched: boolean;
-  handleClipedStatus: () => void;
+  handleListedStatus: () => void;
   handleWatchedStatus: () => void;
   videoId: string | undefined;
   isYouTubeModalOpen: boolean;
@@ -43,9 +43,9 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   handleFormSubmit: () => undefined,
   handleResetBtnClick: () => undefined,
   userNoteInputRef: undefined,
-  cliped: false,
+  listed: false,
   watched: false,
-  handleClipedStatus: () => undefined,
+  handleListedStatus: () => undefined,
   handleWatchedStatus: () => undefined,
   videoId: undefined,
   isYouTubeModalOpen: false,
@@ -69,12 +69,12 @@ export const MovieDetailContextProvider = ({
     openModal: openYouTubeModal,
   } = useModal();
   const [watched, setWacthed] = useState<boolean>(false);
-  const [cliped, setCliped] = useState<boolean>(false);
+  const [listed, setListed] = useState<boolean>(false);
 
   const videoId = movie.videos?.results[0].key;
 
-  const handleClipedStatus = () => {
-    setCliped((prev) => !prev);
+  const handleListedStatus = () => {
+    setListed((prev) => !prev);
   };
   const handleWatchedStatus = () => {
     setWacthed((prev) => !prev);
@@ -104,9 +104,9 @@ export const MovieDetailContextProvider = ({
     handleFormSubmit,
     handleResetBtnClick,
     userNoteInputRef,
-    cliped,
+    listed,
     watched,
-    handleClipedStatus,
+    handleListedStatus,
     handleWatchedStatus,
     videoId,
     isYouTubeModalOpen,

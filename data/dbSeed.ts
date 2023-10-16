@@ -96,9 +96,9 @@ const userMovie = [
 
 const dbSeed = {
   user,
-  movie,
-  genre,
-  userMovie,
+  // movie,
+  // genre,
+  // userMovie,
 };
 
 export default dbSeed;
