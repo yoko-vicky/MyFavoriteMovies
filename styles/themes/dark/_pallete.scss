@@ -15,5 +15,9 @@
   --color-green: #1dd75b;
   --color-blue: #379ae6;
   --color-pink: rgb(255, 93, 126);
-  --black-gradient: linear-gradient(rgba(0, 0, 0, 0.3), transparent);
+  --black-gradient: linear-gradient(
+    transparent,
+    transparent,
+    rgba(0, 0, 0, 0.3)
+  );
 }

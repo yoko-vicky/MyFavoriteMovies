@@ -6,4 +6,11 @@
 
 .title {
   @include subTitle;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  svg {
+    font-size: 2rem;
+  }
 }

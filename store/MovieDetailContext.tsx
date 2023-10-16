@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import useModal from '@/hooks/useModal';
 import useUserRate from '@/hooks/useUserRate';
 import { UserRateType } from '@/types';
 import { MovieState } from '@/types/movies';
@@ -26,6 +27,10 @@ interface MovieDetailContextType {
   watched: boolean;
   handleClipedStatus: () => void;
   handleWatchedStatus: () => void;
+  videoId: string | undefined;
+  isYouTubeModalOpen: boolean;
+  closeYouTubeModal: () => void;
+  openYouTubeModal: () => void;
 }
 
 const MovieDetailContext = createContext<MovieDetailContextType>({
@@ -42,6 +47,10 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   watched: false,
   handleClipedStatus: () => undefined,
   handleWatchedStatus: () => undefined,
+  videoId: undefined,
+  isYouTubeModalOpen: false,
+  closeYouTubeModal: () => undefined,
+  openYouTubeModal: () => undefined,
 });
 
 export const MovieDetailContextProvider = ({
@@ -54,8 +63,15 @@ export const MovieDetailContextProvider = ({
   const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
     useUserRate();
   const userNoteInputRef = useRef<HTMLTextAreaElement>(null);
+  const {
+    isModalOpen: isYouTubeModalOpen,
+    closeModal: closeYouTubeModal,
+    openModal: openYouTubeModal,
+  } = useModal();
   const [watched, setWacthed] = useState<boolean>(false);
   const [cliped, setCliped] = useState<boolean>(false);
+
+  const videoId = movie.videos?.results[0].key;
 
   const handleClipedStatus = () => {
     setCliped((prev) => !prev);
@@ -92,6 +108,10 @@ export const MovieDetailContextProvider = ({
     watched,
     handleClipedStatus,
     handleWatchedStatus,
+    videoId,
+    isYouTubeModalOpen,
+    closeYouTubeModal,
+    openYouTubeModal,
   };
 
   return (
