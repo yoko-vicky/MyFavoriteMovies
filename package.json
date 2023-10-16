@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "clean:db": "rm -rf ./prisma/migrations && rm -rf ./prisma/dev.db",
     "init:db:seed": "npx prisma migrate dev --name init",
     "init:db": "npx prisma migrate dev --name init --skip-seed",

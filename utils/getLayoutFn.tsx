@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import { HomeLayout } from '@/components/layout/HomeLayout';
-import { PageLayout } from '@/components/layout/PageLayout';
+import { HomeLayout } from '@/layout/HomeLayout';
+import { PageLayout } from '@/layout/PageLayout';
 
 export const getLayoutFn = (layoutType: 'home' | 'page') => {
   return function getLayout(page: ReactElement) {

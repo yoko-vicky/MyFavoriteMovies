@@ -1,7 +1,7 @@
 import { MovieState } from './movies';
 
 export interface UserState {
-  id: number;
+  id: string;
   email: string;
   name: string | null;
   image: string | null;
@@ -13,7 +13,7 @@ export interface UserState {
 export interface UserMovie {
   id: number;
   user?: UserState;
-  userId: number;
+  userId: string;
   movie?: MovieState;
   movieId: number;
   listed: boolean;

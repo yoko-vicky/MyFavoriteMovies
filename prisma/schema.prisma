@@ -28,14 +28,14 @@ model Account {
   session_state String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
+  userId String
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id    String     @id @default(uuid())
   email String  @unique
   name  String?
   image String?
@@ -77,7 +77,7 @@ model Genre {
 model UserMovie {
   id Int @id @default(autoincrement())
   user User @relation(fields: [userId], references: [id])
-  userId Int
+  userId String
   movie Movie @relation(fields: [movieId], references: [id])
   movieId Int
   listed Boolean  @default(false)
