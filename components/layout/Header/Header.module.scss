@@ -1,12 +1,15 @@
 @import '@/styles/abstracts/_mixins.scss';
 
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   padding: 0.8rem 0;
   z-index: 1;
+
+  &.fixed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }
 
 .container {
