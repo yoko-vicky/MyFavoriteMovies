@@ -26,10 +26,19 @@ model User {
 model Movie{
   id        Int     @id @default(autoincrement())
   title     String
-  description   String?
-  released Int?
+  release_date String
+  poster_path String
+  vote_average Int
+  vote_count Int
+  status String?
+
+  backdrop_path String
+  adult Boolean
+  popularity Int
+
   userMovies UserMovie[]
   genres Genre[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -46,8 +55,9 @@ model UserMovie {
   userId Int
   movie Movie @relation(fields: [movieId], references: [id])
   movieId Int
+  listed Boolean  @default(false)
   watched Boolean @default(false)
-  star Int @default(0)
+  stars Int @default(0)
   comment String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
