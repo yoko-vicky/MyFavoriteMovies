@@ -31,3 +31,9 @@
     font-size: 1.4rem;
   }
 }
+
+@include mq(tab) {
+  .socialLinks {
+    font-size: 2.4rem;
+  }
+}

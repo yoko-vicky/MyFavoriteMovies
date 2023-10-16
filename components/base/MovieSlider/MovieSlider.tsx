@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
 import { MovieState } from '@/types/movies';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 import { FreeMode, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -68,7 +68,7 @@ export const MovieSlider = ({
   delay = 2500,
   reverse = false,
 }: MovieSliderPropsType) => {
-  logger.log({ movies });
+  // logger.log({ movies });
   return (
     <>
       <Swiper
@@ -82,7 +82,7 @@ export const MovieSlider = ({
         modules={[Autoplay, FreeMode]}
         className="mySwiper"
         autoplay={{
-          delay: 2500,
+          delay,
           disableOnInteraction: false,
           reverseDirection: reverse,
         }}

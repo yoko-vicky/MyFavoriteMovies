@@ -2,13 +2,7 @@
 
 .container {
   @include container;
-  // border: 1px solid yellow;
-  position: relative;
-  top: 32rem;
 }
 
 @include mq(pc) {
-  // .container {
-  //   margin-top: 56vh;
-  // }
 }
