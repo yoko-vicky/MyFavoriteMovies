@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-import { MovieDetail } from '@/components/movies/MovieDetail';
+// import { MovieDetail } from '@/components/movies/MovieDetail';
 import { getMoviesByGenreId } from '@/lib/tmdb';
 import uuid from '@/lib/uuid';
 import { MovieState } from '@/types/movies';
@@ -32,13 +32,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const DiscoverMoviesByGenreId = ({
-  movies,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      movies,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
       {movies.map((movie: MovieState) => (
         // TODO: replace MovieDetail with MovieListItem
-        <MovieDetail key={uuid()} movie={movie} />
+        // <MovieDetail key={uuid()} />
+        <div key={uuid()}>{movie.title}</div>
       ))}
     </>
   );

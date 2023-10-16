@@ -177,7 +177,7 @@ export const getTopRatedMovies = async () => {
   }
 };
 
-export const getTrends = async (
+export const getTrendingMovies = async (
   mediaType: MediaType = 'movie',
   timeWindow: TimeWindowType = 'week',
 ) => {
