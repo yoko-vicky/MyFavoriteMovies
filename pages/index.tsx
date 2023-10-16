@@ -59,11 +59,11 @@ export default function Home({
       trendingMovies={trendingMovies}
       upcomingMovies={upcomingMovies}
     >
-      <div style={{ position: 'relative' }}>
+      <>
         <OgHead />
         <Hero />
         <HomeMovies />
-      </div>
+      </>
     </MoviesContextProvider>
   );
 }

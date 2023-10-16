@@ -1,15 +1,9 @@
 @import '@/styles/abstracts/mixins.scss';
 
-$header-height-mob: 5.6rem;
-$header-height-spc: 6.4rem;
-
 .hero {
-  border: 1px solid yellow;
-  height: 30rem;
-  position: absolute;
+  height: 46vh;
   width: 100%;
-  top: 0;
-  // margin-bottom: -5.6rem;
+  margin-bottom: 2rem;
 }
 
 .content {
@@ -21,6 +15,17 @@ $header-height-spc: 6.4rem;
   width: 100%;
   height: 100%;
   z-index: 0;
+  overflow: hidden;
+
+  img {
+    transition: var(--transition-default);
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+  }
 }
 
 .imageCover {
@@ -29,12 +34,33 @@ $header-height-spc: 6.4rem;
   left: 0;
   width: 100%;
   height: 100%;
-  @include blackGradientBg;
+  @include blackGradientBgTopAndBottom;
 }
 
 .movieOverview {
   position: absolute;
   z-index: 1;
-  bottom: 2rem;
-  left: 2rem;
+  bottom: 1rem;
+  right: 2rem;
+  // border: 1px solid;
+}
+
+.title {
+  font-size: 80%;
+  opacity: 0.9;
+}
+
+.mainTitle {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.year {
+  font-size: 70%;
+  margin-left: 0.4rem;
+}
+
+@include mq(pc) {
+  .hero {
+    height: 60vh;
+  }
 }

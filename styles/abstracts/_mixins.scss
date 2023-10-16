@@ -56,6 +56,14 @@ $breakpoints: (
   background: var(--black-gradient);
 }
 
+@mixin blackGradientBgTopToBottom {
+  background: var(--black-gradient-from-top);
+}
+
+@mixin blackGradientBgTopAndBottom {
+  background: var(--black-gradient-top-bottom);
+}
+
 @mixin subTitle {
   font-size: 2.1rem;
   text-transform: uppercase;

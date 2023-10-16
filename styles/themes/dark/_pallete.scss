@@ -20,4 +20,14 @@
     transparent,
     rgba(0, 0, 0, 0.3)
   );
+  --black-gradient-from-top: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    transparent,
+    transparent
+  );
+  --black-gradient-top-bottom: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    transparent,
+    rgba(0, 0, 0, 0.5)
+  );
 }

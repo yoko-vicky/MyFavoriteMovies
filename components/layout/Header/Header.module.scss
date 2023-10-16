@@ -1,7 +1,10 @@
 @import '@/styles/abstracts/_mixins.scss';
 
 .header {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   padding: 0.8rem 0;
   z-index: 1;
 }
@@ -34,6 +37,9 @@
 }
 
 @include mq(spc) {
+  .header {
+    padding: 1.2rem 0;
+  }
   .mobMenu {
     display: none;
   }
