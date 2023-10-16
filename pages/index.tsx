@@ -12,6 +12,7 @@ import {
 import { MoviesContextProvider } from '@/store/MoviesContext';
 import { MovieState } from '@/types/movies';
 import { shapeData } from '@/utils';
+import { getLayoutFn } from '@/utils/getLayoutFn';
 import { logger } from '@/utils/logger';
 
 const Hero = dynamic(() => import('@/components/home/Hero/Hero'), {
@@ -46,7 +47,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 }
 
-export default function Home({
+export default function HomePage({
       topRatedMovies,
       popularMovies,
       trendingMovies,
@@ -71,3 +72,5 @@ export default function Home({
     </MoviesContextProvider>
   );
 }
+
+HomePage.getLayout = getLayoutFn('home');

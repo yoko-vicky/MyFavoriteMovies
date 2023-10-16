@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
 import LogoImage from '@/public/images/logo.png';
 import { HiMenu } from 'react-icons/hi';
 import styles from './Header.module.scss';
 import { MainNav } from '../MainNav';
 import { UserNav } from '../UserNav';
 
-export const Header = () => {
+export enum HeaderVariantType {
+  FIXED = 'fixed',
+  DEFAULT = 'relative',
+}
+interface HeaderPropsType {
+  variant?: HeaderVariantType;
+}
+
+export const Header = ({
+  variant = HeaderVariantType.DEFAULT,
+}: HeaderPropsType) => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   return (
-    <header className={styles.header}>
+    <header className={clsx(styles.header, styles[variant])}>
       <div className={styles.container}>
         <button
           className={styles.mobMenu}

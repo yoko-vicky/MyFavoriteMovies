@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { imageAlt } from '@/constants';
-import DummyImage from '@/public/images/profile.jpg';
 import { logger } from '@/utils/logger';
+import { FaUserAlt } from 'react-icons/fa';
 import styles from './UserIcon.module.scss';
 
 interface UserIconPropsType {
@@ -27,16 +27,24 @@ export const UserIcon = ({
   return href ? (
     <Link
       href={href}
-      className={clsx(styles.image, active ? styles.active : '')}
+      className={clsx(
+        styles.image,
+        active ? styles.active : '',
+        imageSrc ? '' : styles.iconWrap,
+      )}
     >
-      <Image src={imageSrc ?? DummyImage} alt={alt} fill />
+      {imageSrc ? <Image src={imageSrc} alt={alt} fill /> : <FaUserAlt />}
     </Link>
   ) : (
     <div
-      className={clsx(styles.image, active ? styles.active : '')}
+      className={clsx(
+        styles.image,
+        active ? styles.active : '',
+        imageSrc ? '' : styles.iconWrap,
+      )}
       onClick={onClick}
     >
-      <Image src={imageSrc ?? DummyImage} alt={alt} fill />
+      {imageSrc ? <Image src={imageSrc} alt={alt} fill /> : <FaUserAlt />}
     </div>
   );
 };

@@ -1,3 +1,5 @@
+@import '@/styles/abstracts/mixins.scss';
+
 .image {
   display: block;
   position: relative;
@@ -6,7 +8,7 @@
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 2px solid var(--color-white);
   transition: var(--transition-default);
 
   img {
@@ -15,6 +17,10 @@
 
   &:hover,
   &.active {
-    border-color: var(--color-white);
+    border-color: var(--color-yellow);
+  }
+
+  &.iconWrap {
+    @include centerContent;
   }
 }

@@ -6,6 +6,7 @@ import { getMovieById } from '@/lib/tmdb';
 import { MovieDetailContextProvider } from '@/store/MovieDetailContext';
 import { MovieState } from '@/types/movies';
 import { shapeData } from '@/utils';
+import { getLayoutFn } from '../../../utils/getLayoutFn';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const movieId = context.query.movieId;
@@ -46,3 +47,4 @@ const MovieDetailPage = ({
 };
 
 export default MovieDetailPage;
+MovieDetailPage.getLayout = getLayoutFn('home');
