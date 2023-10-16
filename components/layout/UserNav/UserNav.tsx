@@ -1,25 +1,27 @@
-'use client';
-
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { UserIcon } from '@/components/base/UserIcon';
+import { useUserContext } from '@/store/UserContext';
+import { logger } from '@/utils/logger';
 import styles from './UserNav.module.scss';
 
 export const UserNav = () => {
   const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
-  const { data: session } = useSession();
+  const { user } = useUserContext();
 
+  logger.log({ user });
   return (
     <div className={styles.container}>
       <UserIcon
-        userName={session?.user?.name ?? ''}
-        onClick={() => setOpenUserMenu( ( prev ) => !prev )}
+        userName={user?.name ?? ''}
+        onClick={() => setOpenUserMenu((prev) => !prev)}
         active={openUserMenu}
+        imageSrc={user?.image || ''}
       />
       {openUserMenu && (
         <nav className={styles.userMenu}>
-          {session ? (
+          {user ? (
             <>
               {/* session.user.username? */}
               <Link href={`/profile/${123}`} className={styles.link}>

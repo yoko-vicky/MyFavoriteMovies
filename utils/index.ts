@@ -18,3 +18,4 @@ const distinct = (value: any, index: number, self: any) =>
   self.indexOf(value) === index;
 
 export const getUniqueArr = (arr: any[]) => arr.filter(distinct);
+export const getTimestamp = () => Math.floor(Date.now() / 1000);
