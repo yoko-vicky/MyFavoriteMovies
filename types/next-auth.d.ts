@@ -1,17 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from 'next-auth';
+import { UserState } from './user';
 // https://next-auth.js.org/getting-started/typescript
 declare module 'next-auth' {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    user: {
-      id: number;
-      name: string;
-      image?: string;
-      email?: string;
-    };
+    user: UserState;
   }
   /**
    * The shape of the user object returned in the OAuth providers' `profile` callback,
