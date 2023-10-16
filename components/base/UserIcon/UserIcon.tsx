@@ -4,6 +4,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { imageAlt } from '@/constants';
 import DummyImage from '@/public/images/profile.jpg';
+import { logger } from '@/utils/logger';
 import styles from './UserIcon.module.scss';
 
 interface UserIconPropsType {
@@ -22,20 +23,20 @@ export const UserIcon = ({
   active,
 }: UserIconPropsType) => {
   const alt = userName ? `${userName} ${imageAlt.profile}` : imageAlt.profile;
-
+  logger.log({ imageSrc });
   return href ? (
     <Link
       href={href}
       className={clsx(styles.image, active ? styles.active : '')}
     >
-      <Image src={DummyImage} alt={alt} fill />
+      <Image src={imageSrc ?? DummyImage} alt={alt} fill />
     </Link>
   ) : (
     <div
       className={clsx(styles.image, active ? styles.active : '')}
       onClick={onClick}
     >
-      <Image src={DummyImage} alt={alt} fill />
+      <Image src={imageSrc ?? DummyImage} alt={alt} fill />
     </div>
   );
 };
