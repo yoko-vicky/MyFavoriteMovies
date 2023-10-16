@@ -5,6 +5,10 @@ export interface UserState {
   email: string;
   name: string | null;
   image: string | null;
+  bio?: string | null;
+  twitter?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
   userMovies?: UserMovie[];
   createdAt?: Date;
   updatedAt?: Date;

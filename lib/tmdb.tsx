@@ -69,7 +69,7 @@ const getApiData = async ({
 }) => {
   const url = genreId
     ? getApiUrlToDiscoverByGenreId({ genreId, appends })
-    : getApiUrl({ path: path ?? '', appends, lang });
+    : getApiUrl({ path: path || '', appends, lang });
 
   try {
     const res = await fetch(url, getTmdbOptions());

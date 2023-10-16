@@ -22,5 +22,20 @@
 
   &.iconWrap {
     @include centerContent;
+
+    &.md {
+      svg {
+        font-size: 4rem;
+      }
+    }
+  }
+
+  &.md {
+    width: 10rem;
+    height: 10rem;
+    &:hover {
+      border-color: inherit;
+      cursor: initial;
+    }
   }
 }

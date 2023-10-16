@@ -13,6 +13,7 @@ interface UserIconPropsType {
   onClick?: () => void;
   href?: string;
   active?: boolean;
+  size?: 'sm' | 'md';
 }
 
 export const UserIcon = ({
@@ -21,6 +22,7 @@ export const UserIcon = ({
   onClick,
   href,
   active,
+  size = 'sm',
 }: UserIconPropsType) => {
   const alt = userName ? `${userName} ${imageAlt.profile}` : imageAlt.profile;
   logger.log({ imageSrc });
@@ -31,6 +33,7 @@ export const UserIcon = ({
         styles.image,
         active ? styles.active : '',
         imageSrc ? '' : styles.iconWrap,
+        styles[size],
       )}
     >
       {imageSrc ? <Image src={imageSrc} alt={alt} fill /> : <FaUserAlt />}
@@ -41,6 +44,7 @@ export const UserIcon = ({
         styles.image,
         active ? styles.active : '',
         imageSrc ? '' : styles.iconWrap,
+        styles[size],
       )}
       onClick={onClick}
     >

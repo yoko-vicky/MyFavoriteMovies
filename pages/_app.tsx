@@ -15,14 +15,12 @@ type AppWithLayoutProps = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export default function App({ Component, pageProps }: AppWithLayoutProps) {
-  const getLayout = Component.getLayout ?? ((page: ReactElement) => page);
+export default function App({ Component, pageProps }) {
+  const getLayout = Component.getLayout || ((page: ReactElement) => page);
 
   return (
     <SessionProvider session={pageProps.session} refetchInterval={0}>
-      <ErrorBoundary>
-          {getLayout(<Component {...pageProps} />)}
-      </ErrorBoundary>
+      <ErrorBoundary>{getLayout(<Component {...pageProps} />)}</ErrorBoundary>
     </SessionProvider>
   );
 }
