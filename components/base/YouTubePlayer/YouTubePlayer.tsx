@@ -1,21 +1,23 @@
-import YouTube, { YouTubeEvent } from 'react-youtube';
-import { logger } from '@/utils/logger';
+import ReactPlayer from 'react-player';
+// import { logger } from '@/utils/logger';
+
+const youtubeUrl = process.env.NEXT_PUBLIC_YOUTUBE_URL;
 
 export const YouTubePlayer = ({ videoId }: { videoId: string }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onReady = (event: YouTubeEvent<any>) => {
-    // Access the player instance
-    const player = event.target;
-    logger.log('Player ready', player);
-
-    // player.playVideo();
-  };
-
-  const onError = (error: YouTubeEvent<number>) => {
-    logger.error('YouTube Player Error:', error);
-  };
-
-  return <YouTube videoId={videoId} onReady={onReady} onError={onError} />;
+  return (
+    <ReactPlayer
+      url={`${youtubeUrl}${videoId}`}
+      width="100%"
+      height="100%"
+      controls
+      muted
+      config={{
+        youtube: {
+          playerVars: { showinfo: 1 },
+        },
+      }}
+    />
+  );
 };
 
 export default YouTubePlayer;

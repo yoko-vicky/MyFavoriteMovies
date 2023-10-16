@@ -5,9 +5,8 @@ import { useSession } from 'next-auth/react';
 import clsx from 'clsx';
 import { Button } from '@/components/base/Button';
 import { GenrePills } from '@/components/base/GenrePills';
-import { Modal } from '@/components/base/Modal';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
-import useModal from '@/hooks/useModal';
+import { YouTubePlayerModal } from '@/components/modals/YouTubePlayerModal';
 import { createImageUrl } from '@/lib/tmdb';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
 import { getReleaseYear } from '@/utils';
@@ -23,11 +22,16 @@ const Reviews = dynamic(() => import('./Reviews/Reviews'), { ssr: false });
 
 export const MovieDetail = () => {
   const { data: session } = useSession();
-  const { movie } = useMovieDetailContext();
-  const { isModalOpen, toggleModal, closeModal, openModal } = useModal();
+  const {
+    movie,
+    videoId,
+    isYouTubeModalOpen,
+    closeYouTubeModal,
+    openYouTubeModal,
+  } = useMovieDetailContext();
 
   const handleYoutubeModalOpenBtnClick = () => {
-    openModal();
+    openYouTubeModal();
   };
 
   if (!movie) {
@@ -42,15 +46,16 @@ export const MovieDetail = () => {
           <div className={styles.mainVisualWrapper}>
             <div className={styles.mainVisual}>
               <Image
-                src={createImageUrl(movie.backdrop_path, 'w1280')}
+                src={createImageUrl(movie.backdrop_path, 'original')}
                 alt={movie.title}
                 fill
                 style={{ objectFit: 'cover' }}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
               />
             </div>
-            <div className={styles.logoWrapper}>
-              {movie.images?.logos[0] ? (
+
+            {movie.images?.logos[0] ? (
+              <div className={styles.logoWrapper}>
                 <Image
                   src={createImageUrl(movie.images?.logos[0].file_path, 'w500')}
                   alt={movie.title}
@@ -60,10 +65,10 @@ export const MovieDetail = () => {
                   width={300}
                   height={40}
                 />
-              ) : (
-                'TITLE'
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className={styles.movieTitleInImage}>{movie.title}</div>
+            )}
           </div>
         )}
 
@@ -80,14 +85,19 @@ export const MovieDetail = () => {
               />
             </div>
             <div className={styles.overview}>
-              <Button
-                variant={'outlined'}
-                label={'See Video'}
-                Icon={AiOutlineYoutube}
-                activeColor="blue"
-                onClick={handleYoutubeModalOpenBtnClick}
-                activeFlag={isModalOpen}
-              />
+              {videoId && (
+                <div className={styles.youtubeOpenModalBtnWrapper}>
+                  <Button
+                    variant={'outlined'}
+                    label={'Watch on YouTube'}
+                    Icon={AiOutlineYoutube}
+                    activeColor="red"
+                    onClick={handleYoutubeModalOpenBtnClick}
+                    activeFlag={isYouTubeModalOpen}
+                    className={styles.youtubeOpenModalBtn}
+                  />
+                </div>
+              )}
               <h1 className={clsx(styles.title, styles.mob)}>{movie?.title}</h1>
               <div className={styles.release}>
                 <span>{getReleaseYear(movie.release_date) || ''}</span>
@@ -105,15 +115,15 @@ export const MovieDetail = () => {
           <div className={styles.right}>
             {session && <UserComment />}
             <div className={styles.storyCredits}>
-              <Story story={movie.overview} />
+              <Story />
               {/* <div>original Language: {movie.original_language}</div> */}
               <Credits credits={movie.credits} />
             </div>
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <Modal closeModal={closeModal}>This is Modal to Show</Modal>
+      {videoId && isYouTubeModalOpen && (
+        <YouTubePlayerModal videoId={videoId} closeModal={closeYouTubeModal} />
       )}
     </>
   );

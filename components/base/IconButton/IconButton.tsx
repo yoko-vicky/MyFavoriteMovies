@@ -1,9 +1,8 @@
 import React from 'react';
 import { IconType } from 'react-icons';
 import clsx from 'clsx';
-import styles from './Button.module.scss';
+import styles from './IconButton.module.scss';
 
-type ButtonVariantType = 'outlined' | 'simple' | 'simpleOutlined';
 type ButtonActiveColorType =
   | 'yellow'
   | 'green'
@@ -12,36 +11,28 @@ type ButtonActiveColorType =
   | 'pink'
   | 'red';
 
-interface ButtonPropsType {
-  variant: ButtonVariantType;
-  label: string;
-  Icon?: IconType;
+interface IconButtonPropsType {
+  Icon: IconType;
   activeColor?: ButtonActiveColorType;
   activeFlag?: boolean;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
   // href?: string;
   className?: string;
 }
 
-export const Button = ({
-  variant,
-  label,
+export const IconButton = ({
   Icon,
   activeColor,
   activeFlag = false,
   onClick,
-  type = 'button',
   className,
   ...props
-}: ButtonPropsType) => {
+}: IconButtonPropsType) => {
   return (
-    <button
+    <div
       onClick={onClick}
-      type={type}
       className={clsx(
         styles.btn,
-        styles[variant],
         activeColor && styles[activeColor],
         activeFlag ? styles.active : '',
         className ? className : '',
@@ -49,9 +40,8 @@ export const Button = ({
       {...props}
     >
       {Icon && <Icon />}
-      <span>{label}</span>
-    </button>
+    </div>
   );
 };
 
-export default Button;
+export default IconButton;

@@ -103,6 +103,17 @@
       opacity: 0.7;
     }
   }
+  &.red {
+    &:hover,
+    &.active {
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
   &.white {
     &:hover,
     &.active {
