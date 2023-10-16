@@ -13,7 +13,7 @@ export const UserNav = () => {
   return (
     <div className={styles.container}>
       <UserIcon
-        userName={session?.user.name ?? ''}
+        userName={session?.user.name || ''}
         onClick={() => setOpenUserMenu((prev) => !prev)}
         active={openUserMenu}
         imageSrc={session?.user?.image || ''}

@@ -39,6 +39,12 @@ model User {
   email String  @unique
   name  String?
   image String?
+
+  bio String?
+  twitter String?
+  facebook String?
+  instagram String?
+
   userMovies UserMovie[]
   accounts Account[]
   emailVerified DateTime? @map("email_verified")

@@ -1,0 +1,7 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.links {
+  @include centerContent;
+  gap: 1.2rem;
+  font-size: 3rem;
+}

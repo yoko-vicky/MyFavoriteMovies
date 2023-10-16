@@ -13,18 +13,18 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
       allowDangerousEmailAccountLinking: true,
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID ?? '',
-      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
+      clientId: process.env.GITHUB_CLIENT_ID || '',
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
       allowDangerousEmailAccountLinking: true,
     }),
     FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID ?? '',
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET ?? '',
+      clientId: process.env.FACEBOOK_CLIENT_ID || '',
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET || '',
       allowDangerousEmailAccountLinking: true,
     }),
   ],
