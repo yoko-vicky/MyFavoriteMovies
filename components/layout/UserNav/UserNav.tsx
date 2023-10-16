@@ -25,9 +25,9 @@ export const UserNav = () => {
               <Link href={`/profile/${123}`} className={styles.link}>
                 My Profile
               </Link>
-              <Link href={'/clips'} className={styles.link}>
+              {/* <Link href={'/clips'} className={styles.link}>
                 My Clips
-              </Link>
+              </Link> */}
               <button onClick={() => signOut()} className={styles.link}>
                 Sign Out
               </button>
