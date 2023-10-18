@@ -1,0 +1,36 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.overview {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.editBtn {
+  display: inline-block;
+  width: auto;
+}
+
+.left {
+  display: flex;
+  justify-content: center;
+}
+
+.right {
+  @include centerContent;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.name {
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  word-break: break-word;
+}
+
+.bio {
+  word-break: break-word;
+}

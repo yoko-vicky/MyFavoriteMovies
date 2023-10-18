@@ -42,7 +42,7 @@ export const MovieDetail = () => {
   return (
     <>
       <div className={styles.container}>
-        {movie?.backdrop_path && (
+        {!!movie?.backdrop_path && (
           <div className={styles.mainVisualWrapper}>
             <div className={styles.mainVisual}>
               <Image
@@ -85,7 +85,7 @@ export const MovieDetail = () => {
               />
             </div>
             <div className={styles.overview}>
-              {videoId && (
+              {!!videoId && (
                 <div className={styles.youtubeOpenModalBtnWrapper}>
                   <Button
                     variant={'outlined'}
@@ -113,7 +113,7 @@ export const MovieDetail = () => {
             </div>
           </div>
           <div className={styles.right}>
-            {session && <UserComment />}
+            {!!session && <UserComment />}
             <div className={styles.storyCredits}>
               <Story />
               {/* <div>original Language: {movie.original_language}</div> */}
@@ -122,7 +122,7 @@ export const MovieDetail = () => {
           </div>
         </div>
       </div>
-      {videoId && isYouTubeModalOpen && (
+      {!!videoId && isYouTubeModalOpen && (
         <YouTubePlayerModal videoId={videoId} closeModal={closeYouTubeModal} />
       )}
     </>

@@ -11,7 +11,7 @@ export const GenrePills = ({
 }) => {
   return (
     <>
-      {genres && genres.length > 0 && (
+      {!!genres && genres.length > 0 && (
         <div className={styles.genres}>
           {genres.map((genre) => (
             <Link

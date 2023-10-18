@@ -18,7 +18,7 @@ export const SliderMovies = ({
 }: SliderMoviesPropsType) => {
   return (
     <div className={styles.slider}>
-      {title && movies && <h2 className={styles.title}>{title}</h2>}
+      {!!title && !!movies && <h2 className={styles.title}>{title}</h2>}
       <MovieSlider movies={movies} delay={delay} reverse={reverse} />
     </div>
   );

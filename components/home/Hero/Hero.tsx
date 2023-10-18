@@ -13,7 +13,7 @@ export const Hero = () => {
   return (
     <div className={styles.hero}>
       <div className={styles.content}>
-        {heroMovie && (
+        {!!heroMovie && (
           <div className={styles.imageWrapper}>
             <Image
               src={createImageUrl(heroMovie.backdrop_path, 'w1280')}
