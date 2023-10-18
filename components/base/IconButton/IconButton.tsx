@@ -19,6 +19,7 @@ interface IconButtonPropsType {
   onClick?: () => void;
   href?: string;
   className?: string;
+  outerLink?: boolean;
 }
 
 export const IconButton = ({
@@ -28,6 +29,7 @@ export const IconButton = ({
   onClick,
   className,
   href,
+  outerLink = true,
   ...props
 }: IconButtonPropsType) => {
   if (href) {
@@ -41,6 +43,8 @@ export const IconButton = ({
           className ? className : '',
         )}
         {...props}
+        target="_blank"
+        rel={outerLink ? 'noopener' : undefined}
       >
         {!!Icon && <Icon />}
       </Link>
