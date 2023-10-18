@@ -8,8 +8,7 @@ import styles from './ProfileOverview.module.scss';
 import { SocialLinks } from '../SocialLinks';
 
 export const ProfileOverview = () => {
-  const { user, isEditModalOpen, openEditModal, closeEditModal } =
-    useUserProfilePageContext();
+  const { user, isEditModalOpen, openEditModal } = useUserProfilePageContext();
   const { data: session } = useSession();
 
   return (
@@ -34,6 +33,7 @@ export const ProfileOverview = () => {
                 variant={'simpleOutlined'}
                 label={'Edit Profile'}
                 className={styles.editBtn}
+                onClick={() => openEditModal()}
               />
             </div>
           )}

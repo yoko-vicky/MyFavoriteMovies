@@ -20,6 +20,7 @@ export const Story = () => {
             Icon={TfiYoutube}
             onClick={openYouTubeModal}
             activeColor="red"
+            outerLink={false}
           />
         )}
       </div>

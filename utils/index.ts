@@ -19,3 +19,5 @@ const distinct = (value: any, index: number, self: any) =>
 
 export const getUniqueArr = (arr: any[]) => arr.filter(distinct);
 export const getTimestamp = () => Math.floor(Date.now() / 1000);
+export const removeExtraSpaceFromStr = (str: string) =>
+  str.trim().replaceAll(/\s{2,}/g, ' ');
