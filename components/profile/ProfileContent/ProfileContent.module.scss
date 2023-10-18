@@ -1,0 +1,6 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.container {
+  @include container;
+  // border: 1px solid;
+}

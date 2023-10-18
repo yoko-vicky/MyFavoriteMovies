@@ -3,7 +3,6 @@ import NextAuth, { AuthOptions, Session, User } from 'next-auth';
 import { AdapterUser } from 'next-auth/adapters';
 import { JWT } from 'next-auth/jwt';
 import FacebookProvider from 'next-auth/providers/facebook';
-import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { prisma } from '@/lib/prisma';
 import { UserState } from '@/types/user';
@@ -15,11 +14,6 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-      allowDangerousEmailAccountLinking: true,
-    }),
-    GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID || '',
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
       allowDangerousEmailAccountLinking: true,
     }),
     FacebookProvider({
@@ -80,7 +74,7 @@ export const authOptions: AuthOptions = {
       }
 
       if (!dbUser) {
-        if (session.user.name && session.user.email) {
+        if (!!session.user.name && !!session.user.email) {
           dbUser = await prisma.user.create({
             data: {
               name: session.user.name,

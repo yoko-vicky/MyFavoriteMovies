@@ -42,13 +42,13 @@ export const Button = ({
       className={clsx(
         styles.btn,
         styles[variant],
-        activeColor && styles[activeColor],
+        !!activeColor && styles[activeColor],
         activeFlag ? styles.active : '',
         className ? className : '',
       )}
       {...props}
     >
-      {Icon && <Icon />}
+      {!!Icon && <Icon />}
       <span>{label}</span>
     </button>
   );

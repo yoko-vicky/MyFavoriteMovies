@@ -86,7 +86,7 @@ export const MovieSlider = ({
         }}
         loop={true}
       >
-        {movies &&
+        {!!movies &&
           movies.map((movie) => (
             <SwiperSlide key={movie.id}>
               <Link href={`/movies/${movie.id}`}>

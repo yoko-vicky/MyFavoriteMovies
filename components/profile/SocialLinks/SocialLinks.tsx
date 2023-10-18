@@ -1,9 +1,8 @@
 import React from 'react';
 import { IconButton } from '@/components/base/IconButton';
 import { UserState } from '@/types/user';
-import { FaFacebookSquare } from 'react-icons/fa';
-import { FaSquareXTwitter } from 'react-icons/fa6';
-import { ImInstagram } from 'react-icons/im';
+import { BsFacebook, BsInstagram } from 'react-icons/bs';
+import { FaXTwitter } from 'react-icons/fa6';
 import styles from './SocialLinks.module.scss';
 
 export const SocialLinks = ({ user }: { user: UserState }) => {
@@ -13,14 +12,10 @@ export const SocialLinks = ({ user }: { user: UserState }) => {
 
   return (
     <div className={styles.links}>
-      {user.twitter && (
-        <IconButton Icon={FaSquareXTwitter} href={user.twitter} />
-      )}
-      {user.facebook && (
-        <IconButton Icon={FaFacebookSquare} href={user.facebook} />
-      )}
-      {user.instagram && (
-        <IconButton Icon={ImInstagram} href={user.instagram} />
+      {!!user.twitter && <IconButton Icon={FaXTwitter} href={user.twitter} />}
+      {!!user.facebook && <IconButton Icon={BsFacebook} href={user.facebook} />}
+      {!!user.instagram && (
+        <IconButton Icon={BsInstagram} href={user.instagram} />
       )}
     </div>
   );

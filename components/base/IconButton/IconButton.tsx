@@ -36,13 +36,13 @@ export const IconButton = ({
         href={href}
         className={clsx(
           styles.btn,
-          activeColor && styles[activeColor],
+          !!activeColor && styles[activeColor],
           activeFlag ? styles.active : '',
           className ? className : '',
         )}
         {...props}
       >
-        {Icon && <Icon />}
+        {!!Icon && <Icon />}
       </Link>
     );
   }
@@ -52,13 +52,13 @@ export const IconButton = ({
       onClick={onClick}
       className={clsx(
         styles.btn,
-        activeColor && styles[activeColor],
+        !!activeColor && styles[activeColor],
         activeFlag ? styles.active : '',
         className ? className : '',
       )}
       {...props}
     >
-      {Icon && <Icon />}
+      {!!Icon && <Icon />}
     </div>
   );
 };

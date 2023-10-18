@@ -55,7 +55,9 @@ export const Credit = ({
                   credits.length === index + 1 ? styles.last : '',
                 )}
               >
-                {credit.job && <span className={styles.job}>{credit.job}</span>}
+                {!!credit.job && (
+                  <span className={styles.job}>{credit.job}</span>
+                )}
                 {credit.name}
               </div>
             </div>

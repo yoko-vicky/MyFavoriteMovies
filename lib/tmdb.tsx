@@ -34,7 +34,7 @@ export const getApiUrl = ({
   lang?: string;
 }) => {
   const appendToResponse =
-    appends && appends.length > 0
+    !!appends && appends.length > 0
       ? `&append_to_response=${appends.join(',')}`
       : '';
 
@@ -49,7 +49,7 @@ export const getApiUrlToDiscoverByGenreId = ({
   appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
 }) => {
   const appendToResponse =
-    appends && appends.length > 0
+    !!appends && appends.length > 0
       ? `&append_to_response=${appends.join(',')}`
       : '';
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
-import { ProfileOverview } from '@/components/profile/ProfileOverview';
-import { UserMovies } from '@/components/profile/UserMovies';
+import { ProfileContent } from '@/components/profile/ProfileContent';
 import { prisma } from '@/lib/prisma';
 import { UserProfilePageContextProvider } from '@/store/UserProfilePageContext';
 import { UserState } from '@/types/user';
@@ -48,15 +47,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const UserProfilePage = ({
-  userForPage,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      userForPage,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   if (!userForPage) {
     return <LoadingSpinner />;
   }
   return (
-    <UserProfilePageContextProvider  userForPage={userForPage}>
-      <ProfileOverview />
-      <UserMovies />
+    <UserProfilePageContextProvider userForPage={userForPage}>
+      <ProfileContent />
     </UserProfilePageContextProvider>
   );
 };

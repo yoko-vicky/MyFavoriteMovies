@@ -15,7 +15,7 @@ export const Story = () => {
     <div className={styles.story}>
       <div className={styles.title}>
         <span>Story</span>
-        {videoId && (
+        {!!videoId && (
           <IconButton
             Icon={TfiYoutube}
             onClick={openYouTubeModal}
