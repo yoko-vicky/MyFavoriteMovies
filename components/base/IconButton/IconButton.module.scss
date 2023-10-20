@@ -4,6 +4,8 @@
   cursor: pointer;
   transition: var(--transition-default);
 
+  @include iconSizes;
+
   &.yellow {
     &:hover,
     &.active {
