@@ -1,8 +1,12 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { movieListVariant } from '@/constants';
 import { useMoviesContext } from '@/store/MoviesContext';
 import styles from './HomeMovies.module.scss';
-import { SliderMovies } from '../SliderMovies';
+
+const SliderMovies = dynamic(() => import('../SliderMovies/SliderMovies'), {
+  ssr: false,
+});
 
 export const HomeMovies = () => {
   const { topRatedMovies, trendingMovies, upcomingMovies, popularMovies } =

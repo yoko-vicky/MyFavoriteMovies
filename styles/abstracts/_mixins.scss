@@ -89,3 +89,40 @@ $breakpoints: (
     border-radius: 0.6rem;
   }
 }
+
+@mixin iconSizes {
+  svg {
+    font-size: 2rem;
+  }
+
+  &.icon-lg {
+    svg {
+      font-size: 2.6rem;
+    }
+  }
+
+  &.icon-xlg {
+    svg {
+      font-size: 3.4rem;
+    }
+  }
+
+  &:hover,
+  &.active {
+    svg {
+      font-size: 2.2rem;
+    }
+
+    &.icon-lg {
+      svg {
+        font-size: 2.8rem;
+      }
+    }
+
+    &.icon-xlg {
+      svg {
+        font-size: 3.6rem;
+      }
+    }
+  }
+}

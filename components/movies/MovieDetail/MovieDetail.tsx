@@ -11,7 +11,7 @@ import { createImageUrl } from '@/lib/tmdb';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
 import { getReleaseYear } from '@/utils';
 import { logger } from '@/utils/logger';
-import { AiOutlineYoutube } from 'react-icons/ai';
+import { ImYoutube2 } from 'react-icons/im';
 import { Credits } from './Credits';
 import styles from './MovieDetail.module.scss';
 import { Story } from './Story';
@@ -89,12 +89,15 @@ export const MovieDetail = () => {
                 <div className={styles.youtubeOpenModalBtnWrapper}>
                   <Button
                     variant={'outlined'}
-                    label={'Watch on YouTube'}
-                    Icon={AiOutlineYoutube}
+                    label={'Watch Trailer on'}
+                    Icon={ImYoutube2}
+                    iconPos={'after'}
+                    iconSize={'lg'}
                     activeColor="red"
                     onClick={handleYoutubeModalOpenBtnClick}
                     activeFlag={isYouTubeModalOpen}
                     className={styles.youtubeOpenModalBtn}
+                    align="center"
                   />
                 </div>
               )}

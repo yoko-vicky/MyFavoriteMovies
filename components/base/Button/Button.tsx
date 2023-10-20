@@ -22,6 +22,9 @@ interface ButtonPropsType {
   type?: 'button' | 'submit' | 'reset';
   // href?: string;
   className?: string;
+  iconPos?: 'before' | 'after';
+  iconSize?: 'md' | 'lg';
+  align?: 'center' | 'left';
 }
 
 export const Button = ({
@@ -33,6 +36,9 @@ export const Button = ({
   onClick,
   type = 'button',
   className,
+  iconPos = 'before',
+  iconSize = 'md',
+  align = 'left',
   ...props
 }: ButtonPropsType) => {
   return (
@@ -42,14 +48,17 @@ export const Button = ({
       className={clsx(
         styles.btn,
         styles[variant],
+        styles[`icon-${iconSize}`],
+        styles[align],
         !!activeColor && styles[activeColor],
         activeFlag ? styles.active : '',
         className ? className : '',
       )}
       {...props}
     >
-      {!!Icon && <Icon />}
+      {!!Icon && iconPos === 'before' && <Icon />}
       <span>{label}</span>
+      {!!Icon && iconPos === 'after' && <Icon />}
     </button>
   );
 };

@@ -20,6 +20,7 @@ interface IconButtonPropsType {
   href?: string;
   className?: string;
   outerLink?: boolean;
+  iconSize?: 'md' | 'lg' | 'xlg';
 }
 
 export const IconButton = ({
@@ -30,6 +31,7 @@ export const IconButton = ({
   className,
   href,
   outerLink = true,
+  iconSize = 'md',
   ...props
 }: IconButtonPropsType) => {
   if (href) {
@@ -39,6 +41,7 @@ export const IconButton = ({
         className={clsx(
           styles.btn,
           !!activeColor && styles[activeColor],
+          styles[`icon-${iconSize}`],
           activeFlag ? styles.active : '',
           className ? className : '',
         )}

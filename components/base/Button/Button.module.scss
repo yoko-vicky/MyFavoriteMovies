@@ -7,6 +7,10 @@
   text-transform: uppercase;
   border-radius: var(--border-radius);
 
+  &.center {
+    justify-content: center;
+  }
+
   &.simple,
   &.simpleOutlined {
     background-color: rgba(255, 255, 255, 0.2);
@@ -16,9 +20,7 @@
     font-size: 1.4rem;
     border: 1px solid transparent;
 
-    svg {
-      font-size: 1.6rem;
-    }
+    @include iconSizes;
 
     &:hover,
     &.active {
@@ -47,22 +49,15 @@
     align-items: center;
     opacity: 0.7;
 
-    svg {
-      font-size: 2rem;
-    }
+    @include iconSizes;
 
     &:hover {
       opacity: 0.7;
     }
     &.active {
       opacity: 1;
-
-      svg {
-        font-size: 2.2rem;
-      }
     }
   }
-
   &.yellow {
     &:hover,
     &.active {
