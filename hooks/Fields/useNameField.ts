@@ -7,6 +7,9 @@ const useNameField = (initialName: string | null | undefined) => {
   const [name, setName] = useState<string>('');
   const [nameMsg, setNameMsg] = useState<ValidateMsgState | null>(null);
 
+  const isNameOkay =
+    name === initialName || nameMsg?.type === ValidateMsgTypeState.OK;
+
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
     const isCorrectLetters = newName.split('').every((letter: string) => {
@@ -65,6 +68,7 @@ const useNameField = (initialName: string | null | undefined) => {
 
   return {
     name,
+    isNameOkay,
     handleChangeName,
     nameMsg,
     resetNameMsg,

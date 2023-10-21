@@ -49,6 +49,9 @@
       },
       "bio": {
         "characters": "Bio must be under 160 characters."
+      },
+      "links": {
+        "invalidLink": "This is not a valid link."
       }
     }
   }
