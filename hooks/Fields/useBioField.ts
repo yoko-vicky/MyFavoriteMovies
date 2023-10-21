@@ -7,6 +7,9 @@ const useBioField = (initialBio: string | null | undefined) => {
   const [bio, setBio] = useState<string>('');
   const [bioMsg, setBioMsg] = useState<ValidateMsgState | null>(null);
 
+  const isBioOkay =
+    bio === initialBio || bioMsg?.type === ValidateMsgTypeState.OK;
+
   const handleChangeBio = (e: ChangeEvent<HTMLInputElement>) => {
     const newBio = e.target.value;
     setBio(newBio);
@@ -57,6 +60,7 @@ const useBioField = (initialBio: string | null | undefined) => {
     resetBioMsg,
     validateBio,
     clearBioField,
+    isBioOkay,
   };
 };
 

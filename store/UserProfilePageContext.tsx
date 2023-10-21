@@ -1,4 +1,12 @@
-import { ReactNode, createContext, useContext } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import useModal from '@/hooks/useModal';
 import { UserState } from '@/types/user';
@@ -9,6 +17,8 @@ interface UserProfilePageContextType {
   isEditModalOpen: boolean;
   openEditModal: () => void;
   closeEditModal: () => void;
+  isUpdatingProfile: boolean;
+  updateIsUpdatingProfile: (val: boolean) => void;
 }
 
 const UserProfilePageContext = createContext<UserProfilePageContextType>({
@@ -17,6 +27,8 @@ const UserProfilePageContext = createContext<UserProfilePageContextType>({
   isEditModalOpen: false,
   openEditModal: () => undefined,
   closeEditModal: () => undefined,
+  isUpdatingProfile: false,
+  updateIsUpdatingProfile: () => undefined,
 });
 
 export const UserProfilePageContextProvider = ({
@@ -34,6 +46,25 @@ export const UserProfilePageContextProvider = ({
     closeModal: closeEditModal,
     openModal: openEditModal,
   } = useModal();
+  const router = useRouter();
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const timerRef = useRef<any>(null);
+
+  const updateIsUpdatingProfile = (val: boolean) => setIsUpdatingProfile(val);
+
+  useEffect(() => {
+    if (!isUpdatingProfile) {
+      clearTimeout(timerRef.current);
+      return;
+    }
+
+    timerRef.current = setTimeout(() => {
+      router.push('/500');
+    }, 100000);
+
+    return () => clearTimeout(timerRef.current);
+  }, [isUpdatingProfile, router]);
 
   const context: UserProfilePageContextType = {
     user: user || null,
@@ -41,6 +72,8 @@ export const UserProfilePageContextProvider = ({
     isEditModalOpen,
     openEditModal,
     closeEditModal,
+    isUpdatingProfile,
+    updateIsUpdatingProfile,
   };
 
   return (

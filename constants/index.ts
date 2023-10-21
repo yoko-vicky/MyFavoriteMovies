@@ -1,4 +1,3 @@
-import { ValidateMsgTypeState } from '@/types';
 import data from './data.json';
 
 export const msgs = data.messages;
@@ -12,3 +11,5 @@ export const formVal = data.formValidation;
 export const REGEX_USER_NAME = /[a-zA-Z0-9\s_]/;
 export const USER_NAME_MAX_LENGTH = 50;
 export const USER_BIO_MAX_LENGTH = 160;
+export const REGEX_URL =
+  /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
