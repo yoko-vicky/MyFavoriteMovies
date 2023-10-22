@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { updateData } from '@/lib/axios';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
 import { UserState } from '@/types/user';
 import { logger } from '@/utils/logger';
@@ -6,13 +7,14 @@ import useBioField from './useBioField';
 import useLinkField from './useLinkField';
 import useNameField from './useNameField';
 import useAlertBeforeClosingWindow from '../useAlertBeforeClosingWindow';
+import useSessionData from '../useSessionData';
 
-export const useUserProfileEdit = (
-  updateUserProfile: (newUserProfile: UserState) => void,
-) => {
+export const useUserProfileEdit = () => {
   const clickedSubmitForm = useRef<boolean>(false);
-  const { user, isUpdatingProfile, updateIsUpdatingProfile } =
+  const { user, isUpdatingProfile, updateIsUpdatingProfile, closeEditModal } =
     useUserProfilePageContext();
+  const { getNewSessionToUpdateUserData } = useSessionData();
+
   logger.log({ user });
   useAlertBeforeClosingWindow(isUpdatingProfile);
   const {
@@ -118,6 +120,32 @@ export const useUserProfileEdit = (
       logger.error('Could not update profile', error);
     } finally {
       clickedSubmitForm.current = false;
+      updateIsUpdatingProfile(false);
+    }
+  };
+
+  const updateUserProfile = async (newUserProfile: UserState) => {
+    try {
+      const res = await updateData(
+        `/api/user/${newUserProfile.id}`,
+        newUserProfile,
+      );
+      logger.log({ res });
+
+      if (res.status === 200) {
+        getNewSessionToUpdateUserData();
+
+        setTimeout(() => {
+          updateIsUpdatingProfile(false);
+          clearAllFields();
+          closeEditModal();
+        }, 1000);
+      }
+    } catch (error) {
+      logger.error(error);
+      updateIsUpdatingProfile(false);
+
+      throw new Error();
     }
   };
 
@@ -127,8 +155,8 @@ export const useUserProfileEdit = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReadyToSubmitForm, clickedSubmitForm.current]);
 
-  logger.log( { name, bio } );
-  
+  logger.log({ name, bio });
+
   return {
     // name
     name,
