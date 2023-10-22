@@ -3,13 +3,15 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import useModal from '@/hooks/useModal';
+import useSessionData from '@/hooks/useSessionData';
 import { UserState } from '@/types/user';
+import { logger } from '@/utils/logger';
 
 interface UserProfilePageContextType {
   user: UserState | null;
@@ -38,9 +40,12 @@ export const UserProfilePageContextProvider = ({
   children: ReactNode;
   userForPage: UserState | null;
 }) => {
-  const { data: session } = useSession();
-  const user =
-    session?.user.id === userForPage?.id ? session?.user : userForPage;
+  const { sessionData: session } = useSessionData();
+  const user = useMemo(
+    () => (session?.user.id === userForPage?.id ? session?.user : userForPage),
+    [session?.user, userForPage],
+  );
+
   const {
     isModalOpen: isEditModalOpen,
     closeModal: closeEditModal,
@@ -75,6 +80,8 @@ export const UserProfilePageContextProvider = ({
     isUpdatingProfile,
     updateIsUpdatingProfile,
   };
+
+  logger.log({ user });
 
   return (
     <UserProfilePageContext.Provider value={context}>

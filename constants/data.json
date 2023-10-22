@@ -45,7 +45,7 @@
       },
       "name": {
         "characters": "Name can only contain letters, numbers, ' ' and '_'.",
-        "letterNum": "'Name must be 1-20 characters."
+        "letterNum": "Name must be 1-20 characters."
       },
       "bio": {
         "characters": "Bio must be under 160 characters."

@@ -13,6 +13,7 @@ export const useUserProfileEdit = (
   const clickedSubmitForm = useRef<boolean>(false);
   const { user, isUpdatingProfile, updateIsUpdatingProfile } =
     useUserProfilePageContext();
+  logger.log({ user });
   useAlertBeforeClosingWindow(isUpdatingProfile);
   const {
     name,
@@ -126,6 +127,8 @@ export const useUserProfileEdit = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReadyToSubmitForm, clickedSubmitForm.current]);
 
+  logger.log( { name, bio } );
+  
   return {
     // name
     name,
@@ -134,6 +137,7 @@ export const useUserProfileEdit = (
     resetNameMsg,
     validateName,
     clearNameField,
+    isNameOkay,
     // Bio
     bio,
     handleChangeBio,
@@ -141,6 +145,7 @@ export const useUserProfileEdit = (
     resetBioMsg,
     validateBio,
     clearBioField,
+    isBioOkay,
     // Twitter
     twitter,
     handleTwitterChange,

@@ -4,13 +4,14 @@ import { ValidateMsgState, ValidateMsgTypeState } from '@/types';
 import { removeExtraSpaceFromStr } from '@/utils';
 
 const useBioField = (initialBio: string | null | undefined) => {
-  const [bio, setBio] = useState<string>('');
+  const [bio, setBio] = useState<string>(initialBio || '');
   const [bioMsg, setBioMsg] = useState<ValidateMsgState | null>(null);
 
   const isBioOkay =
     bio === initialBio || bioMsg?.type === ValidateMsgTypeState.OK;
 
-  const handleChangeBio = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeBio = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setBioMsg(null);
     const newBio = e.target.value;
     setBio(newBio);
   };
