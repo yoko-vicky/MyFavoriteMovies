@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
-import clsx from 'clsx';
-import { ValidateMsgState, ValidateMsgTypeState } from '@/types';
+import { ValidateMsgState } from '@/types';
 import styles from './TextField.module.scss';
+import { FieldMsg } from '../FieldMsg';
 
 interface TextFieldPropsType {
   label?: string;
@@ -37,16 +37,7 @@ export const TextField = ({
           onBlur={onBlur}
         />
       </label>
-      {!!msg && (
-        <div
-          className={clsx(
-            styles.msg,
-            msg.type === ValidateMsgTypeState.OK ? styles.ok : styles.ng,
-          )}
-        >
-          {msg.msg}
-        </div>
-      )}
+      {!!msg && <FieldMsg msg={msg} />}
     </div>
   );
 };

@@ -45,7 +45,7 @@ export const Button = ({
   disabled = false,
   ...props
 }: ButtonPropsType) => {
-  if (href) {
+  if (href && !disabled) {
     return (
       <Link
         href={href}
@@ -70,7 +70,7 @@ export const Button = ({
   }
   return (
     <button
-      onClick={onClick}
+      onClick={!disabled ? onClick : undefined}
       type={type}
       className={clsx(
         styles.btn,
@@ -80,6 +80,7 @@ export const Button = ({
         !!activeColor && styles[activeColor],
         activeFlag ? styles.active : '',
         className ? className : '',
+        disabled ? styles.disabled : '',
       )}
       {...props}
     >

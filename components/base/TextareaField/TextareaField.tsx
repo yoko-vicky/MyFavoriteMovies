@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
-import clsx from 'clsx';
-import { ValidateMsgState, ValidateMsgTypeState } from '@/types';
+import { ValidateMsgState } from '@/types';
 import styles from './TextareaField.module.scss';
+import { FieldMsg } from '../FieldMsg';
 
 interface TextareaFieldPropsType {
   label?: string;
@@ -34,16 +34,7 @@ export const TextareaField = ({
           onBlur={onBlur}
         />
       </label>
-      {!!msg && (
-        <div
-          className={clsx(
-            styles.msg,
-            msg.type === ValidateMsgTypeState.OK ? styles.ok : styles.ng,
-          )}
-        >
-          {msg.msg}
-        </div>
-      )}
+      {!!msg && <FieldMsg msg={msg} />}
     </div>
   );
 };

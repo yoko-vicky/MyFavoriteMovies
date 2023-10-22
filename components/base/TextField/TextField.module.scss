@@ -21,8 +21,12 @@
 }
 
 @include mq(tab) {
-  .field {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-  }
+  // .field {
+  //   display: grid;
+  //   grid-template-columns: 1fr 2fr;
+  // }
+
+  // .label {
+  //   padding: 2rem 0;
+  // }
 }

@@ -58,58 +58,61 @@ export const UserProfileEditModal = () => {
     closeEditModal();
   };
 
-  if (isUpdatingProfile) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <Modal closeModal={closeUserEditModal}>
-      <div className={styles.modalInner}>
-        <form className={styles.form} onSubmit={submitHandler}>
-          <TextField
-            onChange={handleChangeName}
-            value={name}
-            label={'Name'}
-            msg={nameMsg}
-            onBlur={validateName}
-          />
-          <TextareaField
-            onChange={handleChangeBio}
-            value={bio}
-            label={'Bio'}
-            msg={bioMsg}
-            onBlur={validateBio}
-          />
-          <TextField
-            onChange={handleTwitterChange}
-            value={twitter}
-            type={'url'}
-            label={'Twitter'}
-            msg={twitterMsg}
-            onBlur={validateTwitter}
-          />
-          <TextField
-            onChange={handleFacebookChange}
-            value={facebook}
-            type={'url'}
-            label={'Facebook'}
-            msg={facebookMsg}
-            onBlur={validateFacebook}
-          />
-          <TextField
-            onChange={handleInstagramChange}
-            value={instagram}
-            type={'url'}
-            label={'Instagram'}
-            msg={instagramMsg}
-            onBlur={validateInstagram}
-          />
+    <Modal closeModal={closeUserEditModal} variant="fixedWidth">
+      {isUpdatingProfile ? (
+        <LoadingSpinner />
+      ) : (
+        <div className={styles.modalInner}>
+          <form className={styles.form} onSubmit={submitHandler}>
+            <TextField
+              onChange={handleChangeName}
+              value={name}
+              label={'Name'}
+              msg={nameMsg}
+              onBlur={validateName}
+            />
+            <TextareaField
+              onChange={handleChangeBio}
+              value={bio}
+              label={'Bio'}
+              msg={bioMsg}
+              onBlur={validateBio}
+            />
+            <TextField
+              onChange={handleTwitterChange}
+              value={twitter}
+              type={'url'}
+              label={'Twitter'}
+              msg={twitterMsg}
+              onBlur={validateTwitter}
+            />
+            <TextField
+              onChange={handleFacebookChange}
+              value={facebook}
+              type={'url'}
+              label={'Facebook'}
+              msg={facebookMsg}
+              onBlur={validateFacebook}
+            />
+            <TextField
+              onChange={handleInstagramChange}
+              value={instagram}
+              type={'url'}
+              label={'Instagram'}
+              msg={instagramMsg}
+              onBlur={validateInstagram}
+            />
 
-          {isReadyToSubmitForm && (
-            <Button variant={'simpleOutlined'} label={'Save'} type={'submit'} />
-          )}
-        </form>
-      </div>
+            <Button
+              variant={'simpleOutlined'}
+              label={'Save'}
+              type={'submit'}
+              disabled={!isReadyToSubmitForm}
+            />
+          </form>
+        </div>
+      )}
     </Modal>
   );
 };
