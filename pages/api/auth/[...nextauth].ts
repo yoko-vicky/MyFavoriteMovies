@@ -64,11 +64,14 @@ export const authOptions: AuthOptions = {
       let dbUser: UserState | null = null;
 
       try {
-        dbUser = await prisma.user.findUnique({
+        dbUser = (await prisma.user.findUnique({
           where: {
             email: session.user.email,
           },
-        });
+          include: {
+            userMovies: true,
+          },
+        })) as UserState;
       } catch (error) {
         logger.log({ error });
       }
@@ -82,6 +85,7 @@ export const authOptions: AuthOptions = {
               image: session.user.image,
             },
           });
+          dbUser.userMovies = [];
         } else {
           throw new Error('Error in AOuth process.');
         }

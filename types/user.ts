@@ -9,12 +9,12 @@ export interface UserState {
   twitter?: string | null;
   facebook?: string | null;
   instagram?: string | null;
-  userMovies?: UserMovie[];
+  userMovies?: UserMovieState[];
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export interface UserMovie {
+export interface UserMovieState {
   id: number;
   user?: UserState;
   userId: string;
