@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { LoadingHeight, LoadingWidth, SpinnerSize } from '@/types';
-import styles from './LoadingSpinner.module.scss'
+import styles from './LoadingSpinner.module.scss';
 import { Spinner } from '../Spinner';
 
 interface LoadingSpinnerPropsType {

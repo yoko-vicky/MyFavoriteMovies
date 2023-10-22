@@ -13,7 +13,7 @@ export const useUserProfileEdit = () => {
   const clickedSubmitForm = useRef<boolean>(false);
   const { user, isUpdatingProfile, updateIsUpdatingProfile, closeEditModal } =
     useUserProfilePageContext();
-  const { getNewSessionToUpdateUserData } = useSessionData();
+  const { updateSession } = useSessionData();
 
   logger.log({ user });
   useAlertBeforeClosingWindow(isUpdatingProfile);
@@ -94,8 +94,6 @@ export const useUserProfileEdit = () => {
       return;
     }
 
-    updateIsUpdatingProfile(true);
-
     const newUserData = {
       id: user?.id, // unchangeable
       email: user?.email, // unchangeable
@@ -120,11 +118,12 @@ export const useUserProfileEdit = () => {
       logger.error('Could not update profile', error);
     } finally {
       clickedSubmitForm.current = false;
-      updateIsUpdatingProfile(false);
     }
   };
 
   const updateUserProfile = async (newUserProfile: UserState) => {
+    updateIsUpdatingProfile(true);
+
     try {
       const res = await updateData(
         `/api/user/${newUserProfile.id}`,
@@ -133,13 +132,12 @@ export const useUserProfileEdit = () => {
       logger.log({ res });
 
       if (res.status === 200) {
-        getNewSessionToUpdateUserData();
-
         setTimeout(() => {
           updateIsUpdatingProfile(false);
           clearAllFields();
           closeEditModal();
-        }, 1000);
+          updateSession();
+        }, 3000);
       }
     } catch (error) {
       logger.error(error);

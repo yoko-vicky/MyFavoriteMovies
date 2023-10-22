@@ -1,0 +1,19 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.msg {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+
+  // svg {
+  // }
+  // .text {
+  // }
+  &.ok {
+    color: var(--color-yellow);
+  }
+  &.ng {
+    color: var(--color-red);
+  }
+}
