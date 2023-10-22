@@ -36,7 +36,7 @@ export const ProfileOverview = () => {
                 className={styles.editBtn}
                 onClick={() => {
                   openEditModal();
-                  logger.log('OpenEditModal clicked');
+                  logger.log('OpenEditModal clicked', isEditModalOpen);
                 }}
               />
             </div>

@@ -5,39 +5,11 @@ import { TextField } from '@/components/base/TextField';
 import { TextareaField } from '@/components/base/TextareaField';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import useUserProfileEdit from '@/hooks/Fields/useUserProfileEdit';
-import useSessionData from '@/hooks/useSessionData';
-import { updateData } from '@/lib/axios';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
-import { UserState } from '@/types/user';
-import { logger } from '@/utils/logger';
 import styles from './UserProfileEditModal.module.scss';
 
 export const UserProfileEditModal = () => {
-  const {
-    closeEditModal: closeModal,
-    isUpdatingProfile,
-    updateIsUpdatingProfile,
-  } = useUserProfilePageContext();
-  const { getNewSessionToUpdateUserData } = useSessionData();
-  const updateUserProfile = async (newUserProfile: UserState) => {
-    try {
-      const res = await updateData(
-        `/api/user/${newUserProfile.id}`,
-        newUserProfile,
-      );
-      logger.log({ res });
-
-      if (res.status === 200) {
-        getNewSessionToUpdateUserData();
-        updateIsUpdatingProfile(false);
-        closeUserEditModal();
-      }
-    } catch (error) {
-      logger.error(error);
-      updateIsUpdatingProfile(false);
-      // throw new Error();
-    }
-  };
+  const { isUpdatingProfile, closeEditModal } = useUserProfilePageContext();
   const {
     // name
     name,
@@ -69,7 +41,7 @@ export const UserProfileEditModal = () => {
     clearAllFields,
     validateAllFields,
     handleSubmit,
-  } = useUserProfileEdit(updateUserProfile);
+  } = useUserProfileEdit();
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -83,7 +55,7 @@ export const UserProfileEditModal = () => {
 
   const closeUserEditModal = () => {
     clearAllFields();
-    closeModal();
+    closeEditModal();
   };
 
   if (isUpdatingProfile) {
