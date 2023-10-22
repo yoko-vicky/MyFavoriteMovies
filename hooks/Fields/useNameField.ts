@@ -2,15 +2,17 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { REGEX_USER_NAME, USER_NAME_MAX_LENGTH, formVal } from '@/constants';
 import { ValidateMsgState, ValidateMsgTypeState } from '@/types';
 import { removeExtraSpaceFromStr } from '@/utils';
+import { logger } from '@/utils/logger';
 
 const useNameField = (initialName: string | null | undefined) => {
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>(initialName || '');
   const [nameMsg, setNameMsg] = useState<ValidateMsgState | null>(null);
-
+  logger.log({ initialName });
   const isNameOkay =
     name === initialName || nameMsg?.type === ValidateMsgTypeState.OK;
 
   const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+    setNameMsg(null);
     const newName = e.target.value;
     const isCorrectLetters = newName.split('').every((letter: string) => {
       return letter.match(REGEX_USER_NAME);

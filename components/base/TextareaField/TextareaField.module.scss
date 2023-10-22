@@ -1,0 +1,28 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.label {
+  font-size: 90%;
+  color: rgba(0, 0, 0, 0.7);
+}
+.textarea {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  padding: 1.2rem;
+}
+
+@include mq(tab) {
+  .field {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+}

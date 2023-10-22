@@ -4,6 +4,7 @@ import { Button } from '@/components/base/Button';
 import { UserIcon } from '@/components/base/UserIcon';
 import { UserProfileEditModal } from '@/components/modals/UserProfileEditModal';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
+import { logger } from '@/utils/logger';
 import styles from './ProfileOverview.module.scss';
 import { SocialLinks } from '../SocialLinks';
 
@@ -33,7 +34,10 @@ export const ProfileOverview = () => {
                 variant={'simpleOutlined'}
                 label={'Edit Profile'}
                 className={styles.editBtn}
-                onClick={() => openEditModal()}
+                onClick={() => {
+                  openEditModal();
+                  logger.log('OpenEditModal clicked');
+                }}
               />
             </div>
           )}

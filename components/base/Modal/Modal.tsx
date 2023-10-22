@@ -22,7 +22,7 @@ export const Modal = ({
   className,
   variant,
   radius = 'default',
-  scrollable = false,
+  scrollable = true,
   showCloseIcon = true,
   fullWidth = false,
   innerRef,

@@ -2,6 +2,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { logger } from '@/utils/logger';
 import styles from './ErrorBoundary.module.scss';
+import { Button } from '../../Button';
 
 interface Props {
   children?: ReactNode;
@@ -31,9 +32,11 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="">
           <div className={styles.errorBoundary}>
             <h1 className={styles.title}>Sorry... there was an error.</h1>
-            <button onClick={() => this.setState({ hasError: false })}>
-              Try Again
-            </button>
+            <Button
+              onClick={() => this.setState({ hasError: false })}
+              variant={'outlined'}
+              label={'Try Again'}
+            />
           </div>
         </div>
       );
