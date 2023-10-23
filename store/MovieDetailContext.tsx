@@ -7,9 +7,11 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
+import { useRouter } from 'next/router';
 import { msgs } from '@/constants';
 import useModal from '@/hooks/useModal';
 import useReviewField from '@/hooks/useReviewField';
@@ -18,7 +20,7 @@ import useUserRate from '@/hooks/useUserRate';
 import { updateData } from '@/lib/axios';
 import { ToastId, loadingToastify, updateToastify } from '@/lib/toast';
 import { UserRateType } from '@/types';
-import { MovieState, UpdateUserMovieState } from '@/types/movies';
+import { MovieState, ReviewState, UpdateUserMovieState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 import { logger } from '@/utils/logger';
 
@@ -49,6 +51,7 @@ interface MovieDetailContextType {
   handleChangeReview: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   isPublicReview: boolean;
   toggleisPublicReview: () => void;
+  movieReviewsToShow: ReviewState[];
 }
 
 const MovieDetailContext = createContext<MovieDetailContextType>({
@@ -78,14 +81,17 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   handleChangeReview: () => undefined,
   isPublicReview: false,
   toggleisPublicReview: () => undefined,
+  movieReviewsToShow: [],
 });
 
 export const MovieDetailContextProvider = ({
   children,
   movie,
+  movieReviewsInDb,
 }: {
   children: ReactNode;
   movie: MovieState;
+  movieReviewsInDb: ReviewState[];
 }) => {
   const { updateSession, sessionData } = useSessionData();
   const targetUserMovie = sessionData?.user.userMovies?.find(
@@ -103,19 +109,26 @@ export const MovieDetailContextProvider = ({
   );
   const [watched, setWacthed] = useState<boolean>(false);
   const [listed, setListed] = useState<boolean>(false);
-  const [isPublicReview, setisPublicReview] = useState<boolean>(false);
+  const [isPublicReview, setIsPublicReview] = useState<boolean>(false);
 
   const isUpdatingUserMovieRef = useRef<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emitUpdateRequestTimer = useRef<any>(null);
+  const router = useRouter();
 
   const videoId = movie.videos?.results[0].key;
   const [isShowForm, setIsShowForm] = useState<boolean>(false);
   const [isShowUserComment, setIsShowUserComment] = useState<boolean>(false);
 
+  const movieReviewsToShow = useMemo(() => {
+    const tmdbReviews = movie?.reviews?.results || [];
+    logger.log({ movieReviewsInDb, tmdbReviews: movie?.reviews?.results });
+    return [...movieReviewsInDb, ...tmdbReviews];
+  }, [movie?.reviews?.results, movieReviewsInDb]);
+
   const toggleShowForm = () => setIsShowForm((prev) => !prev);
   const toggleIsShowUserComment = () => setIsShowUserComment((prev) => !prev);
-  const toggleisPublicReview = () => setisPublicReview((prev) => !prev);
+  const toggleisPublicReview = () => setIsPublicReview((prev) => !prev);
 
   const updateUserMovie = async (
     state: UpdateUserMovieState,
@@ -144,6 +157,14 @@ export const MovieDetailContextProvider = ({
           updateSession();
           updateToastify(loadingId, 'success', msgs.success.general);
         }, 1000);
+        const updatedPublicStatus =
+          (targetUserMovie &&
+            targetUserMovie.isPublicReview !== state.status.isPublicReview) ||
+          false;
+        if (updatedPublicStatus) {
+          router.push(`/movies/${movie.id}`);
+          return;
+        }
       } else {
         updateToastify(loadingId, 'error', msgs.error.general);
       }
@@ -185,7 +206,7 @@ export const MovieDetailContextProvider = ({
   const handleResetBtnClick = () => {
     resetRate();
     clearReviewField();
-    setisPublicReview(false);
+    setIsPublicReview(false);
   };
 
   useEffect(() => {
@@ -203,7 +224,7 @@ export const MovieDetailContextProvider = ({
   useEffect(() => {
     if (!targetUserMovie) return;
 
-    setisPublicReview(targetUserMovie.isPublicReview);
+    setIsPublicReview(targetUserMovie.isPublicReview);
   }, [targetUserMovie?.isPublicReview]);
 
   useEffect(() => {
@@ -303,6 +324,7 @@ export const MovieDetailContextProvider = ({
     handleChangeReview,
     isPublicReview,
     toggleisPublicReview,
+    movieReviewsToShow,
   };
 
   return (
