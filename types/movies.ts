@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface VideoState {
   id: string;
   iso_639_1: string;
@@ -96,6 +97,10 @@ export interface ReviewState {
   id: string;
   updated_at: Date;
   url: string;
+  imageUrl?: string | undefined | null;
+  userId?: string;
+  movieId?: number;
+  stars?: number;
 }
 
 export interface ProductionCompanyState {

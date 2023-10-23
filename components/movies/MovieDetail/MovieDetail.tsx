@@ -27,6 +27,7 @@ export const MovieDetail = () => {
     isYouTubeModalOpen,
     closeYouTubeModal,
     openYouTubeModal,
+    movieReviewsToShow,
   } = useMovieDetailContext();
 
   const handleYoutubeModalOpenBtnClick = () => {
@@ -107,11 +108,9 @@ export const MovieDetail = () => {
               <GenrePills genres={movie.genres} />
               <Vote voteAvg={movie.vote_average} voteCount={movie.vote_count} />
 
-              {!!movie.reviews?.results?.length && (
-                <Reviews reviews={movie.reviews.results} />
+              {!!movieReviewsToShow.length && (
+                <Reviews reviews={movieReviewsToShow} />
               )}
-              {/* <div>他にこの映画をお気に入りに登録しているユーザー(β)</div>
-            <div>User1, user2, user3...</div> */}
             </div>
           </div>
           <div className={styles.right}>
