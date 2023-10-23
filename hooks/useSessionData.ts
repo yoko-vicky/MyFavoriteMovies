@@ -35,9 +35,6 @@ const useSessionData = () => {
     }
   };
 
-  const getTargetUserMovie = (movieId: number) =>
-    sessionUserMovies?.find((um) => um.movieId === movieId);
-
   useEffect(() => {
     if (!originSessionData) return;
     setSessionData(originSessionData);
@@ -65,7 +62,6 @@ const useSessionData = () => {
     updateSession,
     getNewSessionToUpdateUserData,
     sessionUserMovies,
-    getTargetUserMovie,
   };
 };
 
