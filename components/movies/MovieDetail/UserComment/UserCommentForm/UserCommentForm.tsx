@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/base/Button';
+import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { commentsData } from '@/constants';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
 import styles from './UserCommentForm.module.scss';
@@ -10,10 +11,16 @@ export const UserCommentForm = () => {
     isActiveStars,
     onClickStar,
     onHoverStar,
-    userNoteInputRef,
-    handleFormSubmit,
     handleResetBtnClick,
+    handleFormSubmit,
+    isUpdatingUserMovieRef,
+    review,
+    handleChangeReview,
   } = useMovieDetailContext();
+
+  if (isUpdatingUserMovieRef?.current) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <form onSubmit={handleFormSubmit} className={styles.form}>
@@ -23,14 +30,20 @@ export const UserCommentForm = () => {
         onClickStar={onClickStar}
         onHoverStar={onHoverStar}
       />
-
-      <textarea ref={userNoteInputRef} className={styles.textarea} />
-
+      <textarea
+        className={styles.textarea}
+        value={review}
+        onChange={handleChangeReview}
+      />
       <div className={styles.btns}>
-        <Button variant={'simpleOutlined'} label={'Save'} type="submit" />
+        <Button
+          variant={'simpleOutlined'}
+          label={commentsData.form.buttons.submit}
+          type="submit"
+        />
         <Button
           variant={'simple'}
-          label={'Reset'}
+          label={commentsData.form.buttons.reset}
           type="reset"
           onClick={handleResetBtnClick}
         />

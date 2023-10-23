@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { imageAlt } from '@/constants';
-import { logger } from '@/utils/logger';
 import { FaUserAlt } from 'react-icons/fa';
 import styles from './UserIcon.module.scss';
 
@@ -14,6 +13,8 @@ interface UserIconPropsType {
   href?: string;
   active?: boolean;
   size?: 'sm' | 'md';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  innerRef?: any;
 }
 
 export const UserIcon = ({
@@ -23,6 +24,7 @@ export const UserIcon = ({
   href,
   active,
   size = 'sm',
+  innerRef,
 }: UserIconPropsType) => {
   const alt = userName ? `${userName} ${imageAlt.profile}` : imageAlt.profile;
   // logger.log({ imageSrc });
@@ -35,6 +37,7 @@ export const UserIcon = ({
         imageSrc ? '' : styles.iconWrap,
         styles[size],
       )}
+      ref={innerRef}
     >
       {imageSrc ? <Image src={imageSrc} alt={alt} fill /> : <FaUserAlt />}
     </Link>
@@ -47,6 +50,7 @@ export const UserIcon = ({
         styles[size],
       )}
       onClick={onClick}
+      ref={innerRef}
     >
       {imageSrc ? <Image src={imageSrc} alt={alt} fill /> : <FaUserAlt />}
     </div>

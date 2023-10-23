@@ -53,13 +53,20 @@
       "links": {
         "invalidLink": "This is not a valid link."
       }
+    },
+    "review": {
+      "characters": "Bio must be under 200 characters."
     }
   },
   "components": {
     "comments": {
       "notes": "* This comment and stars are private and only visible to you.",
       "form": {
-        "title": "Leave Your Review"
+        "title": "Leave Your Review",
+        "buttons": {
+          "submit": "Save",
+          "reset": "Clear"
+        }
       },
       "detail": {
         "title": "Your Review",

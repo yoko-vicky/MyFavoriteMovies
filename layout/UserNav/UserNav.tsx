@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { UserIcon } from '@/components/base/UserIcon';
-import { logger } from '@/utils/logger';
+import useOutsideClick from '@/hooks/useOutsideClick';
 import styles from './UserNav.module.scss';
 
 export const UserNav = () => {
   const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
   const { data: session } = useSession();
   const router = useRouter();
+  const closeMenu = () => setOpenUserMenu(false);
+  const userIconRef = useRef<any>(null);
+  const userNavRef = useRef<any>(null);
+  useOutsideClick([userIconRef, userNavRef], closeMenu);
 
   const handleClickToMyProfile = () => {
     setOpenUserMenu(false);
@@ -28,9 +33,10 @@ export const UserNav = () => {
         onClick={() => setOpenUserMenu((prev) => !prev)}
         active={openUserMenu}
         imageSrc={session?.user?.image || ''}
+        innerRef={userIconRef}
       />
       {openUserMenu && (
-        <nav className={styles.userMenu}>
+        <nav className={styles.userMenu} ref={userNavRef}>
           {session?.user ? (
             <>
               {/* session.user.username? */}

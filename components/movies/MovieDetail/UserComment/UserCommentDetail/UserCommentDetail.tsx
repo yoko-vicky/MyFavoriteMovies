@@ -13,6 +13,7 @@ export const UserCommentDetail = () => {
   const { targetUserMovie, toggleShowForm, isShowForm } =
     useMovieDetailContext();
 
+  // const stars = use
   const { isActiveStars } = useUserRate(
     (targetUserMovie?.stars as UserRateType) || 0,
   );
@@ -34,7 +35,7 @@ export const UserCommentDetail = () => {
         <div className={styles.comment}>{targetUserMovie.comment}</div>
       )}
       <Button
-        variant={'outlined'}
+        variant={'simple'}
         label={
           isShowForm
             ? commentsData.detail.buttons.closeForm
