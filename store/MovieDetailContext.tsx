@@ -47,6 +47,8 @@ interface MovieDetailContextType {
   isUpdatingUserMovieRef: MutableRefObject<boolean> | undefined;
   review: string;
   handleChangeReview: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  isPublicReview: boolean;
+  toggleisPublicReview: () => void;
 }
 
 const MovieDetailContext = createContext<MovieDetailContextType>({
@@ -74,6 +76,8 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   isUpdatingUserMovieRef: undefined,
   review: '',
   handleChangeReview: () => undefined,
+  isPublicReview: false,
+  toggleisPublicReview: () => undefined,
 });
 
 export const MovieDetailContextProvider = ({
@@ -99,6 +103,7 @@ export const MovieDetailContextProvider = ({
   );
   const [watched, setWacthed] = useState<boolean>(false);
   const [listed, setListed] = useState<boolean>(false);
+  const [isPublicReview, setisPublicReview] = useState<boolean>(false);
 
   const isUpdatingUserMovieRef = useRef<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -110,6 +115,7 @@ export const MovieDetailContextProvider = ({
 
   const toggleShowForm = () => setIsShowForm((prev) => !prev);
   const toggleIsShowUserComment = () => setIsShowUserComment((prev) => !prev);
+  const toggleisPublicReview = () => setisPublicReview((prev) => !prev);
 
   const updateUserMovie = async (
     state: UpdateUserMovieState,
@@ -152,12 +158,13 @@ export const MovieDetailContextProvider = ({
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    logger.log({ userRate, review });
+    logger.log({ userRate, review, isPublicReview });
     try {
       updateUserMovie({
         status: {
           stars: userRate,
           comment: review,
+          isPublicReview,
         },
         movie,
       });
@@ -178,6 +185,7 @@ export const MovieDetailContextProvider = ({
   const handleResetBtnClick = () => {
     resetRate();
     clearReviewField();
+    setisPublicReview(false);
   };
 
   useEffect(() => {
@@ -191,6 +199,12 @@ export const MovieDetailContextProvider = ({
 
     setWacthed(targetUserMovie.watched);
   }, [targetUserMovie?.watched]);
+
+  useEffect(() => {
+    if (!targetUserMovie) return;
+
+    setisPublicReview(targetUserMovie.isPublicReview);
+  }, [targetUserMovie?.isPublicReview]);
 
   useEffect(() => {
     if (
@@ -251,14 +265,6 @@ export const MovieDetailContextProvider = ({
       setIsShowForm(true);
       setIsShowUserComment(false);
     }
-
-    // if (
-    //   !targetUserMovie?.comment &&
-    //   !targetUserMovie?.stars &&
-    //   targetUserMovie?.stars !== 0
-    // ) {
-    //   setIsShowForm(true);
-    // }
   }, [
     targetUserMovie,
     targetUserMovie?.comment,
@@ -295,6 +301,8 @@ export const MovieDetailContextProvider = ({
     handleFormSubmit,
     review,
     handleChangeReview,
+    isPublicReview,
+    toggleisPublicReview,
   };
 
   return (

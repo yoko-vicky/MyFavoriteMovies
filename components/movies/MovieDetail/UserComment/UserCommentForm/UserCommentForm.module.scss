@@ -14,7 +14,7 @@
   width: 100%;
   padding: 1rem 2rem;
   height: 12rem;
-  margin-bottom: 1.6rem;
+  margin-bottom: 0.6rem;
   border-radius: var(--border-radius);
 
   &::placeholder,
@@ -40,6 +40,21 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+}
+
+.publicCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+
+  .publicLabel {
+    text-transform: uppercase;
+    font-size: 1.3rem;
+  }
+  .publicIcon {
+    font-size: 2rem;
+  }
 }
 
 @include mq(tab) {

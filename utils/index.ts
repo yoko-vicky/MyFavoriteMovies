@@ -21,3 +21,10 @@ export const getUniqueArr = (arr: any[]) => arr.filter(distinct);
 export const getTimestamp = () => Math.floor(Date.now() / 1000);
 export const removeExtraSpaceFromStr = (str: string) =>
   str.trim().replaceAll(/\s{2,}/g, ' ');
+
+export const formatDate = (date: Date) => {
+  const newDate = new Date(date);
+  const year = newDate.getFullYear();
+  const month = newDate.getMonth();
+  return `${year}/${month + 1}`;
+};

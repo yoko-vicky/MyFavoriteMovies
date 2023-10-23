@@ -91,6 +91,7 @@ model UserMovie {
   watched Boolean @default(false)
   stars Int @default(0)
   comment String?
+  isPublicReview Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

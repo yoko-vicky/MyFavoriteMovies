@@ -22,9 +22,45 @@
 
 .title {
   text-transform: uppercase;
-  margin-bottom: 0.6rem;
+  // margin-bottom: 0.6rem;
   font-size: 1.7rem;
 }
 
-@include mq(tab) {
+.reviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.publicStatus {
+  font-size: 2rem;
+}
+
+.date {
+  font-size: 70%;
+  opacity: 0.6;
+  letter-spacing: 0.6px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  margin-bottom: 1.6rem;
+}
+
+@include mq(pc) {
+  .button {
+    display: block;
+    width: auto;
+  }
+  .btnWrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.6rem;
+  }
 }
