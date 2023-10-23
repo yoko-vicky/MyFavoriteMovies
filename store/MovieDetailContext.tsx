@@ -1,16 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
+  ChangeEvent,
   FormEvent,
+  MutableRefObject,
   ReactNode,
-  RefObject,
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
 import { msgs } from '@/constants';
 import useModal from '@/hooks/useModal';
+import useReviewField from '@/hooks/useReviewField';
 import useSessionData from '@/hooks/useSessionData';
 import useUserRate from '@/hooks/useUserRate';
 import { updateData } from '@/lib/axios';
@@ -29,7 +31,6 @@ interface MovieDetailContextType {
   resetRate: () => void;
   handleFormSubmit: (e: FormEvent) => void;
   handleResetBtnClick: () => void;
-  userNoteInputRef: RefObject<HTMLTextAreaElement> | undefined;
   listed: boolean;
   watched: boolean;
   handleListedStatus: () => void;
@@ -43,6 +44,9 @@ interface MovieDetailContextType {
   toggleShowForm: () => void;
   isShowUserComment: boolean;
   toggleIsShowUserComment: () => void;
+  isUpdatingUserMovieRef: MutableRefObject<boolean> | undefined;
+  review: string;
+  handleChangeReview: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const MovieDetailContext = createContext<MovieDetailContextType>({
@@ -54,7 +58,6 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   resetRate: () => undefined,
   handleFormSubmit: () => undefined,
   handleResetBtnClick: () => undefined,
-  userNoteInputRef: undefined,
   listed: false,
   watched: false,
   handleListedStatus: () => undefined,
@@ -68,6 +71,9 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   toggleShowForm: () => undefined,
   isShowUserComment: false,
   toggleIsShowUserComment: () => undefined,
+  isUpdatingUserMovieRef: undefined,
+  review: '',
+  handleChangeReview: () => undefined,
 });
 
 export const MovieDetailContextProvider = ({
@@ -77,10 +83,9 @@ export const MovieDetailContextProvider = ({
   children: ReactNode;
   movie: MovieState;
 }) => {
-  const { updateSession, sessionData, sessionUserMovies } = useSessionData();
-  const targetUserMovie = useMemo(
-    () => sessionUserMovies?.find((um) => um.movieId === movie.id),
-    [movie.id, sessionUserMovies],
+  const { updateSession, sessionData } = useSessionData();
+  const targetUserMovie = sessionData?.user.userMovies?.find(
+    (um) => um.movieId === movie.id,
   );
   const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
     useUserRate((targetUserMovie?.stars as UserRateType) || 0);
@@ -89,12 +94,15 @@ export const MovieDetailContextProvider = ({
     closeModal: closeYouTubeModal,
     openModal: openYouTubeModal,
   } = useModal();
+  const { review, handleChangeReview, clearReviewField } = useReviewField(
+    targetUserMovie?.comment,
+  );
   const [watched, setWacthed] = useState<boolean>(false);
   const [listed, setListed] = useState<boolean>(false);
-  const isUpdatingUserMovie = useRef<boolean>(false);
+
+  const isUpdatingUserMovieRef = useRef<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emitUpdateRequestTimer = useRef<any>(null);
-  const userNoteInputRef = useRef<HTMLTextAreaElement>(null);
 
   const videoId = movie.videos?.results[0].key;
   const [isShowForm, setIsShowForm] = useState<boolean>(false);
@@ -107,12 +115,13 @@ export const MovieDetailContextProvider = ({
     state: UpdateUserMovieState,
     signal?: AbortSignal,
   ) => {
+    logger.log('Run updateUserMovie', state);
     if (!sessionData || !sessionData.user) return;
 
     const loadingId: ToastId = loadingToastify();
-    isUpdatingUserMovie.current = true;
 
     try {
+      isUpdatingUserMovieRef.current = true;
       const path = `/api/userMovies/${movie.id}?userId=${sessionData.user.id}`;
       const res = await updateData(
         path,
@@ -136,7 +145,25 @@ export const MovieDetailContextProvider = ({
       logger.error(error);
       updateToastify(loadingId, 'error', msgs.error.general);
     } finally {
-      isUpdatingUserMovie.current = false;
+      isUpdatingUserMovieRef.current = false;
+    }
+  };
+
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    logger.log({ userRate, review });
+    try {
+      updateUserMovie({
+        status: {
+          stars: userRate,
+          comment: review,
+        },
+        movie,
+      });
+      setIsShowForm(false);
+    } catch (error) {
+      logger.log({ error });
     }
   };
 
@@ -148,34 +175,26 @@ export const MovieDetailContextProvider = ({
     setWacthed((prev) => !prev);
   };
 
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    // logger.log({ userRate, userNoteInput: userNoteInputRef.current?.value });
-  };
-
   const handleResetBtnClick = () => {
     resetRate();
-
-    if (userNoteInputRef.current) {
-      userNoteInputRef.current.value = '';
-    }
+    clearReviewField();
   };
 
   useEffect(() => {
     if (!targetUserMovie) return;
 
-    logger.log('Update watched and listed!', {
-      watched: targetUserMovie.watched,
-      listed: targetUserMovie.listed,
-    });
-    setWacthed(targetUserMovie.watched);
     setListed(targetUserMovie.listed);
-  }, [targetUserMovie]);
+  }, [targetUserMovie?.listed]);
+
+  useEffect(() => {
+    if (!targetUserMovie) return;
+
+    setWacthed(targetUserMovie.watched);
+  }, [targetUserMovie?.watched]);
 
   useEffect(() => {
     if (
-      isUpdatingUserMovie.current ||
+      isUpdatingUserMovieRef.current ||
       (targetUserMovie?.watched === watched &&
         targetUserMovie?.listed === listed)
     ) {
@@ -212,7 +231,7 @@ export const MovieDetailContextProvider = ({
     targetUserMovie?.listed,
     watched,
     listed,
-    isUpdatingUserMovie.current,
+    isUpdatingUserMovieRef.current,
   ]);
 
   useEffect(() => {
@@ -224,15 +243,32 @@ export const MovieDetailContextProvider = ({
 
     if (
       targetUserMovie?.comment ||
-      (targetUserMovie?.stars && targetUserMovie.stars > 0)
+      (targetUserMovie?.stars && targetUserMovie?.stars !== 0)
     ) {
+      // setIsShowForm(false);
       setIsShowUserComment(true);
+    } else {
+      setIsShowForm(true);
+      setIsShowUserComment(false);
     }
 
-    if (!targetUserMovie?.comment && !targetUserMovie?.stars) {
-      setIsShowForm(true);
-    }
-  }, [targetUserMovie?.comment, targetUserMovie?.stars, watched]);
+    // if (
+    //   !targetUserMovie?.comment &&
+    //   !targetUserMovie?.stars &&
+    //   targetUserMovie?.stars !== 0
+    // ) {
+    //   setIsShowForm(true);
+    // }
+  }, [
+    targetUserMovie,
+    targetUserMovie?.comment,
+    targetUserMovie?.stars,
+    watched,
+  ]);
+
+  useEffect(() => {
+    isUpdatingUserMovieRef.current = false;
+  }, []);
 
   const context: MovieDetailContextType = {
     movie,
@@ -241,9 +277,7 @@ export const MovieDetailContextProvider = ({
     onClickStar,
     onHoverStar,
     resetRate,
-    handleFormSubmit,
     handleResetBtnClick,
-    userNoteInputRef,
     listed,
     watched,
     handleListedStatus,
@@ -257,6 +291,10 @@ export const MovieDetailContextProvider = ({
     toggleShowForm,
     isShowUserComment,
     toggleIsShowUserComment,
+    isUpdatingUserMovieRef,
+    handleFormSubmit,
+    review,
+    handleChangeReview,
   };
 
   return (

@@ -3,9 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import LogoImage from '@/public/images/logo.png';
-import { HiMenu } from 'react-icons/hi';
+// import { HiMenu } from 'react-icons/hi';
 import styles from './Header.module.scss';
-import { MainNav } from '../MainNav';
+// import { MainNav } from '../MainNav';
 import { UserNav } from '../UserNav';
 
 export enum HeaderVariantType {
@@ -24,12 +24,12 @@ export const Header = ({
   return (
     <header className={clsx(styles.header, styles[variant])}>
       <div className={styles.container}>
-        <button
+        {/* <button
           className={styles.mobMenu}
           onClick={() => setOpenMenu((prev) => !prev)}
         >
           <HiMenu />
-        </button>
+        </button> */}
         <Link href={'/'} className={styles.logo}>
           <Image
             src={LogoImage}
@@ -39,7 +39,7 @@ export const Header = ({
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw"
           />
         </Link>
-        <MainNav openMenu={openMenu} />
+        {/* <MainNav openMenu={openMenu} /> */}
         <UserNav />
       </div>
     </header>
