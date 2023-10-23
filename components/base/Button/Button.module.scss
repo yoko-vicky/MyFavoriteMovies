@@ -27,6 +27,11 @@
 
     @include iconSizes;
 
+    &.bgWhite {
+      border-color: rgba(0, 0, 0, 0.8);
+      color: var(--color-black);
+    }
+
     &:hover,
     &.active {
       background-color: rgba(255, 255, 255, 0.35);
@@ -37,6 +42,11 @@
     border: 1px solid var(--color-white);
     color: var(--color-black);
     background-color: rgba(255, 255, 255, 1);
+
+    &.bgWhite {
+      border-color: rgba(0, 0, 0, 0.8);
+      color: var(--color-black);
+    }
 
     &:hover,
     &.active {
@@ -54,6 +64,11 @@
     align-items: center;
     opacity: 0.7;
 
+    &.bgWhite {
+      border-color: rgba(0, 0, 0, 0.8);
+      color: var(--color-black);
+    }
+
     @include iconSizes;
 
     &:hover {
@@ -63,6 +78,7 @@
       opacity: 1;
     }
   }
+
   &.yellow {
     &:hover,
     &.active {

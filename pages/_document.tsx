@@ -1,4 +1,3 @@
-import { ToastContainer } from 'react-toastify';
 import { Html, Head, Main, NextScript } from 'next/document';
 
 export default function Document() {
@@ -9,7 +8,6 @@ export default function Document() {
         <Main />
         <div id="portal-root" />
         <NextScript />
-        <ToastContainer />
       </body>
     </Html>
   );
