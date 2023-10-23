@@ -5,19 +5,13 @@ import clsx from 'clsx';
 import styles from './Button.module.scss';
 
 type ButtonVariantType = 'outlined' | 'simple' | 'simpleOutlined';
-type ButtonActiveColorType =
-  | 'yellow'
-  | 'green'
-  | 'blue'
-  | 'white'
-  | 'pink'
-  | 'red';
+type ButtonColorType = 'yellow' | 'green' | 'blue' | 'white' | 'pink' | 'red';
 
 interface ButtonPropsType {
   variant: ButtonVariantType;
   label: string;
   Icon?: IconType;
-  activeColor?: ButtonActiveColorType;
+  activeColor?: ButtonColorType;
   activeFlag?: boolean;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
@@ -27,6 +21,7 @@ interface ButtonPropsType {
   iconSize?: 'sm' | 'md' | 'lg';
   align?: 'center' | 'left';
   disabled?: boolean;
+  bgWhite?: boolean;
 }
 
 export const Button = ({
@@ -43,6 +38,7 @@ export const Button = ({
   align = 'left',
   href,
   disabled = false,
+  bgWhite = false,
   ...props
 }: ButtonPropsType) => {
   if (href && !disabled) {
@@ -58,6 +54,7 @@ export const Button = ({
           !!activeColor && styles[activeColor],
           activeFlag ? styles.active : '',
           disabled ? styles.disabled : '',
+          bgWhite ? styles.bgWhite : '',
           className ? className : '',
         )}
         {...props}
@@ -79,6 +76,7 @@ export const Button = ({
         styles[align],
         !!activeColor && styles[activeColor],
         activeFlag ? styles.active : '',
+        bgWhite ? styles.bgWhite : '',
         className ? className : '',
         disabled ? styles.disabled : '',
       )}

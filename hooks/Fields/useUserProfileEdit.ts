@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { updateData } from '@/lib/axios';
+import { errorToastify, successToastify } from '@/lib/toast';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
 import { UserState } from '@/types/user';
 import { logger } from '@/utils/logger';
@@ -67,6 +68,15 @@ export const useUserProfileEdit = () => {
     isFacebookOkay &&
     isInstagramOkay;
 
+  logger.log({
+    isReadyToSubmitForm,
+    isNameOkay,
+    isBioOkay,
+    isTwitterOkay,
+    isFacebookOkay,
+    isInstagramOkay,
+  });
+
   const clearAllFields = () => {
     clearNameField();
     clearBioField();
@@ -95,15 +105,17 @@ export const useUserProfileEdit = () => {
     }
 
     const newUserData = {
-      id: user?.id, // unchangeable
-      email: user?.email, // unchangeable
-      image: user?.image, // unchangeable
+      id: user.id, // unchangeable
+      email: user.email, // unchangeable
+      image: user.image, // unchangeable
       name,
       bio,
       twitter,
       instagram,
       facebook,
     } as UserState;
+
+    logger.log(newUserData);
 
     try {
       updateUserProfile(newUserData);
@@ -137,13 +149,14 @@ export const useUserProfileEdit = () => {
           clearAllFields();
           closeEditModal();
           updateSession();
+          successToastify();
         }, 3000);
       }
     } catch (error) {
       logger.error(error);
       updateIsUpdatingProfile(false);
-
-      throw new Error();
+      errorToastify('Could not update profile.');
+      closeEditModal();
     }
   };
 

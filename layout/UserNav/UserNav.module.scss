@@ -20,4 +20,9 @@
 }
 .link {
   padding: 1.2rem;
+  transition: var(--transition-default);
+
+  &:hover {
+    color: var(--color-primary);
+  }
 }

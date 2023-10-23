@@ -1,18 +1,22 @@
 import React from 'react';
-import { useSession } from 'next-auth/react';
 import { Button } from '@/components/base/Button';
 import { UserIcon } from '@/components/base/UserIcon';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { UserProfileEditModal } from '@/components/modals/UserProfileEditModal';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
 import { logger } from '@/utils/logger';
+import { BsFillPencilFill } from 'react-icons/bs';
 import styles from './ProfileOverview.module.scss';
 import { SocialLinks } from '../SocialLinks';
 
 export const ProfileOverview = () => {
-  const { user, isEditModalOpen, openEditModal, isUpdatingProfile } =
-    useUserProfilePageContext();
-  const { data: session } = useSession();
+  const {
+    user,
+    isMyProfile,
+    isEditModalOpen,
+    openEditModal,
+    isUpdatingProfile,
+  } = useUserProfilePageContext();
 
   return (
     <>
@@ -34,7 +38,7 @@ export const ProfileOverview = () => {
               <div className={styles.name}>{user?.name}</div>
               {!!user?.bio && <div className={styles.bio}>{user.bio}</div>}
               {!!user && <SocialLinks user={user} />}
-              {!!session && !!session.user && (
+              {!!isMyProfile && (
                 <div>
                   <Button
                     variant={'simpleOutlined'}
@@ -44,6 +48,8 @@ export const ProfileOverview = () => {
                       openEditModal();
                       logger.log('OpenEditModal clicked', isEditModalOpen);
                     }}
+                    Icon={BsFillPencilFill}
+                    iconSize="sm"
                   />
                 </div>
               )}

@@ -7,7 +7,7 @@
   height: 4.4rem;
   border-radius: 50%;
   overflow: hidden;
-  cursor: pointer;
+
   border: 2px solid var(--color-white);
   transition: var(--transition-default);
 
@@ -15,9 +15,12 @@
     object-fit: cover;
   }
 
-  &:hover,
-  &.active {
-    border-color: var(--color-yellow);
+  &.clickable {
+    cursor: pointer;
+    &:hover,
+    &.active {
+      border-color: var(--color-yellow);
+    }
   }
 
   &.iconWrap {
@@ -33,9 +36,12 @@
   &.md {
     width: 10rem;
     height: 10rem;
-    &:hover {
-      border-color: inherit;
-      cursor: initial;
+
+    &.clickable {
+      &:hover {
+        border-color: inherit;
+        cursor: initial;
+      }
     }
   }
 }

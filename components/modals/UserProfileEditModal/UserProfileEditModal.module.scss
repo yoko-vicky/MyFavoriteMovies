@@ -1,5 +1,8 @@
+@import '@/styles/abstracts/mixins.scss';
+
 .modalInner {
   width: 100%;
+  color: var(--color-black);
 }
 
 .form {
@@ -7,4 +10,13 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
+}
+
+.btn {
+  margin: 1rem 0;
+}
+
+.title {
+  @include subTitle;
+  color: var(--color-black);
 }

@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Footer } from '../Footer';
 import { Header, HeaderVariantType } from '../Header';
 
@@ -12,6 +13,7 @@ export const PageLayout = ({ children }: PageLayoutPropsType) => {
       <Header variant={HeaderVariantType.DEFAULT} />
       {children}
       <Footer />
+      <ToastContainer />
     </>
   );
 };

@@ -3,7 +3,6 @@ import {
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -20,6 +19,7 @@ interface UserProfilePageContextType {
   closeEditModal: () => void;
   isUpdatingProfile: boolean;
   updateIsUpdatingProfile: (val: boolean) => void;
+  isMyProfile: boolean;
 }
 
 const UserProfilePageContext = createContext<UserProfilePageContextType>({
@@ -30,6 +30,7 @@ const UserProfilePageContext = createContext<UserProfilePageContextType>({
   closeEditModal: () => undefined,
   isUpdatingProfile: false,
   updateIsUpdatingProfile: () => undefined,
+  isMyProfile: false,
 });
 
 export const UserProfilePageContextProvider = ({
@@ -40,11 +41,8 @@ export const UserProfilePageContextProvider = ({
   userForPage: UserState | null;
 }) => {
   const { sessionData: session } = useSessionData();
-  const user = useMemo(
-    () => (session?.user.id === userForPage?.id ? session?.user : userForPage),
-    [session?.user, userForPage],
-  );
-
+  const isMyProfile = session?.user.id === userForPage?.id;
+  const user = isMyProfile && session?.user ? session?.user : userForPage;
   const {
     isModalOpen: isEditModalOpen,
     closeModal: closeEditModal,
@@ -78,9 +76,8 @@ export const UserProfilePageContextProvider = ({
     closeEditModal,
     isUpdatingProfile,
     updateIsUpdatingProfile,
+    isMyProfile,
   };
-
-  // logger.log({ user });
 
   return (
     <UserProfilePageContext.Provider value={context}>

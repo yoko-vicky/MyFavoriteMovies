@@ -64,6 +64,7 @@ export const UserProfileEditModal = () => {
         <LoadingSpinner />
       ) : (
         <div className={styles.modalInner}>
+          <div className={styles.title}>Edit Profile</div>
           <form className={styles.form} onSubmit={submitHandler}>
             <TextField
               onChange={handleChangeName}
@@ -105,10 +106,14 @@ export const UserProfileEditModal = () => {
             />
 
             <Button
-              variant={'simpleOutlined'}
+              variant={'outlined'}
+              activeColor="red"
+              align="center"
               label={'Save'}
               type={'submit'}
               disabled={!isReadyToSubmitForm}
+              bgWhite={true}
+              className={styles.btn}
             />
           </form>
         </div>

@@ -36,6 +36,7 @@ export const UserIcon = ({
         active ? styles.active : '',
         imageSrc ? '' : styles.iconWrap,
         styles[size],
+        styles.clickable,
       )}
       ref={innerRef}
     >
@@ -48,6 +49,7 @@ export const UserIcon = ({
         active ? styles.active : '',
         imageSrc ? '' : styles.iconWrap,
         styles[size],
+        onClick ? styles.clickable : '',
       )}
       onClick={onClick}
       ref={innerRef}
