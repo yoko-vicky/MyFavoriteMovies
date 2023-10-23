@@ -1,0 +1,30 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.container {
+  // border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.2rem 0rem;
+}
+
+.comment {
+  width: 100%;
+  padding: 0rem 0rem 1rem;
+}
+
+.note {
+  font-size: 70%;
+  line-height: var(--line-height-heading);
+  opacity: 0.5;
+}
+
+.title {
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  font-size: 1.7rem;
+}
+
+@include mq(tab) {
+}

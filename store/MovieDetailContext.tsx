@@ -17,6 +17,7 @@ import { updateData } from '@/lib/axios';
 import { ToastId, loadingToastify, updateToastify } from '@/lib/toast';
 import { UserRateType } from '@/types';
 import { MovieState, UpdateUserMovieState } from '@/types/movies';
+import { UserMovieState } from '@/types/user';
 import { logger } from '@/utils/logger';
 
 interface MovieDetailContextType {
@@ -37,6 +38,11 @@ interface MovieDetailContextType {
   isYouTubeModalOpen: boolean;
   closeYouTubeModal: () => void;
   openYouTubeModal: () => void;
+  targetUserMovie: UserMovieState | undefined;
+  isShowForm: boolean;
+  toggleShowForm: () => void;
+  isShowUserComment: boolean;
+  toggleIsShowUserComment: () => void;
 }
 
 const MovieDetailContext = createContext<MovieDetailContextType>({
@@ -57,6 +63,11 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   isYouTubeModalOpen: false,
   closeYouTubeModal: () => undefined,
   openYouTubeModal: () => undefined,
+  targetUserMovie: undefined,
+  isShowForm: false,
+  toggleShowForm: () => undefined,
+  isShowUserComment: false,
+  toggleIsShowUserComment: () => undefined,
 });
 
 export const MovieDetailContextProvider = ({
@@ -67,28 +78,30 @@ export const MovieDetailContextProvider = ({
   movie: MovieState;
 }) => {
   const { updateSession, sessionData, sessionUserMovies } = useSessionData();
-  const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
-    useUserRate();
-  const userNoteInputRef = useRef<HTMLTextAreaElement>(null);
   const targetUserMovie = useMemo(
     () => sessionUserMovies?.find((um) => um.movieId === movie.id),
     [movie.id, sessionUserMovies],
   );
+  const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
+    useUserRate((targetUserMovie?.stars as UserRateType) || 0);
   const {
     isModalOpen: isYouTubeModalOpen,
     closeModal: closeYouTubeModal,
     openModal: openYouTubeModal,
   } = useModal();
-  const [watched, setWacthed] = useState<boolean>(
-    targetUserMovie?.watched || false,
-  );
-  const [listed, setListed] = useState<boolean>(
-    targetUserMovie?.listed || false,
-  );
+  const [watched, setWacthed] = useState<boolean>(false);
+  const [listed, setListed] = useState<boolean>(false);
   const isUpdatingUserMovie = useRef<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emitUpdateRequestTimer = useRef<any>(null);
+  const userNoteInputRef = useRef<HTMLTextAreaElement>(null);
+
   const videoId = movie.videos?.results[0].key;
+  const [isShowForm, setIsShowForm] = useState<boolean>(false);
+  const [isShowUserComment, setIsShowUserComment] = useState<boolean>(false);
+
+  const toggleShowForm = () => setIsShowForm((prev) => !prev);
+  const toggleIsShowUserComment = () => setIsShowUserComment((prev) => !prev);
 
   const updateUserMovie = async (
     state: UpdateUserMovieState,
@@ -202,6 +215,25 @@ export const MovieDetailContextProvider = ({
     isUpdatingUserMovie.current,
   ]);
 
+  useEffect(() => {
+    if (!watched) {
+      setIsShowUserComment(false);
+      setIsShowForm(false);
+      return;
+    }
+
+    if (
+      targetUserMovie?.comment ||
+      (targetUserMovie?.stars && targetUserMovie.stars > 0)
+    ) {
+      setIsShowUserComment(true);
+    }
+
+    if (!targetUserMovie?.comment && !targetUserMovie?.stars) {
+      setIsShowForm(true);
+    }
+  }, [targetUserMovie?.comment, targetUserMovie?.stars, watched]);
+
   const context: MovieDetailContextType = {
     movie,
     userRate,
@@ -220,10 +252,12 @@ export const MovieDetailContextProvider = ({
     isYouTubeModalOpen,
     closeYouTubeModal,
     openYouTubeModal,
+    targetUserMovie,
+    isShowForm,
+    toggleShowForm,
+    isShowUserComment,
+    toggleIsShowUserComment,
   };
-
-  logger.log({ isUpdatingUserMovie: isUpdatingUserMovie.current });
-  logger.log({ userMovies: sessionData?.user.userMovies });
 
   return (
     <MovieDetailContext.Provider value={context}>

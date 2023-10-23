@@ -6,14 +6,16 @@ import { Star } from '../Star';
 
 interface StarsPropsType {
   isActiveStars: boolean[];
-  onClickStar: (rate: UserRateType) => void;
-  onHoverStar: (rate: UserRateType) => void;
+  onClickStar: ((rate: UserRateType) => void) | undefined;
+  onHoverStar: ((rate: UserRateType) => void) | undefined;
+  onlyToShow?: boolean;
 }
 
 export const Stars = ({
   isActiveStars,
   onClickStar,
   onHoverStar,
+  onlyToShow = false,
 }: StarsPropsType) => {
   return (
     <div className={styles.stars}>
@@ -22,8 +24,9 @@ export const Stars = ({
           key={uuid()}
           active={isActiveStar}
           rate={(index + 1) as UserRateType}
-          onClick={onClickStar}
-          onHover={onHoverStar}
+          onClick={onlyToShow ? undefined : onClickStar}
+          onHover={onlyToShow ? undefined : onHoverStar}
+          onlyToShow={onlyToShow}
         />
       ))}
     </div>
