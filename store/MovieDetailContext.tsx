@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   FormEvent,
   ReactNode,
@@ -67,21 +66,25 @@ export const MovieDetailContextProvider = ({
   children: ReactNode;
   movie: MovieState;
 }) => {
-  const { updateSession, sessionData, getTargetUserMovie } = useSessionData();
+  const { updateSession, sessionData, sessionUserMovies } = useSessionData();
   const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
     useUserRate();
   const userNoteInputRef = useRef<HTMLTextAreaElement>(null);
-  const initialUserMovieData = useMemo(
-    () => (movie.id ? getTargetUserMovie(movie.id) : undefined),
-    [movie.id],
+  const targetUserMovie = useMemo(
+    () => sessionUserMovies?.find((um) => um.movieId === movie.id),
+    [movie.id, sessionUserMovies],
   );
   const {
     isModalOpen: isYouTubeModalOpen,
     closeModal: closeYouTubeModal,
     openModal: openYouTubeModal,
   } = useModal();
-  const [watched, setWacthed] = useState<boolean>(false);
-  const [listed, setListed] = useState<boolean>(false);
+  const [watched, setWacthed] = useState<boolean>(
+    targetUserMovie?.watched || false,
+  );
+  const [listed, setListed] = useState<boolean>(
+    targetUserMovie?.listed || false,
+  );
   const isUpdatingUserMovie = useRef<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const emitUpdateRequestTimer = useRef<any>(null);
@@ -132,14 +135,36 @@ export const MovieDetailContextProvider = ({
     setWacthed((prev) => !prev);
   };
 
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    // logger.log({ userRate, userNoteInput: userNoteInputRef.current?.value });
+  };
+
+  const handleResetBtnClick = () => {
+    resetRate();
+
+    if (userNoteInputRef.current) {
+      userNoteInputRef.current.value = '';
+    }
+  };
+
   useEffect(() => {
-    logger.log({
-      initialUserMovieData: initialUserMovieData?.watched,
-      watched,
+    if (!targetUserMovie) return;
+
+    logger.log('Update watched and listed!', {
+      watched: targetUserMovie.watched,
+      listed: targetUserMovie.listed,
     });
+    setWacthed(targetUserMovie.watched);
+    setListed(targetUserMovie.listed);
+  }, [targetUserMovie]);
+
+  useEffect(() => {
     if (
       isUpdatingUserMovie.current ||
-      initialUserMovieData?.watched === watched
+      (targetUserMovie?.watched === watched &&
+        targetUserMovie?.listed === listed)
     ) {
       clearTimeout(emitUpdateRequestTimer.current);
       logger.log('Just Canceled previous request and timer');
@@ -156,7 +181,7 @@ export const MovieDetailContextProvider = ({
     emitUpdateRequestTimer.current = setTimeout(() => {
       updateUserMovie(
         {
-          status: { watched },
+          status: { watched, listed },
           movie,
         } as UpdateUserMovieState,
         controller.signal,
@@ -168,21 +193,14 @@ export const MovieDetailContextProvider = ({
       controller.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watched]);
-
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    // logger.log({ userRate, userNoteInput: userNoteInputRef.current?.value });
-  };
-
-  const handleResetBtnClick = () => {
-    resetRate();
-
-    if (userNoteInputRef.current) {
-      userNoteInputRef.current.value = '';
-    }
-  };
+  }, [
+    movie,
+    targetUserMovie?.watched,
+    targetUserMovie?.listed,
+    watched,
+    listed,
+    isUpdatingUserMovie.current,
+  ]);
 
   const context: MovieDetailContextType = {
     movie,
