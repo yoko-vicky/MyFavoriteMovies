@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   FormEvent,
   ReactNode,
@@ -5,6 +6,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -65,10 +67,14 @@ export const MovieDetailContextProvider = ({
   children: ReactNode;
   movie: MovieState;
 }) => {
-  const { updateSession, sessionData } = useSessionData();
+  const { updateSession, sessionData, getTargetUserMovie } = useSessionData();
   const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
     useUserRate();
   const userNoteInputRef = useRef<HTMLTextAreaElement>(null);
+  const initialUserMovieData = useMemo(
+    () => (movie.id ? getTargetUserMovie(movie.id) : undefined),
+    [movie.id],
+  );
   const {
     isModalOpen: isYouTubeModalOpen,
     closeModal: closeYouTubeModal,
@@ -81,7 +87,10 @@ export const MovieDetailContextProvider = ({
   const emitUpdateRequestTimer = useRef<any>(null);
   const videoId = movie.videos?.results[0].key;
 
-  const updateUserMovie = async (state: UpdateUserMovieState) => {
+  const updateUserMovie = async (
+    state: UpdateUserMovieState,
+    signal?: AbortSignal,
+  ) => {
     if (!sessionData || !sessionData.user) return;
 
     const loadingId: ToastId = loadingToastify();
@@ -89,9 +98,13 @@ export const MovieDetailContextProvider = ({
 
     try {
       const path = `/api/userMovies/${movie.id}?userId=${sessionData.user.id}`;
-      const res = await updateData(path, {
-        ...state,
-      } as UpdateUserMovieState);
+      const res = await updateData(
+        path,
+        {
+          ...state,
+        } as UpdateUserMovieState,
+        signal,
+      );
 
       logger.log({ res });
 
@@ -120,22 +133,40 @@ export const MovieDetailContextProvider = ({
   };
 
   useEffect(() => {
-    if (isUpdatingUserMovie.current) return;
-
-    logger.log('Run UseEffect to update UserMovie');
+    logger.log({
+      initialUserMovieData: initialUserMovieData?.watched,
+      watched,
+    });
+    if (
+      isUpdatingUserMovie.current ||
+      initialUserMovieData?.watched === watched
+    ) {
+      clearTimeout(emitUpdateRequestTimer.current);
+      logger.log('Just Canceled previous request and timer');
+      return;
+    }
 
     if (emitUpdateRequestTimer.current) {
       clearTimeout(emitUpdateRequestTimer.current);
+      logger.log('Canceled previous request and Set new Timer!');
     }
 
+    const controller = new AbortController();
+
     emitUpdateRequestTimer.current = setTimeout(() => {
-      updateUserMovie({
-        status: { watched },
-        movie,
-      } as UpdateUserMovieState);
+      updateUserMovie(
+        {
+          status: { watched },
+          movie,
+        } as UpdateUserMovieState,
+        controller.signal,
+      );
     }, 5000);
 
-    () => clearTimeout(emitUpdateRequestTimer.current);
+    () => {
+      clearTimeout(emitUpdateRequestTimer.current);
+      controller.abort();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watched]);
 

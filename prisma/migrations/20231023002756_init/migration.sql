@@ -37,7 +37,6 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "Movie" (
     "id" SERIAL NOT NULL,
-    "tmdbId" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "release_date" TEXT NOT NULL,
     "poster_path" TEXT NOT NULL,
@@ -88,9 +87,6 @@ CREATE UNIQUE INDEX "accounts_provider_provider_account_id_key" ON "accounts"("p
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Movie_tmdbId_key" ON "Movie"("tmdbId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Genre_originGenreId_key" ON "Genre"("originGenreId");
