@@ -25,7 +25,7 @@ export const UserIcon = ({
   size = 'sm',
 }: UserIconPropsType) => {
   const alt = userName ? `${userName} ${imageAlt.profile}` : imageAlt.profile;
-  logger.log({ imageSrc });
+  // logger.log({ imageSrc });
   return href ? (
     <Link
       href={href}

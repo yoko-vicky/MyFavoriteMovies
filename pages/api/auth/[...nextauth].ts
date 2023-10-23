@@ -58,8 +58,8 @@ export const authOptions: AuthOptions = {
       return { ...token, ...user };
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      console.log('session in callbacks', { session });
-      console.log('token in callbacks', { token });
+      // console.log('session in callbacks', { session });
+      // console.log('token in callbacks', { token });
 
       let dbUser: UserState | null = null;
 
@@ -73,7 +73,7 @@ export const authOptions: AuthOptions = {
           },
         })) as UserState;
       } catch (error) {
-        logger.log({ error });
+        logger.error({ error });
       }
 
       if (!dbUser) {

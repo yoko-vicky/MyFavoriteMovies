@@ -37,6 +37,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "Movie" (
     "id" SERIAL NOT NULL,
+    "tmdbId" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "release_date" TEXT NOT NULL,
     "poster_path" TEXT NOT NULL,
@@ -55,6 +56,7 @@ CREATE TABLE "Movie" (
 -- CreateTable
 CREATE TABLE "Genre" (
     "id" SERIAL NOT NULL,
+    "originGenreId" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
 
     CONSTRAINT "Genre_pkey" PRIMARY KEY ("id")
@@ -88,6 +90,15 @@ CREATE UNIQUE INDEX "accounts_provider_provider_account_id_key" ON "accounts"("p
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Movie_tmdbId_key" ON "Movie"("tmdbId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Genre_originGenreId_key" ON "Genre"("originGenreId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "UserMovie_userId_movieId_key" ON "UserMovie"("userId", "movieId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_GenreToMovie_AB_unique" ON "_GenreToMovie"("A", "B");
 
 -- CreateIndex
@@ -97,10 +108,10 @@ CREATE INDEX "_GenreToMovie_B_index" ON "_GenreToMovie"("B");
 ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserMovie" ADD CONSTRAINT "UserMovie_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserMovie" ADD CONSTRAINT "UserMovie_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserMovie" ADD CONSTRAINT "UserMovie_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movie"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserMovie" ADD CONSTRAINT "UserMovie_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movie"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_GenreToMovie" ADD CONSTRAINT "_GenreToMovie_A_fkey" FOREIGN KEY ("A") REFERENCES "Genre"("id") ON DELETE CASCADE ON UPDATE CASCADE;
