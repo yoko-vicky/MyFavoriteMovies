@@ -2,18 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { UpdateUserMovieState } from '@/types/movies';
-import { logger } from '@/utils/logger';
 import { authOptions } from '../../auth/[...nextauth]';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { tmdbId, userId } = req.query;
+  const { movieId, userId } = req.query;
   const { movie, status } = req.body as UpdateUserMovieState;
 
-  if (!tmdbId) {
-    return res.status(404).json({ message: 'tmdbId is missing.' });
+  if (!movieId) {
+    return res.status(404).json({ message: 'movieId is missing.' });
   }
 
   if (!userId) {
@@ -50,10 +49,10 @@ export default async function handler(
     try {
       const upsertMovie = await prisma.movie.upsert({
         where: {
-          tmdbId: +tmdbId,
+          id: +movieId,
         },
         create: {
-          tmdbId: +tmdbId,
+          id: +movieId,
           title: movie.title,
           release_date: movie.release_date,
           poster_path: movie.poster_path,
@@ -76,7 +75,7 @@ export default async function handler(
 
       const upsertUserMovie = await prisma.userMovie.upsert({
         where: {
-          userTmdbId: {
+          userMovieId: {
             userId: userId as string,
             movieId: upsertMovie.id,
           },

@@ -56,7 +56,6 @@ model User {
 
 model Movie{
   id        Int     @id @default(autoincrement())
-  tmdbId Int @unique
   title     String
   release_date String
   poster_path String
@@ -95,5 +94,5 @@ model UserMovie {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique(fields: [userId, movieId], name: "userTmdbId")
+  @@unique(fields: [userId, movieId], name: "userMovieId")
 }

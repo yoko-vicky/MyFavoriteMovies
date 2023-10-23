@@ -9,6 +9,8 @@ const useSessionData = () => {
   const getSessionTimer = useRef<any>(null);
   const [sessionData, setSessionData] = useState<Session | null>(null);
 
+  const sessionUserMovies = sessionData?.user.userMovies;
+
   const updateSession = async (data?: any) => {
     try {
       const newSession = await update(data);
@@ -32,6 +34,9 @@ const useSessionData = () => {
       logger.error(error);
     }
   };
+
+  const getTargetUserMovie = (movieId: number) =>
+    sessionUserMovies?.find((um) => um.movieId === movieId);
 
   useEffect(() => {
     if (!originSessionData) return;
@@ -59,6 +64,8 @@ const useSessionData = () => {
     sessionData,
     updateSession,
     getNewSessionToUpdateUserData,
+    sessionUserMovies,
+    getTargetUserMovie,
   };
 };
 
