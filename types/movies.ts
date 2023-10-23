@@ -161,6 +161,7 @@ export interface UpdateUserMovieStatusState {
   watched?: boolean;
   stars?: number;
   comment?: string | null;
+  isPublicReview?: boolean;
 }
 export interface UpdateUserMovieState {
   status: UpdateUserMovieStatusState;

@@ -66,6 +66,10 @@
         "buttons": {
           "submit": "Save",
           "reset": "Clear"
+        },
+        "publicReview": {
+          "makeReviewPublic": "Make review public",
+          "makeReviewPrivate": "Make review private"
         }
       },
       "detail": {

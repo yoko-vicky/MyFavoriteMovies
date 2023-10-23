@@ -2,6 +2,9 @@
   font-size: 4rem;
   color: var(--color-yellow);
 
+  &.sm {
+    font-size: 3rem;
+  }
   .fillStar {
     display: none;
   }

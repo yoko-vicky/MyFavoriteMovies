@@ -9,6 +9,7 @@ interface StarsPropsType {
   onClickStar: ((rate: UserRateType) => void) | undefined;
   onHoverStar: ((rate: UserRateType) => void) | undefined;
   onlyToShow?: boolean;
+  size?: 'sm' | 'md';
 }
 
 export const Stars = ({
@@ -16,6 +17,7 @@ export const Stars = ({
   onClickStar,
   onHoverStar,
   onlyToShow = false,
+  size = 'md',
 }: StarsPropsType) => {
   return (
     <div className={styles.stars}>
@@ -27,6 +29,7 @@ export const Stars = ({
           onClick={onlyToShow ? undefined : onClickStar}
           onHover={onlyToShow ? undefined : onHoverStar}
           onlyToShow={onlyToShow}
+          size={size}
         />
       ))}
     </div>

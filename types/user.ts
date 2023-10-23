@@ -23,6 +23,7 @@ export interface UserMovieState {
   listed: boolean;
   watched: boolean;
   stars: number;
+  isPublicReview: boolean;
   comment?: string;
   createdAt?: Date;
   updatedAt?: Date;

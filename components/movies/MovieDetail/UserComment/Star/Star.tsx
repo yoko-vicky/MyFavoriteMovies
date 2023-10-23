@@ -10,6 +10,7 @@ interface StarPropsType {
   onClick: ((rate: UserRateType) => void) | undefined;
   onHover: ((rate: UserRateType) => void) | undefined;
   onlyToShow?: boolean;
+  size?: 'sm' | 'md';
 }
 
 export const Star = ({
@@ -18,6 +19,7 @@ export const Star = ({
   onClick,
   onHover,
   onlyToShow = false,
+  size = 'md',
 }: StarPropsType) => {
   return (
     <div
@@ -25,6 +27,7 @@ export const Star = ({
         styles.star,
         active ? styles.active : '',
         !onlyToShow ? styles.interactive : '',
+        styles[size],
       )}
       onClick={() => !onlyToShow && onClick && onClick(rate)}
       onMouseEnter={() => !onlyToShow && onHover && onHover(rate)}

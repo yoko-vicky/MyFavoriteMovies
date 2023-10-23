@@ -1,11 +1,8 @@
 import React from 'react';
 import { Button } from '@/components/base/Button';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
-import {
-  AiFillCheckSquare,
-  AiOutlineCheckSquare,
-  AiOutlinePaperClip,
-} from 'react-icons/ai';
+import { AiFillCheckSquare, AiOutlinePaperClip } from 'react-icons/ai';
+import { BiSquare } from 'react-icons/bi';
 import styles from './UserComment.module.scss';
 import { UserCommentDetail } from './UserCommentDetail';
 import { UserCommentForm } from './UserCommentForm';
@@ -35,7 +32,7 @@ export const UserComment = () => {
           variant={'outlined'}
           label={watched ? 'Watched' : 'Unwatched'}
           onClick={handleWatchedStatus}
-          Icon={watched ? AiFillCheckSquare : AiOutlineCheckSquare}
+          Icon={watched ? AiFillCheckSquare : BiSquare}
           activeColor="green"
           activeFlag={watched}
         />
