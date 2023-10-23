@@ -11,7 +11,6 @@ import { useRouter } from 'next/router';
 import useModal from '@/hooks/useModal';
 import useSessionData from '@/hooks/useSessionData';
 import { UserState } from '@/types/user';
-import { logger } from '@/utils/logger';
 
 interface UserProfilePageContextType {
   user: UserState | null;
@@ -81,7 +80,7 @@ export const UserProfilePageContextProvider = ({
     updateIsUpdatingProfile,
   };
 
-  logger.log({ user });
+  // logger.log({ user });
 
   return (
     <UserProfilePageContext.Provider value={context}>

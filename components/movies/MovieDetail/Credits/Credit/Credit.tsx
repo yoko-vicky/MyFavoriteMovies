@@ -15,7 +15,6 @@ export const Credit = ({
   credits: CreditItemState[];
   title: string;
 }) => {
-  logger.log({ credits });
   const [showFull, setShowFull] = useState<boolean>(false);
 
   const creditsToShow = showFull

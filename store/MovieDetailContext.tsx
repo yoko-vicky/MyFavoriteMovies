@@ -4,13 +4,18 @@ import {
   RefObject,
   createContext,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from 'react';
+import { msgs } from '@/constants';
 import useModal from '@/hooks/useModal';
+import useSessionData from '@/hooks/useSessionData';
 import useUserRate from '@/hooks/useUserRate';
+import { updateData } from '@/lib/axios';
+import { ToastId, loadingToastify, updateToastify } from '@/lib/toast';
 import { UserRateType } from '@/types';
-import { MovieState } from '@/types/movies';
+import { MovieState, UpdateUserMovieState } from '@/types/movies';
 import { logger } from '@/utils/logger';
 
 interface MovieDetailContextType {
@@ -60,6 +65,7 @@ export const MovieDetailContextProvider = ({
   children: ReactNode;
   movie: MovieState;
 }) => {
+  const { updateSession, sessionData } = useSessionData();
   const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
     useUserRate();
   const userNoteInputRef = useRef<HTMLTextAreaElement>(null);
@@ -70,20 +76,73 @@ export const MovieDetailContextProvider = ({
   } = useModal();
   const [watched, setWacthed] = useState<boolean>(false);
   const [listed, setListed] = useState<boolean>(false);
-
+  const isUpdatingUserMovie = useRef<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const emitUpdateRequestTimer = useRef<any>(null);
   const videoId = movie.videos?.results[0].key;
+
+  const updateUserMovie = async (state: UpdateUserMovieState) => {
+    if (!sessionData || !sessionData.user) return;
+
+    const loadingId: ToastId = loadingToastify();
+    isUpdatingUserMovie.current = true;
+
+    try {
+      const path = `/api/userMovies/${movie.id}?userId=${sessionData.user.id}`;
+      const res = await updateData(path, {
+        ...state,
+      } as UpdateUserMovieState);
+
+      logger.log({ res });
+
+      if (res.status === 200) {
+        setTimeout(() => {
+          updateSession();
+          updateToastify(loadingId, 'success', msgs.success.general);
+        }, 1000);
+      } else {
+        updateToastify(loadingId, 'error', msgs.error.general);
+      }
+    } catch (error) {
+      logger.error(error);
+      updateToastify(loadingId, 'error', msgs.error.general);
+    } finally {
+      isUpdatingUserMovie.current = false;
+    }
+  };
 
   const handleListedStatus = () => {
     setListed((prev) => !prev);
   };
+
   const handleWatchedStatus = () => {
     setWacthed((prev) => !prev);
   };
 
+  useEffect(() => {
+    if (isUpdatingUserMovie.current) return;
+
+    logger.log('Run UseEffect to update UserMovie');
+
+    if (emitUpdateRequestTimer.current) {
+      clearTimeout(emitUpdateRequestTimer.current);
+    }
+
+    emitUpdateRequestTimer.current = setTimeout(() => {
+      updateUserMovie({
+        status: { watched },
+        movie,
+      } as UpdateUserMovieState);
+    }, 5000);
+
+    () => clearTimeout(emitUpdateRequestTimer.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watched]);
+
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    logger.log({ userRate, userNoteInput: userNoteInputRef.current?.value });
+    // logger.log({ userRate, userNoteInput: userNoteInputRef.current?.value });
   };
 
   const handleResetBtnClick = () => {
@@ -113,6 +172,9 @@ export const MovieDetailContextProvider = ({
     closeYouTubeModal,
     openYouTubeModal,
   };
+
+  logger.log({ isUpdatingUserMovie: isUpdatingUserMovie.current });
+  logger.log({ userMovies: sessionData?.user.userMovies });
 
   return (
     <MovieDetailContext.Provider value={context}>

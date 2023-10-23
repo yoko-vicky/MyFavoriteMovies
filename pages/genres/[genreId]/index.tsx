@@ -24,7 +24,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     };
   } catch (error) {
-    logger.log({ error });
+    logger.error({ error });
     return {
       notFound: true,
     };

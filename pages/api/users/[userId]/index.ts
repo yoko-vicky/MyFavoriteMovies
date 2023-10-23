@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/nextAuth';
 import { prisma } from '@/lib/prisma';
 
 export default async function handler(
@@ -11,7 +13,17 @@ export default async function handler(
     return res.status(404).json({ message: 'userId is missing.' });
   }
 
-  if (req.method === 'PUT') {
+  // Check Session
+  const session = await getServerSession(req, res, authOptions);
+  if (!session || !session.user) {
+    return res.status(401).json({ message: 'Unauthenticated' });
+  }
+
+  if (session.user.id !== (userId as string)) {
+    return res.status(401).json({ message: 'Unauthenticated' });
+  }
+
+  if (req.method === 'POST') {
     const userData = req.body;
 
     try {

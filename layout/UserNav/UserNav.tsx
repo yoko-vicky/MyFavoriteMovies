@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { UserIcon } from '@/components/base/UserIcon';
 import { logger } from '@/utils/logger';
@@ -8,8 +8,19 @@ import styles from './UserNav.module.scss';
 export const UserNav = () => {
   const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
   const { data: session } = useSession();
+  const router = useRouter();
 
-  logger.log({ user: session?.user });
+  const handleClickToMyProfile = () => {
+    setOpenUserMenu(false);
+    session?.user.id && router.push(`/profile/${session.user.id}`);
+  };
+
+  const handleClickToMyList = () => {
+    setOpenUserMenu(false);
+    router.push('/mylist');
+  };
+
+  // logger.log({ user: session?.user });
   return (
     <div className={styles.container}>
       <UserIcon
@@ -23,15 +34,12 @@ export const UserNav = () => {
           {session?.user ? (
             <>
               {/* session.user.username? */}
-              <Link
-                href={`/profile/${session?.user.id}`}
-                className={styles.link}
-              >
+              <button className={styles.link} onClick={handleClickToMyProfile}>
                 My Profile
-              </Link>
-              <Link href={'/mylist'} className={styles.link}>
+              </button>
+              <button className={styles.link} onClick={handleClickToMyList}>
                 My List
-              </Link>
+              </button>
               <button onClick={() => signOut()} className={styles.link}>
                 Sign Out
               </button>

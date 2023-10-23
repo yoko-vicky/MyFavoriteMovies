@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import { Button } from '@/components/base/Button';
 import uuid from '@/lib/uuid';
 import { ReviewState } from '@/types/movies';
-import { logger } from '@/utils/logger';
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai';
 import { Review } from './Review';
 import styles from './Reviews.module.scss';
@@ -28,7 +27,7 @@ export const Reviews = ({ reviews }: { reviews: ReviewState[] }) => {
       : sortedReviews.slice(0, 3);
   }, [reviews, showFullReviews, sortedReviews]);
 
-  logger.log({ sortedReviews });
+  // logger.log({ sortedReviews });
 
   if (!reviews || reviews.length === 0) {
     return <></>;

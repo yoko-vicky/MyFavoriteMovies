@@ -75,7 +75,7 @@ const getApiData = async ({
     const res = await fetch(url, getTmdbOptions());
     return await res.json();
   } catch (error) {
-    logger.log({ error });
+    logger.error({ error });
     return error;
   }
 };

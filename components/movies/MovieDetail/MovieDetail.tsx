@@ -10,7 +10,6 @@ import { YouTubePlayerModal } from '@/components/modals/YouTubePlayerModal';
 import { createImageUrl } from '@/lib/tmdb';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
 import { getReleaseYear } from '@/utils';
-import { logger } from '@/utils/logger';
 import { ImYoutube2 } from 'react-icons/im';
 import { Credits } from './Credits';
 import styles from './MovieDetail.module.scss';
@@ -37,7 +36,7 @@ export const MovieDetail = () => {
   if (!movie) {
     return <LoadingSpinner />;
   }
-  logger.log({ movie });
+  // logger.log({ movie });
 
   return (
     <>

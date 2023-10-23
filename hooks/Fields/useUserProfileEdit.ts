@@ -15,7 +15,7 @@ export const useUserProfileEdit = () => {
     useUserProfilePageContext();
   const { updateSession } = useSessionData();
 
-  logger.log({ user });
+  // logger.log({ user });
   useAlertBeforeClosingWindow(isUpdatingProfile);
   const {
     name,
@@ -126,7 +126,7 @@ export const useUserProfileEdit = () => {
 
     try {
       const res = await updateData(
-        `/api/user/${newUserProfile.id}`,
+        `/api/users/${newUserProfile.id}`,
         newUserProfile,
       );
       logger.log({ res });

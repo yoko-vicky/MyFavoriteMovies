@@ -10,7 +10,7 @@ interface CreditsPropsType {
 }
 
 export const Credits = ({ credits }: CreditsPropsType) => {
-  logger.log({ credits });
+  // logger.log({ credits });
 
   if (!credits) {
     return <></>;

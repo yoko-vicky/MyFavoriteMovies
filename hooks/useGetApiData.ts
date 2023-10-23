@@ -19,7 +19,7 @@ const useGetApiData = (fetchFn: any, props?: any) => {
         logger.log({ res });
         setData(res);
       } catch (error) {
-        logger.log({ error });
+        logger.error({ error });
         setError(error);
       } finally {
         setIsLoading(false);
