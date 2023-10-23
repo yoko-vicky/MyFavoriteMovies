@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { UserRateType } from '@/types';
+import { logger } from '@/utils/logger';
 
-export const useUserRate = () => {
+export const useUserRate = (initialStars: UserRateType) => {
+  logger.log({ initialStars });
   const [userRate, setUserRate] = useState<UserRateType>(0);
   const [userHoverRate, setUserHoverRate] = useState<UserRateType>(0);
 
@@ -66,6 +68,11 @@ export const useUserRate = () => {
   useEffect(() => {
     setUserHoverRate(userRate);
   }, [userRate]);
+
+  useEffect(() => {
+    if (!initialStars) return;
+    setUserRate(initialStars);
+  }, [initialStars]);
 
   return {
     isActiveStars,

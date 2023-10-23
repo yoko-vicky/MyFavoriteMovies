@@ -54,5 +54,20 @@
         "invalidLink": "This is not a valid link."
       }
     }
+  },
+  "components": {
+    "comments": {
+      "notes": "* This comment and stars are private and only visible to you.",
+      "form": {
+        "title": "Leave Your Review"
+      },
+      "detail": {
+        "title": "Your Review",
+        "buttons": {
+          "showForm": "Edit my review",
+          "closeForm": "Close Review Form"
+        }
+      }
+    }
   }
 }

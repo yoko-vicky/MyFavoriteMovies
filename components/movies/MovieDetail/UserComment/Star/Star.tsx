@@ -7,17 +7,28 @@ import styles from './Star.module.scss';
 interface StarPropsType {
   active: boolean;
   rate: UserRateType;
-  onClick: (rate: UserRateType) => void;
-  onHover: (rate: UserRateType) => void;
+  onClick: ((rate: UserRateType) => void) | undefined;
+  onHover: ((rate: UserRateType) => void) | undefined;
+  onlyToShow?: boolean;
 }
 
-export const Star = ({ active, rate, onClick, onHover }: StarPropsType) => {
+export const Star = ({
+  active,
+  rate,
+  onClick,
+  onHover,
+  onlyToShow = false,
+}: StarPropsType) => {
   return (
     <div
-      className={clsx(styles.star, active ? styles.active : '')}
-      onClick={() => onClick(rate)}
-      onMouseEnter={() => onHover(rate)}
-      onMouseLeave={() => onHover(0)}
+      className={clsx(
+        styles.star,
+        active ? styles.active : '',
+        !onlyToShow ? styles.interactive : '',
+      )}
+      onClick={() => !onlyToShow && onClick && onClick(rate)}
+      onMouseEnter={() => !onlyToShow && onHover && onHover(rate)}
+      onMouseLeave={() => !onlyToShow && onHover && onHover(0)}
     >
       <AiOutlineStar className={styles.outlineStar} />
       <AiFillStar className={styles.fillStar} />

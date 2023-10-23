@@ -24,7 +24,7 @@ interface ButtonPropsType {
   href?: string;
   className?: string;
   iconPos?: 'before' | 'after';
-  iconSize?: 'md' | 'lg';
+  iconSize?: 'sm' | 'md' | 'lg';
   align?: 'center' | 'left';
   disabled?: boolean;
 }

@@ -7,11 +7,18 @@ import {
   AiOutlinePaperClip,
 } from 'react-icons/ai';
 import styles from './UserComment.module.scss';
+import { UserCommentDetail } from './UserCommentDetail';
 import { UserCommentForm } from './UserCommentForm';
 
 export const UserComment = () => {
-  const { listed, watched, handleListedStatus, handleWatchedStatus } =
-    useMovieDetailContext();
+  const {
+    listed,
+    watched,
+    handleListedStatus,
+    handleWatchedStatus,
+    isShowForm,
+    isShowUserComment,
+  } = useMovieDetailContext();
 
   return (
     <div className={styles.comment}>
@@ -34,7 +41,8 @@ export const UserComment = () => {
         />
       </div>
 
-      {watched && <UserCommentForm />}
+      {isShowUserComment && <UserCommentDetail />}
+      {isShowForm && <UserCommentForm />}
     </div>
   );
 };
