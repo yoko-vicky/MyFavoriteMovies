@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { UpdateUserMovieState } from '@/types/movies';
 import axios from 'axios';
 
 const customHeaders = {
@@ -23,3 +24,24 @@ export const patchData = async (path: string, obj: any, signal?: AbortSignal) =>
 
 export const deleteData = async (path: string, signal?: AbortSignal) =>
   await axios.delete(path, { signal, headers: customHeaders });
+
+export const updateUserMovie = async ({
+  movieId,
+  userId,
+  state,
+  signal,
+}: {
+  movieId: number;
+  userId: string;
+  state: any;
+  signal?: AbortSignal;
+}) => {
+  const path = `/api/userMovies/${movieId}?userId=${userId}`;
+  return await updateData(
+    path,
+    {
+      ...state,
+    } as UpdateUserMovieState,
+    signal,
+  );
+};

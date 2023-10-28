@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/base/errors/ErrorBoundary';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/globals.scss';
+import { UserSessionDataContextProvider } from '@/store/UserSessionDataContext';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -20,7 +21,9 @@ export default function App({ Component, pageProps }:AppWithLayoutProps) {
 
   return (
     <SessionProvider session={pageProps.session} refetchInterval={0}>
-      <ErrorBoundary>{getLayout(<Component {...pageProps} />)}</ErrorBoundary>
+      <UserSessionDataContextProvider>
+        <ErrorBoundary>{getLayout(<Component {...pageProps} />)}</ErrorBoundary>
+      </UserSessionDataContextProvider>
     </SessionProvider>
   );
 }

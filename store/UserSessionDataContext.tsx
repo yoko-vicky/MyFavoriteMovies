@@ -1,15 +1,47 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef, useState } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Session } from 'next-auth';
 import { getSession, useSession } from 'next-auth/react';
+import { UserMovieState, UserState } from '@/types/user';
 import { logger } from '@/utils/logger';
 
-const useSessionData = () => {
+// import { logger } from '@/utils/logger';
+
+interface UserSessionDataContextType {
+  sessionData: Session | null;
+  updateSession: (data?: any) => void;
+  getNewSessionToUpdateUserData: () => void;
+  sessionUserMovies: UserMovieState[] | undefined;
+  sessionUser: UserState | undefined;
+}
+
+const UserSessionDataContext = createContext<UserSessionDataContextType>({
+  sessionData: null,
+  updateSession: () => undefined,
+  getNewSessionToUpdateUserData: () => undefined,
+  sessionUserMovies: undefined,
+  sessionUser: undefined,
+});
+
+export const UserSessionDataContextProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const { data: originSessionData, update } = useSession();
   const getSessionTimer = useRef<any>(null);
   const [sessionData, setSessionData] = useState<Session | null>(null);
 
-  const sessionUserMovies = sessionData?.user.userMovies;
+  const sessionUser: UserState | undefined = sessionData?.user;
+  const sessionUserMovies: UserMovieState[] | undefined =
+    sessionUser?.userMovies;
 
   const updateSession = async (data?: any) => {
     try {
@@ -57,12 +89,23 @@ const useSessionData = () => {
     setSessionData(originSessionData);
   }, [originSessionData, sessionData]);
 
-  return {
+  const context: UserSessionDataContextType = {
     sessionData,
     updateSession,
     getNewSessionToUpdateUserData,
     sessionUserMovies,
+    sessionUser,
   };
+
+  // logger.log({ heroMovie, allMovies });
+
+  return (
+    <UserSessionDataContext.Provider value={context}>
+      {children}
+    </UserSessionDataContext.Provider>
+  );
 };
 
-export default useSessionData;
+export default UserSessionDataContext;
+export const useUserSessionDataContext = () =>
+  useContext(UserSessionDataContext);
