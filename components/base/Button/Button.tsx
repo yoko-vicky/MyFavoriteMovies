@@ -3,6 +3,7 @@ import { IconType } from 'react-icons';
 import Link from 'next/link';
 import clsx from 'clsx';
 import styles from './Button.module.scss';
+import { Spinner } from '../loading/Spinner';
 
 type ButtonVariantType = 'outlined' | 'simple' | 'simpleOutlined';
 type ButtonColorType = 'yellow' | 'green' | 'blue' | 'white' | 'pink' | 'red';
@@ -22,6 +23,7 @@ interface ButtonPropsType {
   align?: 'center' | 'left';
   disabled?: boolean;
   bgWhite?: boolean;
+  isLoading?: boolean;
 }
 
 export const Button = ({
@@ -39,8 +41,30 @@ export const Button = ({
   href,
   disabled = false,
   bgWhite = false,
+  isLoading = false,
   ...props
 }: ButtonPropsType) => {
+  if (isLoading) {
+    return (
+      <div
+        onClick={undefined}
+        className={clsx(
+          styles.btn,
+          styles[variant],
+          styles[`icon-${iconSize}`],
+          styles['center'],
+          !!activeColor && styles[activeColor],
+          activeFlag ? styles.active : '',
+          bgWhite ? styles.bgWhite : '',
+          className ? className : '',
+          styles.disabled,
+        )}
+        {...props}
+      >
+        <Spinner size="xsm" />
+      </div>
+    );
+  }
   if (href && !disabled) {
     return (
       <Link

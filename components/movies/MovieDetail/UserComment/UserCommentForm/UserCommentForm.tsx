@@ -15,14 +15,14 @@ export const UserCommentForm = () => {
     onHoverStar,
     handleResetBtnClick,
     handleFormSubmit,
-    isUpdatingUserMovieRef,
     review,
+    isUpdatingReviewRef,
     handleChangeReview,
     isPublicReview,
-    toggleisPublicReview,
+    toggleIsPublicReview,
   } = useMovieDetailContext();
 
-  if (isUpdatingUserMovieRef?.current) {
+  if (isUpdatingReviewRef?.current) {
     return <LoadingSpinner />;
   }
 
@@ -42,8 +42,9 @@ export const UserCommentForm = () => {
       <label className={styles.publicCheckbox}>
         <input
           type={'checkbox'}
-          checked={isPublicReview}
-          onChange={toggleisPublicReview}
+          defaultChecked={isPublicReview || false}
+          checked={isPublicReview || false}
+          onChange={toggleIsPublicReview}
         />
         <span className={styles.publicIcon}>
           {isPublicReview ? <AiFillCheckSquare /> : <BiSquare />}

@@ -8,21 +8,17 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
-import { useRouter } from 'next/router';
-import { msgs } from '@/constants';
 import useModal from '@/hooks/useModal';
 import useReviewField from '@/hooks/useReviewField';
-import useSessionData from '@/hooks/useSessionData';
+import useUserMovieState from '@/hooks/useUserMovieState';
 import useUserRate from '@/hooks/useUserRate';
-import { updateData } from '@/lib/axios';
-import { ToastId, loadingToastify, updateToastify } from '@/lib/toast';
 import { UserRateType } from '@/types';
-import { MovieState, ReviewState, UpdateUserMovieState } from '@/types/movies';
+import { MovieState, ReviewState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 import { logger } from '@/utils/logger';
+import { useUserSessionDataContext } from './UserSessionDataContext';
 
 interface MovieDetailContextType {
   movie: MovieState | null;
@@ -35,8 +31,8 @@ interface MovieDetailContextType {
   handleResetBtnClick: () => void;
   listed: boolean;
   watched: boolean;
-  handleListedStatus: () => void;
-  handleWatchedStatus: () => void;
+  handleListedButtonClick: () => void;
+  handleWatchedButtonClick: () => void;
   videoId: string | undefined;
   isYouTubeModalOpen: boolean;
   closeYouTubeModal: () => void;
@@ -46,12 +42,14 @@ interface MovieDetailContextType {
   toggleShowForm: () => void;
   isShowUserComment: boolean;
   toggleIsShowUserComment: () => void;
-  isUpdatingUserMovieRef: MutableRefObject<boolean> | undefined;
   review: string;
   handleChangeReview: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   isPublicReview: boolean;
-  toggleisPublicReview: () => void;
+  toggleIsPublicReview: () => void;
   movieReviewsToShow: ReviewState[];
+  isUpdatingWatchedRef: MutableRefObject<boolean> | undefined;
+  isUpdatingListedRef: MutableRefObject<boolean> | undefined;
+  isUpdatingReviewRef: MutableRefObject<boolean> | undefined;
 }
 
 const MovieDetailContext = createContext<MovieDetailContextType>({
@@ -65,8 +63,8 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   handleResetBtnClick: () => undefined,
   listed: false,
   watched: false,
-  handleListedStatus: () => undefined,
-  handleWatchedStatus: () => undefined,
+  handleListedButtonClick: () => undefined,
+  handleWatchedButtonClick: () => undefined,
   videoId: undefined,
   isYouTubeModalOpen: false,
   closeYouTubeModal: () => undefined,
@@ -76,12 +74,14 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   toggleShowForm: () => undefined,
   isShowUserComment: false,
   toggleIsShowUserComment: () => undefined,
-  isUpdatingUserMovieRef: undefined,
   review: '',
   handleChangeReview: () => undefined,
   isPublicReview: false,
-  toggleisPublicReview: () => undefined,
+  toggleIsPublicReview: () => undefined,
   movieReviewsToShow: [],
+  isUpdatingWatchedRef: undefined,
+  isUpdatingListedRef: undefined,
+  isUpdatingReviewRef: undefined,
 });
 
 export const MovieDetailContextProvider = ({
@@ -93,10 +93,31 @@ export const MovieDetailContextProvider = ({
   movie: MovieState;
   movieReviewsInDb: ReviewState[];
 }) => {
-  const { updateSession, sessionData } = useSessionData();
-  const targetUserMovie = sessionData?.user.userMovies?.find(
-    (um) => um.movieId === movie.id,
+  const { sessionUser } = useUserSessionDataContext();
+  const videoId = movie.videos?.results[0].key;
+  const movieId = movie.id;
+  const targetUserMovie = sessionUser?.userMovies?.find(
+    (um) => um.movieId === movieId,
   );
+  const [isShowForm, setIsShowForm] = useState<boolean>(false);
+  const [isShowUserComment, setIsShowUserComment] = useState<boolean>(false);
+
+  const {
+    state: watched,
+    handleButtonClick: handleWatchedButtonClick,
+    isUpdatingRef: isUpdatingWatchedRef,
+  } = useUserMovieState({
+    movie,
+    key: 'watched',
+  });
+  const {
+    state: listed,
+    handleButtonClick: handleListedButtonClick,
+    isUpdatingRef: isUpdatingListedRef,
+  } = useUserMovieState({
+    movie,
+    key: 'listed',
+  });
   const { userRate, isActiveStars, onClickStar, onHoverStar, resetRate } =
     useUserRate((targetUserMovie?.stars as UserRateType) || 0);
   const {
@@ -104,21 +125,21 @@ export const MovieDetailContextProvider = ({
     closeModal: closeYouTubeModal,
     openModal: openYouTubeModal,
   } = useModal();
-  const { review, handleChangeReview, clearReviewField } = useReviewField(
-    targetUserMovie?.comment,
-  );
-  const [watched, setWacthed] = useState<boolean>(false);
-  const [listed, setListed] = useState<boolean>(false);
-  const [isPublicReview, setIsPublicReview] = useState<boolean>(false);
-
-  const isUpdatingUserMovieRef = useRef<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const emitUpdateRequestTimer = useRef<any>(null);
-  const router = useRouter();
-
-  const videoId = movie.videos?.results[0].key;
-  const [isShowForm, setIsShowForm] = useState<boolean>(false);
-  const [isShowUserComment, setIsShowUserComment] = useState<boolean>(false);
+  const {
+    review,
+    handleChangeReview,
+    handleFormSubmit,
+    handleResetBtnClick,
+    isPublicReview,
+    // setIsPublicReview,
+    isUpdatingReviewRef,
+    toggleIsPublicReview,
+  } = useReviewField({
+    movie,
+    userRate,
+    setIsShowForm,
+    resetRate,
+  });
 
   const movieReviewsToShow = useMemo(() => {
     const tmdbReviews = movie?.reviews?.results || [];
@@ -128,149 +149,9 @@ export const MovieDetailContextProvider = ({
 
   const toggleShowForm = () => setIsShowForm((prev) => !prev);
   const toggleIsShowUserComment = () => setIsShowUserComment((prev) => !prev);
-  const toggleisPublicReview = () => setIsPublicReview((prev) => !prev);
-
-  const updateUserMovie = async (
-    state: UpdateUserMovieState,
-    signal?: AbortSignal,
-  ) => {
-    logger.log('Run updateUserMovie', state);
-    if (!sessionData || !sessionData.user) return;
-
-    const loadingId: ToastId = loadingToastify();
-
-    try {
-      isUpdatingUserMovieRef.current = true;
-      const path = `/api/userMovies/${movie.id}?userId=${sessionData.user.id}`;
-      const res = await updateData(
-        path,
-        {
-          ...state,
-        } as UpdateUserMovieState,
-        signal,
-      );
-
-      logger.log({ res });
-
-      if (res.status === 200) {
-        setTimeout(() => {
-          updateSession();
-          updateToastify(loadingId, 'success', msgs.success.general);
-        }, 1000);
-        const updatedPublicStatus =
-          (targetUserMovie &&
-            targetUserMovie.isPublicReview !== state.status.isPublicReview) ||
-          false;
-        if (updatedPublicStatus) {
-          router.push(`/movies/${movie.id}`);
-          return;
-        }
-      } else {
-        updateToastify(loadingId, 'error', msgs.error.general);
-      }
-    } catch (error) {
-      logger.error(error);
-      updateToastify(loadingId, 'error', msgs.error.general);
-    } finally {
-      isUpdatingUserMovieRef.current = false;
-    }
-  };
-
-  const handleFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    logger.log({ userRate, review, isPublicReview });
-    try {
-      updateUserMovie({
-        status: {
-          stars: userRate,
-          comment: review,
-          isPublicReview,
-        },
-        movie,
-      });
-      setIsShowForm(false);
-    } catch (error) {
-      logger.log({ error });
-    }
-  };
-
-  const handleListedStatus = () => {
-    setListed((prev) => !prev);
-  };
-
-  const handleWatchedStatus = () => {
-    setWacthed((prev) => !prev);
-  };
-
-  const handleResetBtnClick = () => {
-    resetRate();
-    clearReviewField();
-    setIsPublicReview(false);
-  };
 
   useEffect(() => {
-    if (!targetUserMovie) return;
-
-    setListed(targetUserMovie.listed);
-  }, [targetUserMovie?.listed]);
-
-  useEffect(() => {
-    if (!targetUserMovie) return;
-
-    setWacthed(targetUserMovie.watched);
-  }, [targetUserMovie?.watched]);
-
-  useEffect(() => {
-    if (!targetUserMovie) return;
-
-    setIsPublicReview(targetUserMovie.isPublicReview);
-  }, [targetUserMovie?.isPublicReview]);
-
-  useEffect(() => {
-    if (
-      isUpdatingUserMovieRef.current ||
-      (targetUserMovie?.watched === watched &&
-        targetUserMovie?.listed === listed)
-    ) {
-      clearTimeout(emitUpdateRequestTimer.current);
-      logger.log('Just Canceled previous request and timer');
-      return;
-    }
-
-    if (emitUpdateRequestTimer.current) {
-      clearTimeout(emitUpdateRequestTimer.current);
-      logger.log('Canceled previous request and Set new Timer!');
-    }
-
-    const controller = new AbortController();
-
-    emitUpdateRequestTimer.current = setTimeout(() => {
-      updateUserMovie(
-        {
-          status: { watched, listed },
-          movie,
-        } as UpdateUserMovieState,
-        controller.signal,
-      );
-    }, 5000);
-
-    () => {
-      clearTimeout(emitUpdateRequestTimer.current);
-      controller.abort();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    movie,
-    targetUserMovie?.watched,
-    targetUserMovie?.listed,
-    watched,
-    listed,
-    isUpdatingUserMovieRef.current,
-  ]);
-
-  useEffect(() => {
-    if (!watched) {
+    if (!watched || isUpdatingWatchedRef.current) {
       setIsShowUserComment(false);
       setIsShowForm(false);
       return;
@@ -291,11 +172,8 @@ export const MovieDetailContextProvider = ({
     targetUserMovie?.comment,
     targetUserMovie?.stars,
     watched,
+    isUpdatingWatchedRef.current,
   ]);
-
-  useEffect(() => {
-    isUpdatingUserMovieRef.current = false;
-  }, []);
 
   const context: MovieDetailContextType = {
     movie,
@@ -307,8 +185,8 @@ export const MovieDetailContextProvider = ({
     handleResetBtnClick,
     listed,
     watched,
-    handleListedStatus,
-    handleWatchedStatus,
+    handleListedButtonClick,
+    handleWatchedButtonClick,
     videoId,
     isYouTubeModalOpen,
     closeYouTubeModal,
@@ -318,13 +196,15 @@ export const MovieDetailContextProvider = ({
     toggleShowForm,
     isShowUserComment,
     toggleIsShowUserComment,
-    isUpdatingUserMovieRef,
     handleFormSubmit,
     review,
     handleChangeReview,
     isPublicReview,
-    toggleisPublicReview,
+    toggleIsPublicReview,
     movieReviewsToShow,
+    isUpdatingWatchedRef,
+    isUpdatingListedRef,
+    isUpdatingReviewRef,
   };
 
   return (

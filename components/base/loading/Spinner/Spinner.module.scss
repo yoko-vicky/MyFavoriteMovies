@@ -84,8 +84,23 @@
         left: 18px;
         width: 3px;
         height: 9px;
-        border-radius: 20%;
-        background: var(--color-grey);
+      }
+    }
+  }
+  &.xsm {
+    width: 2rem;
+    height: 2rem;
+
+    div {
+      transform-origin: 1rem 1rem;
+      &:after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        top: 0.75px;
+        left: 9px;
+        width: 1.5px;
+        height: 4.5px;
       }
     }
   }

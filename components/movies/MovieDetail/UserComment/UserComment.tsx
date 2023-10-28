@@ -11,10 +11,12 @@ export const UserComment = () => {
   const {
     listed,
     watched,
-    handleListedStatus,
-    handleWatchedStatus,
+    handleListedButtonClick,
+    handleWatchedButtonClick,
     isShowForm,
     isShowUserComment,
+    isUpdatingWatchedRef,
+    isUpdatingListedRef,
   } = useMovieDetailContext();
 
   return (
@@ -23,18 +25,20 @@ export const UserComment = () => {
         <Button
           variant={'outlined'}
           label={listed ? 'Added to my List' : 'Add this movie to my List'}
-          onClick={handleListedStatus}
+          onClick={handleListedButtonClick}
           Icon={AiOutlinePaperClip}
           activeColor="pink"
           activeFlag={listed}
+          isLoading={isUpdatingListedRef?.current}
         />
         <Button
           variant={'outlined'}
           label={watched ? 'Watched' : 'Unwatched'}
-          onClick={handleWatchedStatus}
+          onClick={handleWatchedButtonClick}
           Icon={watched ? AiFillCheckSquare : BiSquare}
           activeColor="green"
           activeFlag={watched}
+          isLoading={!!isUpdatingWatchedRef?.current}
         />
       </div>
 

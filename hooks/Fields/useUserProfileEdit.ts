@@ -2,19 +2,19 @@ import { useEffect, useRef } from 'react';
 import { updateData } from '@/lib/axios';
 import { errorToastify, successToastify } from '@/lib/toast';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
+import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
 import { UserState } from '@/types/user';
 import { logger } from '@/utils/logger';
 import useBioField from './useBioField';
 import useLinkField from './useLinkField';
 import useNameField from './useNameField';
 import useAlertBeforeClosingWindow from '../useAlertBeforeClosingWindow';
-import useSessionData from '../useSessionData';
 
 export const useUserProfileEdit = () => {
   const clickedSubmitForm = useRef<boolean>(false);
   const { user, isUpdatingProfile, updateIsUpdatingProfile, closeEditModal } =
     useUserProfilePageContext();
-  const { updateSession } = useSessionData();
+  const { updateSession } = useUserSessionDataContext();
 
   // logger.log({ user });
   useAlertBeforeClosingWindow(isUpdatingProfile);
