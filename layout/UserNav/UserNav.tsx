@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 import { UserIcon } from '@/components/base/UserIcon';
 import useOutsideClick from '@/hooks/useOutsideClick';
+import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
 import styles from './UserNav.module.scss';
 
 export const UserNav = () => {
   const [openUserMenu, setOpenUserMenu] = useState<boolean>(false);
-  const { data: session } = useSession();
+  const { sessionUser } = useUserSessionDataContext();
   const router = useRouter();
   const closeMenu = () => setOpenUserMenu(false);
   const userIconRef = useRef<any>(null);
@@ -17,27 +18,27 @@ export const UserNav = () => {
 
   const handleClickToMyProfile = () => {
     setOpenUserMenu(false);
-    session?.user.id && router.push(`/profile/${session.user.id}`);
+    sessionUser?.id && router.push(`/profile/${sessionUser.id}`);
   };
 
   const handleClickToMyList = () => {
     setOpenUserMenu(false);
-    router.push('/mylist');
+    sessionUser && router.push('mylist');
   };
 
   // logger.log({ user: session?.user });
   return (
     <div className={styles.container}>
       <UserIcon
-        userName={session?.user.name || ''}
+        userName={sessionUser?.name || ''}
         onClick={() => setOpenUserMenu((prev) => !prev)}
         active={openUserMenu}
-        imageSrc={session?.user?.image || ''}
+        imageSrc={sessionUser?.image || ''}
         innerRef={userIconRef}
       />
       {openUserMenu && (
         <nav className={styles.userMenu} ref={userNavRef}>
-          {session?.user ? (
+          {sessionUser ? (
             <>
               {/* session.user.username? */}
               <button className={styles.link} onClick={handleClickToMyProfile}>
