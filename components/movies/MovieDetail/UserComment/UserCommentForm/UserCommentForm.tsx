@@ -16,13 +16,13 @@ export const UserCommentForm = () => {
     handleResetBtnClick,
     handleFormSubmit,
     review,
-    isUpdatingReviewRef,
+    isUpdatingReview,
     handleChangeReview,
     isPublicReview,
     toggleIsPublicReview,
   } = useMovieDetailContext();
 
-  if (isUpdatingReviewRef?.current) {
+  if (isUpdatingReview) {
     return <LoadingSpinner />;
   }
 
@@ -53,6 +53,9 @@ export const UserCommentForm = () => {
           {commentsData.form.publicReview.makeReviewPublic}
         </span>
       </label>
+      <p className={styles.publicNotes}>
+        {commentsData.form.publicReview.makeReviewPublicNotes}
+      </p>
       <div className={styles.btns}>
         <Button
           variant={'simpleOutlined'}

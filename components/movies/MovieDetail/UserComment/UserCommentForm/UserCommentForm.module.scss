@@ -46,7 +46,8 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 1.6rem;
+
+  cursor: pointer;
 
   .publicLabel {
     text-transform: uppercase;
@@ -55,6 +56,12 @@
   .publicIcon {
     font-size: 2rem;
   }
+}
+.publicNotes {
+  font-size: 1.3rem;
+  opacity: 0.8;
+  margin-bottom: 1.6rem;
+  padding-left: 1rem;
 }
 
 @include mq(tab) {

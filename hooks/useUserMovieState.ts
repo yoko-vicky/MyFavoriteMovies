@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updateUserMovie } from '@/lib/axios';
 import { errorToastify } from '@/lib/toast';
 import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
@@ -21,8 +21,7 @@ const useUserMovieState = ({
     (um) => um.movieId === movieId,
   );
   const [state, setState] = useState<boolean>(false);
-
-  const isUpdatingRef = useRef<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   const updateState = async (
     state: UpdateUserMovieState,
@@ -30,8 +29,6 @@ const useUserMovieState = ({
   ) => {
     logger.log('Run updateUserMovie', key, state);
     if (!sessionUser) return;
-
-    isUpdatingRef.current = true;
 
     try {
       const res = await updateUserMovie({
@@ -56,12 +53,13 @@ const useUserMovieState = ({
       errorToastify();
     } finally {
       setTimeout(() => {
-        isUpdatingRef.current = false;
+        setIsUpdating(false);
       }, 1000);
     }
   };
 
   const handleButtonClick = () => {
+    setIsUpdating(true);
     const newStateObj = { status: { [key]: !state }, movie };
     updateState(newStateObj);
   };
@@ -72,14 +70,10 @@ const useUserMovieState = ({
     setState(targetUserMovie[key]);
   }, [key, targetUserMovie]);
 
-  useEffect(() => {
-    isUpdatingRef.current = false;
-  }, []);
-
   return {
     state,
     updateState,
-    isUpdatingRef,
+    isUpdating,
     handleButtonClick,
   };
 };

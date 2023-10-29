@@ -15,8 +15,8 @@ export const UserComment = () => {
     handleWatchedButtonClick,
     isShowForm,
     isShowUserComment,
-    isUpdatingWatchedRef,
-    isUpdatingListedRef,
+    isUpdatingWatched,
+    isUpdatingListed,
   } = useMovieDetailContext();
 
   return (
@@ -29,7 +29,7 @@ export const UserComment = () => {
           Icon={AiOutlinePaperClip}
           activeColor="pink"
           activeFlag={listed}
-          isLoading={isUpdatingListedRef?.current}
+          isLoading={isUpdatingListed}
         />
         <Button
           variant={'outlined'}
@@ -38,7 +38,7 @@ export const UserComment = () => {
           Icon={watched ? AiFillCheckSquare : BiSquare}
           activeColor="green"
           activeFlag={watched}
-          isLoading={!!isUpdatingWatchedRef?.current}
+          isLoading={isUpdatingWatched}
         />
       </div>
 

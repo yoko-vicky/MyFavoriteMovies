@@ -9,6 +9,7 @@ import {
 import { useRouter } from 'next/router';
 import useModal from '@/hooks/useModal';
 import { UserState } from '@/types/user';
+import { useUserSessionDataContext } from './UserSessionDataContext';
 
 interface UserProfilePageContextType {
   user: UserState | null;
@@ -39,7 +40,7 @@ export const UserProfilePageContextProvider = ({
   children: ReactNode;
   userForPage: UserState | null;
 }) => {
-  const { sessionData: session } = useUserSessionData();
+  const { sessionData: session } = useUserSessionDataContext();
   const isMyProfile = session?.user.id === userForPage?.id;
   const user = isMyProfile && session?.user ? session?.user : userForPage;
   const {
@@ -88,6 +89,3 @@ export const UserProfilePageContextProvider = ({
 export default UserProfilePageContext;
 export const useUserProfilePageContext = () =>
   useContext(UserProfilePageContext);
-function useUserSessionData(): { sessionData: any } {
-  throw new Error('Function not implemented.');
-}

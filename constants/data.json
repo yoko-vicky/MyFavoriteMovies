@@ -69,7 +69,8 @@
         },
         "publicReview": {
           "makeReviewPublic": "Make review public",
-          "makeReviewPrivate": "Make review private"
+          "makeReviewPrivate": "Make review private",
+          "makeReviewPublicNotes": "Note: When you make it public, your review is shown in 'REVIEWS' on this movie."
         }
       },
       "detail": {
