@@ -1,0 +1,35 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+// .container {
+//   margin-bottom: 2.4rem;
+// }
+
+@include mq(tab) {
+  .movies {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+@include mq(spc) {
+  .movies {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+}
+
+@include mq(pc) {
+  .movies {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+  }
+}

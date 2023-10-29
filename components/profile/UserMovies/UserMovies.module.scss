@@ -1,1 +1,16 @@
 @import '@/styles/abstracts/mixins.scss';
+
+.list {
+  margin-bottom: 6rem;
+}
+.btnWrapper {
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+@include mq(tab) {
+  .btnWrapper {
+    margin: 2rem auto;
+  }
+}

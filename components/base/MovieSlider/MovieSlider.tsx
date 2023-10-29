@@ -2,23 +2,17 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
-import { MovieState } from '@/types/movies';
+import { MovieState, SliderBreakPointState } from '@/types/movies';
 // import { logger } from '@/utils/logger';
-import { FreeMode, Autoplay } from 'swiper/modules';
+import { FreeMode, Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
 import styles from './MovieSlider.module.scss';
 
-interface MovieSliderPropsType {
-  orient?: 'horizontal' | 'vertical';
-  movies: MovieState[];
-  delay?: number;
-  reverse?: boolean;
-}
-
-const breakPointsForVertical = {
+const defaultBreakPoints = {
   320: {
     slidesPerView: 2,
     spaceBetween: 10,
@@ -45,26 +39,18 @@ const breakPointsForVertical = {
   // },
 };
 
-const breakPointsForHorizontal = {
-  640: {
-    slidesPerView: 1,
-    spaceBetween: 20,
-  },
-  768: {
-    slidesPerView: 2,
-    spaceBetween: 40,
-  },
-  1024: {
-    slidesPerView: 4,
-    spaceBetween: 60,
-  },
-};
+interface MovieSliderPropsType {
+  movies: MovieState[];
+  delay?: number;
+  reverse?: boolean;
+  breakPoints?: SliderBreakPointState;
+}
 
 export const MovieSlider = ({
-  orient = 'vertical',
   movies,
   delay = 2500,
   reverse = false,
+  breakPoints = defaultBreakPoints,
 }: MovieSliderPropsType) => {
   // logger.log({ movies });
   return (
@@ -72,17 +58,16 @@ export const MovieSlider = ({
       <Swiper
         spaceBetween={30}
         freeMode={true}
-        breakpoints={
-          orient === 'vertical'
-            ? breakPointsForVertical
-            : breakPointsForHorizontal
-        }
-        modules={[Autoplay, FreeMode]}
+        breakpoints={breakPoints}
+        modules={[Autoplay, FreeMode, Pagination]}
         className="mySwiper"
         autoplay={{
           delay,
           disableOnInteraction: false,
           reverseDirection: reverse,
+        }}
+        pagination={{
+          clickable: true,
         }}
         loop={true}
       >

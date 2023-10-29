@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthOptions, Session, User } from 'next-auth';
 import { AdapterUser } from 'next-auth/adapters';
 import { JWT } from 'next-auth/jwt';
@@ -68,9 +70,13 @@ export const authOptions: AuthOptions = {
             email: session.user.email,
           },
           include: {
-            userMovies: true,
+            userMovies: {
+              include: {
+                movie: true,
+              },
+            },
           },
-        })) as UserState;
+        })) as unknown as UserState;
       } catch (error) {
         logger.error({ error });
       }
