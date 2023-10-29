@@ -6,3 +6,9 @@
   font-size: 2rem;
   margin: 1rem auto;
 }
+
+@include mq(tab) {
+  .links {
+    margin: 0.6rem;
+  }
+}

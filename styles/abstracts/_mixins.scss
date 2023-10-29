@@ -93,6 +93,8 @@ $breakpoints: (
 @mixin iconSizes {
   svg {
     font-size: 2rem;
+    position: relative;
+    transition: var(--transition-short);
   }
 
   &.icon-sm {
@@ -116,25 +118,8 @@ $breakpoints: (
   &:hover,
   &.active {
     svg {
-      font-size: 2.2rem;
-    }
-
-    &.icon-sm {
-      svg {
-        font-size: 1.8rem;
-      }
-    }
-
-    &.icon-lg {
-      svg {
-        font-size: 2.8rem;
-      }
-    }
-
-    &.icon-xlg {
-      svg {
-        font-size: 3.6rem;
-      }
+      position: relative;
+      transform: translateY(-0.26rem);
     }
   }
 }

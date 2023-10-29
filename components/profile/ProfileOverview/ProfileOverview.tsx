@@ -38,26 +38,26 @@ export const ProfileOverview = () => {
               <div className={styles.name}>{user?.name}</div>
               {!!user?.bio && <div className={styles.bio}>{user.bio}</div>}
               {!!user && <SocialLinks user={user} />}
-              {!!isMyProfile && (
-                <div>
-                  <Button
-                    variant={'simpleOutlined'}
-                    label={'Edit Profile'}
-                    className={styles.editBtn}
-                    onClick={() => {
-                      openEditModal();
-                      logger.log('OpenEditModal clicked', isEditModalOpen);
-                    }}
-                    Icon={BsFillPencilFill}
-                    iconSize="sm"
-                  />
-                </div>
-              )}
             </>
           )}
         </div>
+        <div>
+          {isMyProfile && (
+            <Button
+              variant={'simpleOutlined'}
+              label={'Edit Profile'}
+              className={styles.editBtn}
+              onClick={() => {
+                openEditModal();
+                logger.log('OpenEditModal clicked', isEditModalOpen);
+              }}
+              Icon={BsFillPencilFill}
+              iconSize="sm"
+            />
+          )}
+        </div>
       </div>
-      {isEditModalOpen && <UserProfileEditModal />}
+      {isMyProfile && isEditModalOpen && <UserProfileEditModal />}
     </>
   );
 };

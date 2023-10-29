@@ -25,7 +25,7 @@
 }
 
 .name {
-  font-size: 1.6rem;
+  font-size: 2rem;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   word-break: break-word;
@@ -34,3 +34,19 @@
 .bio {
   word-break: break-word;
 }
+
+// @include mq(tab) {
+//   .overview {
+//     border: 1px solid;
+//     flex-direction: row;
+//     justify-content: center;
+//     align-items: flex-start;
+//     gap: 3rem;
+//   }
+
+//   .right {
+//     gap: 0.4rem;
+//     text-align: left;
+//     align-items: flex-start;
+//   }
+// }
