@@ -2,7 +2,6 @@
 import {
   ChangeEvent,
   FormEvent,
-  MutableRefObject,
   ReactNode,
   createContext,
   useContext,
@@ -47,9 +46,9 @@ interface MovieDetailContextType {
   isPublicReview: boolean;
   toggleIsPublicReview: () => void;
   movieReviewsToShow: ReviewState[];
-  isUpdatingWatchedRef: MutableRefObject<boolean> | undefined;
-  isUpdatingListedRef: MutableRefObject<boolean> | undefined;
-  isUpdatingReviewRef: MutableRefObject<boolean> | undefined;
+  isUpdatingWatched: boolean;
+  isUpdatingListed: boolean;
+  isUpdatingReview: boolean;
 }
 
 const MovieDetailContext = createContext<MovieDetailContextType>({
@@ -79,9 +78,9 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
   isPublicReview: false,
   toggleIsPublicReview: () => undefined,
   movieReviewsToShow: [],
-  isUpdatingWatchedRef: undefined,
-  isUpdatingListedRef: undefined,
-  isUpdatingReviewRef: undefined,
+  isUpdatingWatched: false,
+  isUpdatingListed: false,
+  isUpdatingReview: false,
 });
 
 export const MovieDetailContextProvider = ({
@@ -105,7 +104,7 @@ export const MovieDetailContextProvider = ({
   const {
     state: watched,
     handleButtonClick: handleWatchedButtonClick,
-    isUpdatingRef: isUpdatingWatchedRef,
+    isUpdating: isUpdatingWatched,
   } = useUserMovieState({
     movie,
     key: 'watched',
@@ -113,7 +112,7 @@ export const MovieDetailContextProvider = ({
   const {
     state: listed,
     handleButtonClick: handleListedButtonClick,
-    isUpdatingRef: isUpdatingListedRef,
+    isUpdating: isUpdatingListed,
   } = useUserMovieState({
     movie,
     key: 'listed',
@@ -132,7 +131,7 @@ export const MovieDetailContextProvider = ({
     handleResetBtnClick,
     isPublicReview,
     // setIsPublicReview,
-    isUpdatingReviewRef,
+    isUpdatingReview,
     toggleIsPublicReview,
   } = useReviewField({
     movie,
@@ -151,7 +150,7 @@ export const MovieDetailContextProvider = ({
   const toggleIsShowUserComment = () => setIsShowUserComment((prev) => !prev);
 
   useEffect(() => {
-    if (!watched || isUpdatingWatchedRef.current) {
+    if (!watched || isUpdatingWatched) {
       setIsShowUserComment(false);
       setIsShowForm(false);
       return;
@@ -172,7 +171,7 @@ export const MovieDetailContextProvider = ({
     targetUserMovie?.comment,
     targetUserMovie?.stars,
     watched,
-    isUpdatingWatchedRef.current,
+    isUpdatingWatched,
   ]);
 
   const context: MovieDetailContextType = {
@@ -202,9 +201,9 @@ export const MovieDetailContextProvider = ({
     isPublicReview,
     toggleIsPublicReview,
     movieReviewsToShow,
-    isUpdatingWatchedRef,
-    isUpdatingListedRef,
-    isUpdatingReviewRef,
+    isUpdatingWatched,
+    isUpdatingListed,
+    isUpdatingReview,
   };
 
   return (

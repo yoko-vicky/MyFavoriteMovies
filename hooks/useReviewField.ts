@@ -4,7 +4,6 @@ import {
   FormEvent,
   SetStateAction,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import { useRouter } from 'next/router';
@@ -41,7 +40,7 @@ const useReviewField = ({
   const [review, setReview] = useState<string>('');
   const [reviewMsg, setReviewMsg] = useState<ValidateMsgState | null>(null);
   const [isPublicReview, setIsPublicReview] = useState<boolean>(false);
-  const isUpdatingReviewRef = useRef<boolean>(false);
+  const [isUpdatingReview, setIsUpdatingReview] = useState<boolean>(false);
 
   const isReviewOkay =
     review === initialReview ||
@@ -95,7 +94,7 @@ const useReviewField = ({
       errorToastify();
       return;
     }
-    isUpdatingReviewRef.current = true;
+    setIsUpdatingReview(true);
 
     const state = {
       status: {
@@ -116,7 +115,7 @@ const useReviewField = ({
       if (res.status === 200) {
         setTimeout(() => {
           updateSession();
-          isUpdatingReviewRef.current = false;
+          setIsUpdatingReview(false);
         }, 1000);
 
         const updatedPublicStatus =
@@ -134,7 +133,7 @@ const useReviewField = ({
       errorToastify();
       logger.log({ error });
     } finally {
-      isUpdatingReviewRef.current = false;
+      setIsUpdatingReview(false);
     }
   };
 
@@ -174,7 +173,7 @@ const useReviewField = ({
     toggleIsPublicReview,
     handleFormSubmit,
     handleResetBtnClick,
-    isUpdatingReviewRef,
+    isUpdatingReview,
   };
 };
 

@@ -11,7 +11,7 @@ import styles from './UserCommentDetail.module.scss';
 import { Stars } from '../Stars';
 
 export const UserCommentDetail = () => {
-  const { targetUserMovie, toggleShowForm, isShowForm } =
+  const { targetUserMovie, toggleShowForm, isShowForm, isUpdatingReview } =
     useMovieDetailContext();
 
   // const stars = use
@@ -54,20 +54,22 @@ export const UserCommentDetail = () => {
         </div>
       )}
 
-      <div className={styles.btnWrapper}>
-        <Button
-          variant={'simple'}
-          label={
-            isShowForm
-              ? commentsData.detail.buttons.closeForm
-              : commentsData.detail.buttons.showForm
-          }
-          Icon={isShowForm ? AiFillCaretUp : BsFillPencilFill}
-          iconSize="sm"
-          onClick={toggleShowForm}
-          className={styles.button}
-        />
-      </div>
+      {!isUpdatingReview && (
+        <div className={styles.btnWrapper}>
+          <Button
+            variant={'simple'}
+            label={
+              isShowForm
+                ? commentsData.detail.buttons.closeForm
+                : commentsData.detail.buttons.showForm
+            }
+            Icon={isShowForm ? AiFillCaretUp : BsFillPencilFill}
+            iconSize="sm"
+            onClick={toggleShowForm}
+            className={styles.button}
+          />
+        </div>
+      )}
     </div>
   );
 };
