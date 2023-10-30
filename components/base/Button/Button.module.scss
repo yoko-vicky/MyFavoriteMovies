@@ -141,3 +141,11 @@
     }
   }
 }
+
+@include mq(tab) {
+  // .btn {
+  //   &.outlined {
+  //     // display: block;
+  //   }
+  // }
+}
