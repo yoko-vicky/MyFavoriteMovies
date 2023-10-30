@@ -12,10 +12,14 @@ export const SocialLinks = ({ user }: { user: UserState }) => {
 
   return (
     <div className={styles.links}>
-      {!!user.twitter && <IconButton Icon={FaXTwitter} href={user.twitter} />}
-      {!!user.facebook && <IconButton Icon={BsFacebook} href={user.facebook} />}
+      {!!user.twitter && (
+        <IconButton Icon={FaXTwitter} href={user.twitter} iconSize="lg" />
+      )}
+      {!!user.facebook && (
+        <IconButton Icon={BsFacebook} href={user.facebook} iconSize="lg" />
+      )}
       {!!user.instagram && (
-        <IconButton Icon={BsInstagram} href={user.instagram} />
+        <IconButton Icon={BsInstagram} href={user.instagram} iconSize="lg" />
       )}
     </div>
   );
