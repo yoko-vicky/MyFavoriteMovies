@@ -21,11 +21,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let user: UserState | null = null;
 
   try {
-    user = await prisma.user.findUnique({
+    user = (await prisma.user.findUnique({
       where: {
         id: userId as string,
       },
-    });
+      include: {
+        userMovies: {
+          include: {
+            movie: true,
+          },
+        },
+      },
+    })) as unknown as UserState;
 
     if (!user) {
       return {
@@ -47,8 +54,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const UserProfilePage = ({
-      userForPage,
-    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  userForPage,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   if (!userForPage) {
     return <LoadingSpinner />;
   }

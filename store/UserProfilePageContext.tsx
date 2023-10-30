@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { useRouter } from 'next/router';
 import useModal from '@/hooks/useModal';
+import { MovieState } from '@/types/movies';
 import { UserState } from '@/types/user';
 import { useUserSessionDataContext } from './UserSessionDataContext';
 
@@ -20,6 +21,8 @@ interface UserProfilePageContextType {
   isUpdatingProfile: boolean;
   updateIsUpdatingProfile: (val: boolean) => void;
   isMyProfile: boolean;
+  userListedMovies: MovieState[];
+  userWatchedMovies: MovieState[];
 }
 
 const UserProfilePageContext = createContext<UserProfilePageContextType>({
@@ -31,6 +34,8 @@ const UserProfilePageContext = createContext<UserProfilePageContextType>({
   isUpdatingProfile: false,
   updateIsUpdatingProfile: () => undefined,
   isMyProfile: false,
+  userListedMovies: [],
+  userWatchedMovies: [],
 });
 
 export const UserProfilePageContextProvider = ({
@@ -40,15 +45,28 @@ export const UserProfilePageContextProvider = ({
   children: ReactNode;
   userForPage: UserState | null;
 }) => {
-  const { sessionData: session } = useUserSessionDataContext();
-  const isMyProfile = session?.user.id === userForPage?.id;
-  const user = isMyProfile && session?.user ? session?.user : userForPage;
+  const { sessionUser } = useUserSessionDataContext();
+  const isMyProfile = !!sessionUser && sessionUser?.id === userForPage?.id;
+  const user = isMyProfile ? sessionUser : userForPage;
   const {
     isModalOpen: isEditModalOpen,
     closeModal: closeEditModal,
     openModal: openEditModal,
   } = useModal();
   const router = useRouter();
+
+  const userListedMovies = user?.userMovies
+    ? (user.userMovies
+        ?.filter((um) => um.listed && !um.watched)
+        .map((um) => um.movie) as MovieState[])
+    : [];
+
+  const userWatchedMovies = user?.userMovies
+    ? (user.userMovies
+        ?.filter((um) => um.watched)
+        .map((um) => um.movie) as MovieState[])
+    : [];
+
   const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const timerRef = useRef<any>(null);
@@ -77,6 +95,8 @@ export const UserProfilePageContextProvider = ({
     isUpdatingProfile,
     updateIsUpdatingProfile,
     isMyProfile,
+    userListedMovies,
+    userWatchedMovies,
   };
 
   return (

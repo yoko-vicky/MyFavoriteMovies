@@ -1,3 +1,5 @@
+import { SwiperOptions } from 'swiper/types';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface VideoState {
   id: string;
@@ -171,4 +173,9 @@ export interface UpdateUserMovieStatusState {
 export interface UpdateUserMovieState {
   status: UpdateUserMovieStatusState;
   movie: MovieState;
+}
+
+export interface SliderBreakPointState {
+  [width: number]: SwiperOptions;
+  [ratio: string]: SwiperOptions;
 }
