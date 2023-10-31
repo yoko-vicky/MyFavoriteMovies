@@ -8,8 +8,7 @@ import {
 } from 'react';
 import { useRouter } from 'next/router';
 import useModal from '@/hooks/useModal';
-import { MovieState } from '@/types/movies';
-import { UserState } from '@/types/user';
+import { UserMovieState, UserState } from '@/types/user';
 import { useUserSessionDataContext } from './UserSessionDataContext';
 
 interface UserProfilePageContextType {
@@ -21,8 +20,8 @@ interface UserProfilePageContextType {
   isUpdatingProfile: boolean;
   updateIsUpdatingProfile: (val: boolean) => void;
   isMyProfile: boolean;
-  userListedMovies: MovieState[];
-  userWatchedMovies: MovieState[];
+  listedUserMovies: UserMovieState[];
+  watchedUserMovies: UserMovieState[];
 }
 
 const UserProfilePageContext = createContext<UserProfilePageContextType>({
@@ -34,8 +33,8 @@ const UserProfilePageContext = createContext<UserProfilePageContextType>({
   isUpdatingProfile: false,
   updateIsUpdatingProfile: () => undefined,
   isMyProfile: false,
-  userListedMovies: [],
-  userWatchedMovies: [],
+  listedUserMovies: [],
+  watchedUserMovies: [],
 });
 
 export const UserProfilePageContextProvider = ({
@@ -55,16 +54,12 @@ export const UserProfilePageContextProvider = ({
   } = useModal();
   const router = useRouter();
 
-  const userListedMovies = user?.userMovies
-    ? (user.userMovies
-        ?.filter((um) => um.listed && !um.watched)
-        .map((um) => um.movie) as MovieState[])
+  const listedUserMovies = user?.userMovies
+    ? user.userMovies?.filter((um) => um.listed && !um.watched)
     : [];
 
-  const userWatchedMovies = user?.userMovies
-    ? (user.userMovies
-        ?.filter((um) => um.watched)
-        .map((um) => um.movie) as MovieState[])
+  const watchedUserMovies = user?.userMovies
+    ? user.userMovies?.filter((um) => um.watched)
     : [];
 
   const [isUpdatingProfile, setIsUpdatingProfile] = useState<boolean>(false);
@@ -95,8 +90,8 @@ export const UserProfilePageContextProvider = ({
     isUpdatingProfile,
     updateIsUpdatingProfile,
     isMyProfile,
-    userListedMovies,
-    userWatchedMovies,
+    listedUserMovies,
+    watchedUserMovies,
   };
 
   return (

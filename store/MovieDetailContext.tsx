@@ -86,7 +86,7 @@ const MovieDetailContext = createContext<MovieDetailContextType>({
 export const MovieDetailContextProvider = ({
   children,
   movie,
-  movieReviewsInDb,
+  movieReviewsInDb: originalMovieReviewsInDb,
 }: {
   children: ReactNode;
   movie: MovieState;
@@ -100,6 +100,10 @@ export const MovieDetailContextProvider = ({
   );
   const [isShowForm, setIsShowForm] = useState<boolean>(false);
   const [isShowUserComment, setIsShowUserComment] = useState<boolean>(false);
+  const [movieReviewsInDb, setMovieReviewsInDb] = useState<ReviewState[]>([]);
+
+  const updateMovieReviewsInDb = (newMovieReviewsInDb: ReviewState[]) =>
+    setMovieReviewsInDb(newMovieReviewsInDb);
 
   const {
     state: watched,
@@ -138,6 +142,7 @@ export const MovieDetailContextProvider = ({
     userRate,
     setIsShowForm,
     resetRate,
+    updateMovieReviewsInDb,
   });
 
   const movieReviewsToShow = useMemo(() => {
@@ -173,6 +178,11 @@ export const MovieDetailContextProvider = ({
     watched,
     isUpdatingWatched,
   ]);
+
+  useEffect(() => {
+    if (!originalMovieReviewsInDb) return;
+    setMovieReviewsInDb(originalMovieReviewsInDb);
+  }, [originalMovieReviewsInDb]);
 
   const context: MovieDetailContextType = {
     movie,

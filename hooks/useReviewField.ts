@@ -4,16 +4,20 @@ import {
   FormEvent,
   SetStateAction,
   useEffect,
+  useRef,
   useState,
 } from 'react';
-import { useRouter } from 'next/router';
 import { USER_REVIEW_MAX_LENGTH, formVal } from '@/constants';
-import { updateUserMovie } from '@/lib/axios';
+import { getData, updateUserMovie } from '@/lib/axios';
 import { errorToastify } from '@/lib/toast';
 import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
 import { ValidateMsgState, ValidateMsgTypeState } from '@/types';
-import { MovieState } from '@/types/movies';
-import { removeExtraSpaceFromStr } from '@/utils';
+import { MovieState, ReviewState } from '@/types/movies';
+import { UserMovieState } from '@/types/user';
+import {
+  createReviewItemsFromUserMoviesInDb,
+  removeExtraSpaceFromStr,
+} from '@/utils';
 import { logger } from '@/utils/logger';
 
 const useReviewField = ({
@@ -21,13 +25,14 @@ const useReviewField = ({
   userRate,
   setIsShowForm,
   resetRate,
+  updateMovieReviewsInDb,
 }: {
   movie: MovieState;
   userRate: number;
   setIsShowForm: Dispatch<SetStateAction<boolean>>;
   resetRate: () => void;
+  updateMovieReviewsInDb: (newReviewsInDb: ReviewState[]) => void;
 }) => {
-  const router = useRouter();
   const { updateSession, sessionUser, sessionUserMovies } =
     useUserSessionDataContext();
 
@@ -36,11 +41,13 @@ const useReviewField = ({
   );
 
   const initialReview = targetUserMovie?.comment;
+  const initialIsPublicReview = targetUserMovie?.isPublicReview;
 
   const [review, setReview] = useState<string>('');
   const [reviewMsg, setReviewMsg] = useState<ValidateMsgState | null>(null);
   const [isPublicReview, setIsPublicReview] = useState<boolean>(false);
   const [isUpdatingReview, setIsUpdatingReview] = useState<boolean>(false);
+  const timeToGetReviewsRef = useRef<boolean>(false);
 
   const isReviewOkay =
     review === initialReview ||
@@ -105,6 +112,11 @@ const useReviewField = ({
       movie,
     };
 
+    const shouldUpdateUserReviewsAfterSucceeded =
+      (review !== initialReview && !!isPublicReview) ||
+      initialIsPublicReview !== !!isPublicReview;
+
+    logger.log({ initialIsPublicReview, isPublicReview });
     try {
       const res = await updateUserMovie({
         movieId: movie.id,
@@ -118,22 +130,16 @@ const useReviewField = ({
           setIsUpdatingReview(false);
         }, 1000);
 
-        const updatedPublicStatus =
-          (targetUserMovie &&
-            targetUserMovie.isPublicReview !== state.status.isPublicReview) ||
-          false;
-
-        if (updatedPublicStatus) {
-          router.push(`/movies/${movie.id}`);
-          return;
+        if (shouldUpdateUserReviewsAfterSucceeded) {
+          timeToGetReviewsRef.current = true;
         }
       }
-      setIsShowForm(false);
     } catch (error) {
       errorToastify();
       logger.log({ error });
     } finally {
       setIsUpdatingReview(false);
+      setIsShowForm(false);
     }
   };
 
@@ -147,7 +153,8 @@ const useReviewField = ({
     if (!targetUserMovie) return;
 
     setIsPublicReview(targetUserMovie.isPublicReview);
-  }, [targetUserMovie, targetUserMovie?.isPublicReview]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetUserMovie?.isPublicReview]);
 
   useEffect(() => {
     if (!initialReview) return;
@@ -159,6 +166,33 @@ const useReviewField = ({
 
     errorToastify(reviewMsg.msg);
   }, [reviewMsg, reviewMsg?.msg, reviewMsg?.type]);
+
+  const getNewReviewsInDb = async () => {
+    try {
+      const res = await getData(`/api/userMovies/${movie.id}`);
+      if (res.status === 200) {
+        logger.log({ res });
+
+        const filteredReviewsToShow = res.data.data.filter(
+          (um: UserMovieState) => um.watched && um.isPublicReview,
+        );
+        const reviewItems = createReviewItemsFromUserMoviesInDb(
+          filteredReviewsToShow,
+        );
+        updateMovieReviewsInDb(reviewItems);
+      }
+    } catch (error) {
+      logger.log(error);
+    } finally {
+      timeToGetReviewsRef.current = false;
+    }
+  };
+
+  useEffect(() => {
+    if (!timeToGetReviewsRef.current) return;
+    getNewReviewsInDb();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeToGetReviewsRef.current]);
 
   return {
     review,

@@ -8,32 +8,54 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { movieId, userId } = req.query;
-  const { movie, status } = req.body as UpdateUserMovieState;
+  const { movieId } = req.query;
 
   if (!movieId) {
     return res.status(404).json({ message: 'movieId is missing.' });
   }
 
-  if (!userId) {
-    return res.status(404).json({ message: 'userId is missing.' });
-  }
+  if (req.method === 'GET') {
+    try {
+      const userMovies = await prisma.userMovie.findMany({
+        where: {
+          movieId: +movieId,
+        },
+        include: {
+          user: true,
+        },
+      });
 
-  if (!movie || !status) {
-    return res.status(404).json({ message: 'request body is missing.' });
-  }
+      res.status(200).json({
+        message: `Successfully got all userMovies with movieId: ${movieId}`,
+        data: userMovies || [],
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: 'Something went wrong.', error: error.message });
+    }
+  } else if (req.method === 'PUT') {
+    const { userId } = req.query;
+    const { movie, status } = req.body as UpdateUserMovieState;
 
-  // Check Session
-  const session = await getServerSession(req, res, authOptions);
-  if (!session || !session.user) {
-    return res.status(401).json({ message: 'Unauthenticated' });
-  }
+    if (!userId) {
+      return res.status(404).json({ message: 'userId is missing.' });
+    }
 
-  if (session.user.id !== (userId as string)) {
-    return res.status(401).json({ message: 'Unauthenticated' });
-  }
+    if (!movie || !status) {
+      return res.status(404).json({ message: 'request body is missing.' });
+    }
 
-  if (req.method === 'PUT') {
+    // Check Session
+    const session = await getServerSession(req, res, authOptions);
+    if (!session || !session.user) {
+      return res.status(401).json({ message: 'Unauthenticated' });
+    }
+
+    if (session.user.id !== (userId as string)) {
+      return res.status(401).json({ message: 'Unauthenticated' });
+    }
+
     const movieGenres = movie.genres
       ? movie.genres.map((genre) => ({
           where: {

@@ -42,8 +42,8 @@ export const UserCommentForm = () => {
       <label className={styles.publicCheckbox}>
         <input
           type={'checkbox'}
-          defaultChecked={isPublicReview || false}
-          checked={isPublicReview || false}
+          // defaultChecked={isPublicReview || false}
+          checked={isPublicReview}
           onChange={toggleIsPublicReview}
         />
         <span className={styles.publicIcon}>
