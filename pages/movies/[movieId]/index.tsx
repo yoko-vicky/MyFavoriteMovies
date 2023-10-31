@@ -7,7 +7,7 @@ import { getMovieById } from '@/lib/tmdb';
 import { MovieDetailContextProvider } from '@/store/MovieDetailContext';
 import { MovieState, ReviewState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
-import { shapeData } from '@/utils';
+import { createReviewItemsFromUserMoviesInDb, shapeData } from '@/utils';
 import { logger } from '@/utils/logger';
 import { getLayoutFn } from '../../../utils/getLayoutFn';
 
@@ -50,23 +50,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   logger.log({ userMovies });
   if (userMovies && !!userMovies.length) {
-    movieReviewsInDb = userMovies.map((um) => ({
-      author: um.user?.name || '',
-      author_details: {
-        name: um.user?.name || '',
-        username: um.user?.name || '',
-        avatar_path: null,
-        rating: null,
-      },
-      content: um.comment,
-      stars: um.stars,
-      created_at: um.createdAt,
-      updated_at: um.updatedAt,
-      url: '',
-      imageUrl: um.user?.image,
-      userId: um.userId,
-      movieId: um.movieId,
-    }));
+    movieReviewsInDb = createReviewItemsFromUserMoviesInDb(userMovies);
   }
 
   return {
@@ -78,9 +62,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MovieDetailPage = ({
-  movie,
-  movieReviewsInDb,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      movie,
+      movieReviewsInDb,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   if (!movie) {
     return <LoadingSpinner />;
   }

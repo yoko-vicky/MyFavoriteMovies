@@ -1,3 +1,7 @@
+import uuid from '@/lib/uuid';
+import { ReviewState } from '@/types/movies';
+import { UserMovieState } from '@/types/user';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const getRandomNum = (max = 10) => Math.floor(Math.random() * max);
 export const shapeData = (data: any) => JSON.parse(JSON.stringify(data));
@@ -28,3 +32,25 @@ export const formatDate = (date: Date) => {
   const month = newDate.getMonth();
   return `${year}/${month + 1}`;
 };
+
+export const createReviewItemsFromUserMoviesInDb = (
+  userMoviesInDb: UserMovieState[],
+) =>
+  userMoviesInDb.map( ( um ) => ( {
+    id: uuid(),
+    author: um.user?.name || '',
+    author_details: {
+      name: um.user?.name || '',
+      username: um.user?.name || '',
+      avatar_path: null,
+      rating: null,
+    },
+    content: um.comment,
+    stars: um.stars,
+    created_at: um.createdAt,
+    updated_at: um.updatedAt,
+    url: '',
+    imageUrl: um.user?.image,
+    userId: um.userId,
+    movieId: um.movieId,
+  })) as ReviewState[];

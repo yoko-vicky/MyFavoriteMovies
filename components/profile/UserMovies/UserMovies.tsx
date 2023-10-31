@@ -10,23 +10,23 @@ export const UserMovies = () => {
     // userForPage,
     // isMyProfile,
     user,
-    userListedMovies,
-    userWatchedMovies,
+    listedUserMovies,
+    watchedUserMovies,
   } = useUserProfilePageContext();
   logger.log({ userMovies: user?.userMovies });
 
   const maxLengthToShow = 12;
-  const listedMoviesToShow = userListedMovies.slice(0, maxLengthToShow);
-  const watchedMoviesToShow = userWatchedMovies.slice(0, maxLengthToShow);
+  const listedUserMoviesToShow = listedUserMovies.slice(0, maxLengthToShow);
+  const watchedUserMoviesToShow = watchedUserMovies.slice(0, maxLengthToShow);
 
   return (
     <div className={styles.container}>
       <div className={styles.list}>
         <MoviesList
           title={`${user?.name}'s List`}
-          movies={listedMoviesToShow}
+          userMovies={listedUserMoviesToShow}
         />
-        {userListedMovies.length > maxLengthToShow && (
+        {listedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>
             <Button
               variant={'outlined'}
@@ -40,9 +40,9 @@ export const UserMovies = () => {
       <div className={styles.list}>
         <MoviesList
           title={`${user?.name}'s Watched Movies`}
-          movies={watchedMoviesToShow}
+          userMovies={watchedUserMoviesToShow}
         />
-        {userWatchedMovies.length > maxLengthToShow && (
+        {watchedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>
             <Button
               variant={'outlined'}
@@ -53,10 +53,10 @@ export const UserMovies = () => {
           </div>
         )}
       </div>
-      {/* <SliderMovies title={`${user?.name}'s List`} movies={userListedMovies} /> */}
+      {/* <SliderMovies title={`${user?.name}'s List`} movies={listedUserMovies} /> */}
       {/* <SliderMovies
         title={`${user?.name}'s Watched Movies`}
-        movies={userWatchedMovies}
+        movies={watchedUserMovies}
       /> */}
     </div>
   );

@@ -2,16 +2,23 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
-import { MovieState } from '@/types/movies';
+import { UserMovieState } from '@/types/user';
 import styles from './MoviesListItem.module.scss';
 
-export const MoviesListItem = ({ movie }: { movie: MovieState }) => {
+export const MoviesListItem = ({
+  userMovie,
+}: {
+  userMovie: UserMovieState;
+}) => {
+  if (!userMovie.movie) {
+    return <></>;
+  }
   return (
     <div className={styles.movie}>
-      <Link href={`/movies/${movie.id}`}>
+      <Link href={`/movies/${userMovie.movie?.id}`}>
         <Image
-          src={createImageUrl(movie.poster_path)}
-          alt={movie.title}
+          src={createImageUrl(userMovie.movie?.poster_path)}
+          alt={userMovie.movie?.title}
           width={200}
           height={300}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw"
