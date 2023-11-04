@@ -6,7 +6,7 @@ import styles from './RadioButtonFields.module.scss';
 
 interface RadioButtonFieldsPropsType {
   optionItems: CheckboxOptionItemState[];
-  handleOptionChange: (newName: string) => void;
+  handleOptionChange: (newValue: string) => void;
 }
 
 export const RadioButtonFields = ({
@@ -25,8 +25,8 @@ export const RadioButtonFields = ({
             className={clsx(styles.input, item.checked ? styles.checked : '')}
             type="radio"
             checked={item.checked}
-            name={item.name}
-            onChange={() => handleOptionChange(item.name)}
+            name={item.value}
+            onChange={() => handleOptionChange(item.value)}
           />
           <span className={styles.checkmark}></span>
           <span
