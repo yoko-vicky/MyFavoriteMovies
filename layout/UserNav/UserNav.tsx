@@ -23,7 +23,7 @@ export const UserNav = () => {
 
   const handleClickToMyList = () => {
     setOpenUserMenu(false);
-    sessionUser && router.push('mylist');
+    sessionUser && router.push('/mylist');
   };
 
   // logger.log({ user: session?.user });

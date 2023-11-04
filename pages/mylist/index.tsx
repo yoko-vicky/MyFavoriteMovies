@@ -7,10 +7,12 @@ import { authOptions } from '@/lib/nextAuth';
 import { UserListPageContextProvider } from '@/store/UserListPageContext';
 import { shapeData } from '@/utils';
 import { getLayoutFn } from '@/utils/getLayoutFn';
+import { logger } from '@/utils/logger';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
+  logger.log({ session });
   if (!session || !session.user) {
     return {
       notFound: true,
@@ -26,9 +28,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MyListPage = ({
-  user,
-  userMovies,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      user,
+      userMovies,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   if (!user || !userMovies) {
     return <LoadingSpinner />;
   }
