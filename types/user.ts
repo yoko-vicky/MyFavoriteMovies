@@ -1,4 +1,4 @@
-import { MovieState } from './movies';
+import { MovieGenreState, MovieState } from './movies';
 
 export interface UserState {
   id: string;

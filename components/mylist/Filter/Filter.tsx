@@ -11,6 +11,9 @@ export const Filter = () => {
     handleChangeAge,
     agesOptions,
     isAllAges,
+    genreOptions,
+    isAllGenres,
+    handleChangeGenre,
   } = useUserListPageContext();
 
   return (
@@ -25,6 +28,14 @@ export const Filter = () => {
         optionItems={agesOptions}
         handleOptionChange={handleChangeAge}
         isAll={isAllAges}
+        allValue={'All'}
+      />
+      {/* GenreFilter */}
+      <CheckboxFields
+        optionItems={genreOptions}
+        handleOptionChange={handleChangeGenre}
+        isAll={isAllGenres}
+        allValue={'0'}
       />
     </div>
   );

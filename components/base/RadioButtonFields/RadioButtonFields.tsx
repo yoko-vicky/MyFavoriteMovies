@@ -1,11 +1,11 @@
 import React from 'react';
 import clsx from 'clsx';
 import uuid from '@/lib/uuid';
-import { CheckboxOptionItemState } from '@/types';
+import { OptionItemState } from '@/types';
 import styles from './RadioButtonFields.module.scss';
 
 interface RadioButtonFieldsPropsType {
-  optionItems: CheckboxOptionItemState[];
+  optionItems: OptionItemState[];
   handleOptionChange: (newValue: string) => void;
 }
 
@@ -19,7 +19,7 @@ export const RadioButtonFields = ({
 
   return (
     <div className={styles.fields}>
-      {optionItems.map((item: CheckboxOptionItemState) => (
+      {optionItems.map((item: OptionItemState) => (
         <label className={styles.item} key={uuid()}>
           <input
             className={clsx(styles.input, item.checked ? styles.checked : '')}

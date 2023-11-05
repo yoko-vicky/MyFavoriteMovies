@@ -1,8 +1,10 @@
 import { ReactNode, createContext, useContext, useMemo } from 'react';
 import useAges from '@/hooks/ListFilter/useAges';
+import useGenres from '@/hooks/ListFilter/useGenres';
 import useWatchedStatus from '@/hooks/ListFilter/useWatchedStatus';
 import { OptionItemState } from '@/types';
 import { UserMovieState, UserState } from '@/types/user';
+import { logger } from '@/utils/logger';
 
 interface UserListPageContextType {
   user: UserState | null;
@@ -12,6 +14,12 @@ interface UserListPageContextType {
   handleChangeAge: (age: string, addOrRemove: 'add' | 'remove') => void;
   agesOptions: OptionItemState[];
   isAllAges: boolean;
+  genreOptions: OptionItemState[];
+  isAllGenres: boolean;
+  handleChangeGenre: (
+    genreOriginId: string,
+    addOrRemove: 'add' | 'remove',
+  ) => void;
 }
 
 const UserListPageContext = createContext<UserListPageContextType>({
@@ -22,6 +30,9 @@ const UserListPageContext = createContext<UserListPageContextType>({
   handleChangeAge: () => undefined,
   agesOptions: [],
   isAllAges: false,
+  genreOptions: [],
+  isAllGenres: false,
+  handleChangeGenre: () => undefined,
 });
 
 export const UserListPageContextProvider = ({
@@ -40,10 +51,17 @@ export const UserListPageContextProvider = ({
   } = useWatchedStatus();
 
   const { ageFilter, handleChangeAge, agesOptions, isAllAges } = useAges();
+  const { genreOptions, isAllGenres, handleChangeGenre, genreFilter } =
+    useGenres(originUserMovies);
+  logger.log({ genreOptions });
 
   const userMovies = useMemo(
-    () => originUserMovies.filter(watchedStatusFilter).filter(ageFilter),
-    [ageFilter, originUserMovies, watchedStatusFilter],
+    () =>
+      originUserMovies
+        .filter(watchedStatusFilter)
+        .filter(ageFilter)
+        .filter(genreFilter),
+    [ageFilter, genreFilter, originUserMovies, watchedStatusFilter],
   );
 
   const context: UserListPageContextType = {
@@ -54,6 +72,9 @@ export const UserListPageContextProvider = ({
     handleChangeAge,
     agesOptions,
     isAllAges,
+    genreOptions,
+    isAllGenres,
+    handleChangeGenre,
   };
 
   return (

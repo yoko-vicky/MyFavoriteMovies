@@ -16,7 +16,8 @@ export interface VideoState {
 
 export interface MovieGenreState {
   id: number;
-  name: string;
+  originGenreId: number;
+  title: string;
 }
 
 export interface MovieState {
@@ -197,7 +198,7 @@ export type AgeState =
   | '2000'
   | '2010'
   | '2020'
-  | 'all';
+  | 'All';
 
 export const agesArr = [
   '1930',
@@ -210,5 +211,5 @@ export const agesArr = [
   '2000',
   '2010',
   '2020',
-  'all',
+  'All',
 ] as AgeState[];

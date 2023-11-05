@@ -72,7 +72,11 @@ export const authOptions: AuthOptions = {
           include: {
             userMovies: {
               include: {
-                movie: true,
+                movie: {
+                  include: {
+                    genres: true,
+                  },
+                },
               },
             },
           },
