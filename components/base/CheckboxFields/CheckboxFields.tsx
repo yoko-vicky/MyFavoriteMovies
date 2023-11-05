@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import uuid from '@/lib/uuid';
 import { OptionItemState } from '@/types';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 import styles from './CheckboxFields.module.scss';
 
 interface CheckboxFieldsPropsType {
@@ -26,7 +26,7 @@ export const CheckboxFields = ({
     <div className={styles.fields}>
       {optionItems.map((item: OptionItemState) => {
         const disabled = isAll && item.value !== allValue;
-        logger.log({ disabled, item: item.label });
+        // logger.log({ disabled, item: item.label });
         return (
           <label
             className={clsx(styles.item, disabled ? styles.disabled : '')}
