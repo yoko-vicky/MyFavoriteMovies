@@ -1,5 +1,13 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { UserMovieState, UserState } from '@/types/user';
+import { logger } from '@/utils/logger';
 
 interface UserListPageContextType {
   user: UserState | null;
@@ -24,18 +32,61 @@ type AgeState =
   | '2020'
   | 'all';
 
+enum WatchedStatus {
+  UNWATCHED = 'unwatched',
+  WATCHED = 'watched',
+  ALL = 'all',
+}
+
 export const UserListPageContextProvider = ({
   children,
   user,
-  userMovies,
+  userMovies: originUserMovies,
 }: {
   children: ReactNode;
   user: UserState;
   userMovies: UserMovieState[];
 }) => {
-  const defaultAge = 'all';
+  const defaultAges: AgeState[] = ['all'];
+  const defaultWatchedStatus = WatchedStatus.UNWATCHED;
+  const [watchedStatus, setWatchedStatus] =
+    useState<WatchedStatus>(defaultWatchedStatus);
   const [genres, setGenres] = useState<string[]>([]);
-  const [age, setAge] = useState<AgeState>('all');
+  const [ages, setAges] = useState<AgeState[]>(defaultAges);
+
+  const ageFilter = useCallback(
+    (userMovie: UserMovieState) => {
+      if (ages == defaultAges) {
+        return true;
+      } else {
+        const movieAge =
+          userMovie.movie?.release_date.split('-')[0].slice(0, 3) + '0';
+        logger.log({ movieAge });
+        return ages.includes(movieAge as AgeState);
+      }
+    },
+    [ages, defaultAges],
+  );
+
+  const watchedStatusFilter = useCallback(
+    (userMovie: UserMovieState) => {
+      if (watchedStatus === WatchedStatus.UNWATCHED) {
+        return userMovie.listed && !userMovie.watched;
+      }
+
+      if (watchedStatus === WatchedStatus.WATCHED) {
+        return userMovie.watched;
+      }
+
+      return true;
+    },
+    [watchedStatus],
+  );
+
+  const userMovies = useMemo(
+    () => originUserMovies.filter(watchedStatusFilter).filter(ageFilter),
+    [ageFilter, originUserMovies, watchedStatusFilter],
+  );
 
   const context: UserListPageContextType = {
     user,
