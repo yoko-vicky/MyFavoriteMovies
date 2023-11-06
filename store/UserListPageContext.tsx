@@ -6,17 +6,24 @@ import {
   useMemo,
   useState,
 } from 'react';
+import useWatchedStatus from '@/hooks/ListFilter/useWatchedStatus';
+import { WatchedStatus } from '@/types/movies';
 import { UserMovieState, UserState } from '@/types/user';
 import { logger } from '@/utils/logger';
+import { CheckboxOptionItemState } from '../types/index';
 
 interface UserListPageContextType {
   user: UserState | null;
   userMovies: UserMovieState[];
+  watchedStatusOptionItems: CheckboxOptionItemState[];
+  handleWatchedStatusChange: (newName: string) => void;
 }
 
 const UserListPageContext = createContext<UserListPageContextType>({
   user: null,
   userMovies: [],
+  watchedStatusOptionItems: [],
+  handleWatchedStatusChange: () => undefined,
 });
 
 type AgeState =
@@ -32,12 +39,6 @@ type AgeState =
   | '2020'
   | 'all';
 
-enum WatchedStatus {
-  UNWATCHED = 'unwatched',
-  WATCHED = 'watched',
-  ALL = 'all',
-}
-
 export const UserListPageContextProvider = ({
   children,
   user,
@@ -47,10 +48,9 @@ export const UserListPageContextProvider = ({
   user: UserState;
   userMovies: UserMovieState[];
 }) => {
+  const { watchedStatus, watchedStatusOptionItems, handleWatchedStatusChange } =
+    useWatchedStatus();
   const defaultAges: AgeState[] = ['all'];
-  const defaultWatchedStatus = WatchedStatus.UNWATCHED;
-  const [watchedStatus, setWatchedStatus] =
-    useState<WatchedStatus>(defaultWatchedStatus);
   const [genres, setGenres] = useState<string[]>([]);
   const [ages, setAges] = useState<AgeState[]>(defaultAges);
 
@@ -84,13 +84,17 @@ export const UserListPageContextProvider = ({
   );
 
   const userMovies = useMemo(
-    () => originUserMovies.filter(watchedStatusFilter).filter(ageFilter),
-    [ageFilter, originUserMovies, watchedStatusFilter],
+    () => originUserMovies.filter(watchedStatusFilter),
+    [originUserMovies, watchedStatusFilter],
   );
+
+  logger.log({ userMovies, watchedStatusFilter, watchedStatus });
 
   const context: UserListPageContextType = {
     user,
     userMovies,
+    watchedStatusOptionItems,
+    handleWatchedStatusChange,
   };
 
   return (

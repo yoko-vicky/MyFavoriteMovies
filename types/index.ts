@@ -16,3 +16,9 @@ export interface ValidateMsgState {
   msg: string;
   type: ValidateMsgTypeState;
 }
+
+export interface CheckboxOptionItemState {
+  label: string;
+  name: string;
+  checked: boolean;
+}

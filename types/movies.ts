@@ -179,3 +179,9 @@ export interface SliderBreakPointState {
   [width: number]: SwiperOptions;
   [ratio: string]: SwiperOptions;
 }
+
+export enum WatchedStatus {
+  UNWATCHED = 'unwatched',
+  WATCHED = 'watched',
+  ALL = 'all',
+}
