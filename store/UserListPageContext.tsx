@@ -1,22 +1,17 @@
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { ReactNode, createContext, useContext, useMemo } from 'react';
+import useAges from '@/hooks/ListFilter/useAges';
 import useWatchedStatus from '@/hooks/ListFilter/useWatchedStatus';
-import { WatchedStatus } from '@/types/movies';
+import { OptionItemState } from '@/types';
 import { UserMovieState, UserState } from '@/types/user';
-import { logger } from '@/utils/logger';
-import { CheckboxOptionItemState } from '../types/index';
 
 interface UserListPageContextType {
   user: UserState | null;
   userMovies: UserMovieState[];
-  watchedStatusOptionItems: CheckboxOptionItemState[];
-  handleWatchedStatusChange: (newName: string) => void;
+  watchedStatusOptionItems: OptionItemState[];
+  handleWatchedStatusChange: (newValue: string) => void;
+  handleChangeAge: (age: string, addOrRemove: 'add' | 'remove') => void;
+  agesOptions: OptionItemState[];
+  isAllAges: boolean;
 }
 
 const UserListPageContext = createContext<UserListPageContextType>({
@@ -24,20 +19,10 @@ const UserListPageContext = createContext<UserListPageContextType>({
   userMovies: [],
   watchedStatusOptionItems: [],
   handleWatchedStatusChange: () => undefined,
+  handleChangeAge: () => undefined,
+  agesOptions: [],
+  isAllAges: false,
 });
-
-type AgeState =
-  | '1930'
-  | '1940'
-  | '1950'
-  | '1960'
-  | '1970'
-  | '1980'
-  | '1990'
-  | '2000'
-  | '2010'
-  | '2020'
-  | 'all';
 
 export const UserListPageContextProvider = ({
   children,
@@ -48,53 +33,27 @@ export const UserListPageContextProvider = ({
   user: UserState;
   userMovies: UserMovieState[];
 }) => {
-  const { watchedStatus, watchedStatusOptionItems, handleWatchedStatusChange } =
-    useWatchedStatus();
-  const defaultAges: AgeState[] = ['all'];
-  const [genres, setGenres] = useState<string[]>([]);
-  const [ages, setAges] = useState<AgeState[]>(defaultAges);
+  const {
+    watchedStatusFilter,
+    watchedStatusOptionItems,
+    handleWatchedStatusChange,
+  } = useWatchedStatus();
 
-  const ageFilter = useCallback(
-    (userMovie: UserMovieState) => {
-      if (ages == defaultAges) {
-        return true;
-      } else {
-        const movieAge =
-          userMovie.movie?.release_date.split('-')[0].slice(0, 3) + '0';
-        logger.log({ movieAge });
-        return ages.includes(movieAge as AgeState);
-      }
-    },
-    [ages, defaultAges],
-  );
-
-  const watchedStatusFilter = useCallback(
-    (userMovie: UserMovieState) => {
-      if (watchedStatus === WatchedStatus.UNWATCHED) {
-        return userMovie.listed && !userMovie.watched;
-      }
-
-      if (watchedStatus === WatchedStatus.WATCHED) {
-        return userMovie.watched;
-      }
-
-      return true;
-    },
-    [watchedStatus],
-  );
+  const { ageFilter, handleChangeAge, agesOptions, isAllAges } = useAges();
 
   const userMovies = useMemo(
-    () => originUserMovies.filter(watchedStatusFilter),
-    [originUserMovies, watchedStatusFilter],
+    () => originUserMovies.filter(watchedStatusFilter).filter(ageFilter),
+    [ageFilter, originUserMovies, watchedStatusFilter],
   );
-
-  logger.log({ userMovies, watchedStatusFilter, watchedStatus });
 
   const context: UserListPageContextType = {
     user,
     userMovies,
     watchedStatusOptionItems,
     handleWatchedStatusChange,
+    handleChangeAge,
+    agesOptions,
+    isAllAges,
   };
 
   return (

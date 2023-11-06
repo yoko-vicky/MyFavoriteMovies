@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { CheckboxOptionItemState } from '@/types';
 import { WatchedStatus } from '@/types/movies';
+import { UserMovieState } from '@/types/user';
 
 const useWatchedStatus = () => {
   const defaultWatchedStatus = WatchedStatus.UNWATCHED;
@@ -10,17 +11,17 @@ const useWatchedStatus = () => {
   const watchedStatusOptionItems: CheckboxOptionItemState[] = [
     {
       label: 'Unwatched',
-      name: 'unwatched',
+      value: 'unwatched',
       checked: watchedStatus === WatchedStatus.UNWATCHED,
     },
     {
       label: 'Watched',
-      name: 'watched',
+      value: 'watched',
       checked: watchedStatus === WatchedStatus.WATCHED,
     },
     {
       label: 'All',
-      name: 'all',
+      value: 'all',
       checked: watchedStatus === WatchedStatus.ALL,
     },
   ];
@@ -29,10 +30,26 @@ const useWatchedStatus = () => {
     setWatchedStatus(newName as WatchedStatus);
   };
 
+  const watchedStatusFilter = useCallback(
+    (userMovie: UserMovieState) => {
+      if (watchedStatus === WatchedStatus.UNWATCHED) {
+        return userMovie.listed && !userMovie.watched;
+      }
+
+      if (watchedStatus === WatchedStatus.WATCHED) {
+        return userMovie.watched;
+      }
+
+      return true;
+    },
+    [watchedStatus],
+  );
+
   return {
     watchedStatusOptionItems,
     handleWatchedStatusChange,
     watchedStatus,
+    watchedStatusFilter,
   };
 };
 
