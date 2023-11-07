@@ -30,7 +30,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   let movieReviewsInDb: Partial<ReviewState>[] = [];
 
-  logger.log({ movieId });
+  logger.log({ movie, movieId });
   const userMovies: UserMovieState[] | undefined =
     (await prisma.userMovie.findMany({
       where: {

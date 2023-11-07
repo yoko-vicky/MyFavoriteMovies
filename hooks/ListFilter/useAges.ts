@@ -5,23 +5,33 @@ import { UserMovieState } from '@/types/user';
 import { logger } from '@/utils/logger';
 
 const useAges = () => {
-  const [ages, setAges] = useState<AgeState[]>(['all']);
+  const [ages, setAges] = useState<AgeState[]>(['All']);
 
-  const isAllAges = ages.includes('all');
+  const isAllAges = ages.includes('All');
 
   const ageFilter = useCallback(
     (userMovie: UserMovieState) => {
-      if (ages.includes('all')) {
+      if (ages.includes('All')) {
         return true;
       } else {
-        const movieAge =
+        let movieAge =
           userMovie.movie?.release_date.split('-')[0].slice(0, 3) + '0';
-        logger.log({ movieAge });
+
+        if (+movieAge <= 1930) {
+          movieAge = '1930';
+        }
+
+        if (+movieAge >= 2020) {
+          movieAge = '2020';
+        }
+
         return ages.includes(movieAge as AgeState);
       }
     },
     [ages],
   );
+
+  logger.log({ ages });
 
   const handleChangeAge = (age: string, addOrRemove: 'add' | 'remove') => {
     addOrRemove === 'add'
@@ -29,10 +39,10 @@ const useAges = () => {
       : setAges((prev) => prev.filter((item) => item !== age));
   };
 
-  const agesOptions = agesArr.map((item, index) => {
-    const checked = ages.includes('all') || ages.includes(item);
+  const agesOptions = agesArr.map((item) => {
+    const checked = ages.includes('All') || ages.includes(item);
 
-    if (index === 0) {
+    if (item === '1930') {
       return {
         label: `〜${item}`,
         value: item,
@@ -40,7 +50,7 @@ const useAges = () => {
       };
     }
 
-    if (index === ages.length - 1) {
+    if (item === '2020') {
       return {
         label: `${item}〜`,
         value: item,
