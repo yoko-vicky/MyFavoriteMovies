@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { OptionItemState } from '@/types';
 import { AgeState, agesArr } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 
 const useAges = () => {
   const [ages, setAges] = useState<AgeState[]>(['All']);
@@ -31,7 +31,7 @@ const useAges = () => {
     [ages],
   );
 
-  logger.log({ ages });
+  // logger.log({ ages });
 
   const handleChangeAge = (age: string, addOrRemove: 'add' | 'remove') => {
     addOrRemove === 'add'

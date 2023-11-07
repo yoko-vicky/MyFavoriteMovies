@@ -14,6 +14,8 @@ export const Filter = () => {
     genreOptions,
     isAllGenres,
     handleChangeGenre,
+    handleChangeStarRate,
+    starRateOptions,
   } = useUserListPageContext();
 
   return (
@@ -36,6 +38,17 @@ export const Filter = () => {
         handleOptionChange={handleChangeGenre}
         isAll={isAllGenres}
         allValue={'0'}
+      />
+      {/* GenreFilter */}
+      {/* <CheckboxFields
+        optionItems={starRateOptions}
+        handleOptionChange={handleChangeStarRate}
+        isAll={isAllStarRate}
+        allValue={'All'}
+      /> */}
+      <RadioButtonFields
+        optionItems={starRateOptions}
+        handleOptionChange={handleChangeStarRate}
       />
     </div>
   );

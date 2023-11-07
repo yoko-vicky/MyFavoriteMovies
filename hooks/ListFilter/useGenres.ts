@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { OptionItemState } from '@/types';
 import { MovieGenreState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 
 const useGenres = (originUserMovies: UserMovieState[]) => {
   const allGenreItem = {
@@ -40,7 +40,7 @@ const useGenres = (originUserMovies: UserMovieState[]) => {
   const genreOptions: OptionItemState[] = useMemo(
     () =>
       originGenreOptions.map((op) => {
-        logger.log({ op });
+        // logger.log({ op });
         const checked =
           genres.includes(allGenreItem.originGenreId) ||
           genres.includes(op.originGenreId);

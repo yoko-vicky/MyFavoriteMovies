@@ -213,3 +213,7 @@ export const agesArr = [
   '2020',
   'All',
 ] as AgeState[];
+
+export type StarRateState = '0' | '1' | '2' | '3' | '4' | '5' | 'All';
+
+export const starRateArr = ['1', '2', '3', '4', '5', 'All'] as StarRateState[];
