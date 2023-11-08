@@ -4,15 +4,15 @@ import { WatchedStatus } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 
 const useWatchedStatus = () => {
-  const defaultWatchedStatus = WatchedStatus.UNWATCHED;
+  const defaultWatchedStatus = WatchedStatus.LISTED;
   const [watchedStatus, setWatchedStatus] =
     useState<WatchedStatus>(defaultWatchedStatus);
 
   const watchedStatusOptionItems: OptionItemState[] = [
     {
-      label: 'Unwatched',
-      value: 'unwatched',
-      checked: watchedStatus === WatchedStatus.UNWATCHED,
+      label: 'Listed',
+      value: 'listed',
+      checked: watchedStatus === WatchedStatus.LISTED,
     },
     {
       label: 'Watched',
@@ -32,7 +32,7 @@ const useWatchedStatus = () => {
 
   const watchedStatusFilter = useCallback(
     (userMovie: UserMovieState) => {
-      if (watchedStatus === WatchedStatus.UNWATCHED) {
+      if (watchedStatus === WatchedStatus.LISTED) {
         return userMovie.listed && !userMovie.watched;
       }
 
