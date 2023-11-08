@@ -8,7 +8,7 @@ import styles from './Hero.module.scss';
 export const Hero = () => {
   const {
     handleInputWordChange,
-    searchWord,
+    // searchWord,
     errorMsg,
     handleSearchBtnClick,
     existQuery,
@@ -29,28 +29,26 @@ export const Hero = () => {
           />
           <div className={styles.imageCover}>
             <div className={styles.searchForm}>
-              <label className={styles.inputLabel}>
-                <BsSearch />
-                <input
-                  type="text"
-                  placeholder="Movie Title here"
-                  className={styles.input}
-                  value={inputWord}
-                  onChange={handleInputWordChange}
-                />
-              </label>
-              <button
-                className={styles.button}
-                onClick={handleSearchBtnClick}
-                disabled={!existQuery || isSearching}
-              >
-                {isSearching ? 'Searching...' : 'Search!'}
-              </button>
-              <div className={styles.note}>
-                <div className={styles.errorMsg}>errorMsg: {errorMsg}</div>
-                <div>searchWord:{searchWord}</div>
-                <div>inputWord:{inputWord}</div>
+              <div className={styles.searchField}>
+                <label className={styles.inputLabel}>
+                  <BsSearch />
+                  <input
+                    type="text"
+                    placeholder="Movie Title here"
+                    className={styles.input}
+                    value={inputWord}
+                    onChange={handleInputWordChange}
+                  />
+                </label>
+                <button
+                  className={styles.button}
+                  onClick={handleSearchBtnClick}
+                  disabled={!existQuery || isSearching}
+                >
+                  {isSearching ? 'Searching...' : 'Search!'}
+                </button>
               </div>
+              {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
             </div>
           </div>
         </div>
