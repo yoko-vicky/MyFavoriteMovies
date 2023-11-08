@@ -2,23 +2,23 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
-import { UserMovieState } from '@/types/user';
+import { MovieState } from '@/types/movies';
 import styles from './MoviesListItem.module.scss';
 
 export const MoviesListItem = ({
-  userMovie,
+  movie,
 }: {
-  userMovie: UserMovieState;
+  movie: MovieState;
 }) => {
-  if (!userMovie.movie) {
+  if (!movie) {
     return <></>;
   }
   return (
     <div className={styles.movie}>
-      <Link href={`/movies/${userMovie.movie?.id}`}>
+      <Link href={`/movies/${movie?.id}`}>
         <Image
-          src={createImageUrl(userMovie.movie?.poster_path)}
-          alt={userMovie.movie?.title}
+          src={createImageUrl(movie?.poster_path)}
+          alt={movie?.title}
           width={200}
           height={300}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw"
