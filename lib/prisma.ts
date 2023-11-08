@@ -1,5 +1,5 @@
 import { APP_ENV } from '@/utils/environment';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 import { PrismaClient } from '@prisma/client';
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };

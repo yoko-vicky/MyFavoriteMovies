@@ -19,6 +19,7 @@ const Hero = dynamic(() => import('@/components/home/Hero/Hero'), {
   ssr: false,
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   let topRatedMovies: MovieState[] = [];
   let popularMovies: MovieState[] = [];
