@@ -1,0 +1,15 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.icon {
+  font-size: 2.4rem;
+
+  svg {
+    transition: var(--transition-default);
+  }
+
+  &:hover {
+    svg {
+      color: var(--color-yellow);
+    }
+  }
+}

@@ -63,7 +63,7 @@ export default async function handler(
           },
           create: {
             originGenreId: genre.id,
-            title: genre.name,
+            name: genre.name,
           },
         }))
       : undefined;

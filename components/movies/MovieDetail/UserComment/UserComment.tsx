@@ -24,7 +24,7 @@ export const UserComment = () => {
       <div className={styles.btns}>
         <Button
           variant={'outlined'}
-          label={listed ? 'Added to my List' : 'Add this movie to my List'}
+          label={'Add to my List'}
           onClick={handleListedButtonClick}
           Icon={AiOutlinePaperClip}
           activeColor="pink"
@@ -33,7 +33,7 @@ export const UserComment = () => {
         />
         <Button
           variant={'outlined'}
-          label={watched ? 'Watched' : 'Unwatched'}
+          label={'Watched'}
           onClick={handleWatchedButtonClick}
           Icon={watched ? AiFillCheckSquare : BiSquare}
           activeColor="green"

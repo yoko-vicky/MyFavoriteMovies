@@ -3,7 +3,6 @@ import { updateUserMovie } from '@/lib/axios';
 import { errorToastify } from '@/lib/toast';
 import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
 import { MovieState, UpdateUserMovieState } from '@/types/movies';
-
 import { logger } from '@/utils/logger';
 
 const useUserMovieState = ({

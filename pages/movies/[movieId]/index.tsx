@@ -62,9 +62,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MovieDetailPage = ({
-      movie,
-      movieReviewsInDb,
-    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  movie,
+  movieReviewsInDb,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  logger.log({ movieGenres: movie?.genres });
   if (!movie) {
     return <LoadingSpinner />;
   }

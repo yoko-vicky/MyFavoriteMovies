@@ -16,7 +16,7 @@ import useUserRate from '@/hooks/useUserRate';
 import { UserRateType } from '@/types';
 import { MovieState, ReviewState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
-import { logger } from '@/utils/logger';
+import { Logger, logger } from '@/utils/logger';
 import { useUserSessionDataContext } from './UserSessionDataContext';
 
 interface MovieDetailContextType {
@@ -105,6 +105,7 @@ export const MovieDetailContextProvider = ({
   const updateMovieReviewsInDb = (newMovieReviewsInDb: ReviewState[]) =>
     setMovieReviewsInDb(newMovieReviewsInDb);
 
+  logger.log({ movie });
   const {
     state: watched,
     handleButtonClick: handleWatchedButtonClick,

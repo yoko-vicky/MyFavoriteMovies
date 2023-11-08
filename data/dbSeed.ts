@@ -14,31 +14,31 @@ const user = [
 const genre = [
   {
     id: 1,
-    title: 'Adventure',
+    name: 'Adventure',
   },
   {
     id: 2,
-    title: 'Fantasy',
+    name: 'Fantasy',
   },
   {
     id: 3,
-    title: 'Children',
+    name: 'Children',
   },
   {
     id: 4,
-    title: 'Romance',
+    name: 'Romance',
   },
   {
     id: 5,
-    title: 'Comedy',
+    name: 'Comedy',
   },
   {
     id: 6,
-    title: 'Drama',
+    name: 'Drama',
   },
   {
     id: 7,
-    title: 'Science Fiction',
+    name: 'Science Fiction',
   },
 ];
 
