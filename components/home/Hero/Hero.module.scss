@@ -35,28 +35,79 @@
   width: 100%;
   height: 100%;
   @include blackGradientBgTopAndBottom;
+  @include centerContent;
 }
 
-.movieOverview {
+.searchForm {
+  position: relative;
+  @include centerContent;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.inputLabel {
+  border: 2px solid var(--color-white);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 1rem 2rem;
+
+  svg {
+    font-size: 2rem;
+    flex: 0 0 2rem;
+  }
+}
+
+.input {
+  font-family: inherit;
+  font-size: 1.8rem;
+  letter-spacing: 0.6px;
+
+  &::placeholder {
+    opacity: 0.4;
+  }
+}
+
+.note {
   position: absolute;
-  z-index: 1;
-  bottom: 1rem;
-  right: 2rem;
-  // border: 1px solid;
+  bottom: -6rem;
+  border: 1px solid yellow;
+  width: 100%;
 }
 
-.title {
-  font-size: 80%;
-  opacity: 0.9;
+.button {
+  padding: 0.8rem;
+  width: 100%;
+  text-align: center;
+  border-radius: var(--border-radius);
+  background-color: var(--color-yellow);
+  color: var(--color-white);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 1.5rem;
+  transition: var(--transition-default);
+
+  &:hover,
+  &:active {
+    color: var(--color-black);
+    background-color: var(--color-white);
+  }
 }
 
-.mainTitle {
-  font-weight: var(--font-weight-semi-bold);
-}
+@include mq(tab) {
+  .searchForm {
+    flex-direction: row;
+  }
 
-.year {
-  font-size: 70%;
-  margin-left: 0.4rem;
+  .inputLabel {
+    padding: 1rem 6rem 1rem 2rem;
+  }
+
+  .button {
+    padding: 1.2rem 2rem;
+    height: 100%;
+  }
 }
 
 @include mq(pc) {
