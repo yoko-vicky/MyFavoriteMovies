@@ -1,7 +1,7 @@
 import React from 'react';
 import uuid from '@/lib/uuid';
 import { CreditState } from '@/types/movies';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 import { Credit } from './Credit';
 import styles from './Credits.module.scss';
 

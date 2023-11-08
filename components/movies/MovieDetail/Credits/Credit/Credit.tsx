@@ -5,7 +5,7 @@ import { Button } from '@/components/base/Button';
 import { baseImageUrl } from '@/lib/tmdb';
 import uuid from '@/lib/uuid';
 import { CreditItemState } from '@/types/movies';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 import styles from './Credit.module.scss';
 
 export const Credit = ({
