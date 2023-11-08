@@ -1,5 +1,5 @@
 import uuid from '@/lib/uuid';
-import { ReviewState } from '@/types/movies';
+import { MovieState, ReviewState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -36,7 +36,7 @@ export const formatDate = (date: Date) => {
 export const createReviewItemsFromUserMoviesInDb = (
   userMoviesInDb: UserMovieState[],
 ) =>
-  userMoviesInDb.map( ( um ) => ( {
+  userMoviesInDb.map((um) => ({
     id: uuid(),
     author: um.user?.name || '',
     author_details: {
@@ -54,3 +54,6 @@ export const createReviewItemsFromUserMoviesInDb = (
     userId: um.userId,
     movieId: um.movieId,
   })) as ReviewState[];
+
+export const getMoviesFromUserMovies = (userMovies: UserMovieState[]) =>
+  userMovies.filter((um) => !!um.movie).map((um) => um.movie) as MovieState[];

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/base/Button';
 import { MoviesList } from '@/components/base/MoviesList';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
+import { getMoviesFromUserMovies } from '@/utils';
 import { logger } from '@/utils/logger';
 import styles from './UserMovies.module.scss';
 
@@ -16,15 +17,20 @@ export const UserMovies = () => {
   logger.log({ userMovies: user?.userMovies });
 
   const maxLengthToShow = 12;
-  const listedUserMoviesToShow = listedUserMovies.slice(0, maxLengthToShow);
-  const watchedUserMoviesToShow = watchedUserMovies.slice(0, maxLengthToShow);
+  const listedUserMoviesToShow = getMoviesFromUserMovies(
+    listedUserMovies.slice(0, maxLengthToShow),
+  );
+
+  const watchedUserMoviesToShow = getMoviesFromUserMovies(
+    watchedUserMovies.slice(0, maxLengthToShow),
+  );
 
   return (
     <div className={styles.container}>
       <div className={styles.list}>
         <MoviesList
           title={`${user?.name}'s List`}
-          userMovies={listedUserMoviesToShow}
+          movies={listedUserMoviesToShow}
         />
         {listedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>
@@ -40,7 +46,7 @@ export const UserMovies = () => {
       <div className={styles.list}>
         <MoviesList
           title={`${user?.name}'s Watched Movies`}
-          userMovies={watchedUserMoviesToShow}
+          movies={watchedUserMoviesToShow}
         />
         {watchedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>

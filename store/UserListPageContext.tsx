@@ -4,7 +4,9 @@ import useGenres from '@/hooks/ListFilter/useGenres';
 import useStarRate from '@/hooks/ListFilter/useStarRate';
 import useWatchedStatus from '@/hooks/ListFilter/useWatchedStatus';
 import { OptionItemState } from '@/types';
+import { MovieState } from '@/types/movies';
 import { UserMovieState, UserState } from '@/types/user';
+import { getMoviesFromUserMovies } from '@/utils';
 import { logger } from '@/utils/logger';
 // import { logger } from '@/utils/logger';
 
@@ -24,6 +26,7 @@ interface UserListPageContextType {
   ) => void;
   handleChangeStarRate: (newStarRate: string) => void;
   starRateOptions: OptionItemState[];
+  userMovieMovies: MovieState[];
 }
 
 const UserListPageContext = createContext<UserListPageContextType>({
@@ -39,6 +42,7 @@ const UserListPageContext = createContext<UserListPageContextType>({
   handleChangeGenre: () => undefined,
   handleChangeStarRate: () => undefined,
   starRateOptions: [],
+  userMovieMovies: [],
 });
 
 export const UserListPageContextProvider = ({
@@ -74,6 +78,11 @@ export const UserListPageContextProvider = ({
     [ageFilter, genreFilter, originUserMovies, watchedStatusFilter],
   );
 
+  const userMovieMovies = useMemo(
+    () => getMoviesFromUserMovies(userMovies),
+    [userMovies],
+  );
+
   const context: UserListPageContextType = {
     user,
     userMovies,
@@ -87,6 +96,7 @@ export const UserListPageContextProvider = ({
     handleChangeGenre,
     handleChangeStarRate,
     starRateOptions,
+    userMovieMovies,
   };
 
   return (

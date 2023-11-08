@@ -1,16 +1,16 @@
 import React from 'react';
 import uuid from '@/lib/uuid';
 // import { logger } from '@/utils/logger';
-import { UserMovieState } from '@/types/user';
+import { MovieState } from '@/types/movies';
 import styles from './MoviesList.module.scss';
 import { MoviesListItem } from '../MoviesListItem';
 import { SubTitle } from '../SubTitle';
 
 export const MoviesList = ({
-  userMovies,
+  movies = [],
   title,
 }: {
-  userMovies: UserMovieState[];
+  movies: MovieState[];
   title?: string;
 }) => {
   // logger.log({ movies });
@@ -18,8 +18,8 @@ export const MoviesList = ({
     <div className={styles.container}>
       {!!title && <SubTitle title={title} tag={'div'} />}
       <div className={styles.movies}>
-        {userMovies.map((um) => (
-          <MoviesListItem key={uuid()} userMovie={um} />
+        {movies.map((movie) => (
+          <MoviesListItem key={uuid()} movie={movie} />
         ))}
       </div>
     </div>
