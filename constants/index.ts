@@ -13,5 +13,5 @@ export const REGEX_USER_NAME = /[a-zA-Z0-9\s_]/;
 export const USER_NAME_MAX_LENGTH = 50;
 export const USER_BIO_MAX_LENGTH = 160;
 export const USER_REVIEW_MAX_LENGTH = 200;
-export const REGEX_URL =
-  /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+export const REGEX_URL = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+export const REGEX_SEARCH_QUERY = /[a-zA-Z0-9\s]/;

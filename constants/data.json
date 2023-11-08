@@ -56,6 +56,10 @@
     },
     "review": {
       "characters": "Bio must be under 200 characters."
+    },
+    "searchMovie": {
+      "inputLetters": "Search query can only contain letters, numbers, and ' '.",
+      "queryRequired": "Please input search query first."
     }
   },
   "components": {

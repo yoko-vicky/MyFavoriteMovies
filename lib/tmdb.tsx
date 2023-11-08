@@ -28,17 +28,23 @@ export const getApiUrl = ({
   path,
   appends = ['images', 'videos', 'credits', 'reviews', 'recommendations'],
   lang = defaultLang,
+  query,
 }: {
   path: string;
   appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
   lang?: string;
+  query?: string;
 }) => {
   const appendToResponse =
     !!appends && appends.length > 0
       ? `&append_to_response=${appends.join(',')}`
       : '';
 
-  return `${process.env.NEXT_PUBLIC_TMDB_API_URL}${path}?api_key=${tmdbApiKey}?language=${lang}${appendToResponse}`;
+  return `${
+    process.env.NEXT_PUBLIC_TMDB_API_URL
+  }${path}?api_key=${tmdbApiKey}?language=${lang}${appendToResponse}${
+    query ? `&query=${query}` : ''
+  }`;
 };
 
 export const getApiUrlToDiscoverByGenreId = ({
@@ -61,15 +67,17 @@ const getApiData = async ({
   appends,
   lang = defaultLang,
   genreId,
+  query = '',
 }: {
   path?: string;
   appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
   lang?: string;
   genreId?: number;
+  query?: string;
 }) => {
   const url = genreId
     ? getApiUrlToDiscoverByGenreId({ genreId, appends })
-    : getApiUrl({ path: path || '', appends, lang });
+    : getApiUrl({ path: path || '', query, appends, lang });
 
   try {
     const res = await fetch(url, getTmdbOptions());
@@ -85,6 +93,7 @@ type TimeWindowType = 'day' | 'week';
 
 export const paths = {
   movieById: (movieId: number) => `/movie/${movieId}`,
+  movieByQuery: () => '/search/movie',
   creditById: (creditId: number) => `/credit/${creditId}`,
   movieImagesById: (movieId: number) => `/movie/${movieId}/images`,
   movieVideosById: (movieId: number) => `/movie/${movieId}/videos`,
@@ -118,6 +127,9 @@ export const paths = {
 
 export const getMovieById = async (movieId: number) =>
   await getApiData({ path: paths.movieById(movieId) });
+
+export const getMovieByTitleQuery = async (query: string) =>
+  await getApiData({ path: paths.movieByQuery(), query });
 
 export const getCreditById = async (creditId: number) =>
   await getApiData({ path: paths.creditById(creditId) });

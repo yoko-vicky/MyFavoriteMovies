@@ -17,7 +17,7 @@ export const successToastify = (message: string = successMsgs.general) =>
     autoClose: 3000,
   });
 
-export const loadingToastify = () => toast.loading('Updating...');
+export const loadingToastify = (msg: string = 'Updating') => toast.loading(msg);
 export const updateToastify = (
   id: Id,
   type: 'success' | 'error',

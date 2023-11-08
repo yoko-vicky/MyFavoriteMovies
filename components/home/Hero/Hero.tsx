@@ -1,41 +1,59 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { createImageUrl } from '@/lib/tmdb';
+import HeroBg from '@/public/images/hero-bg.jpg';
 import { useMoviesContext } from '@/store/MoviesContext';
-// import { logger } from '@/utils/logger';
-import { getReleaseYear } from '@/utils';
+import { BsSearch } from 'react-icons/bs';
 import styles from './Hero.module.scss';
 
 export const Hero = () => {
-  const { heroMovie } = useMoviesContext();
-  // logger.log({ heroMovie });
+  const {
+    handleInputWordChange,
+    searchWord,
+    errorMsg,
+    handleSearchBtnClick,
+    existQuery,
+    inputWord,
+    isSearching,
+  } = useMoviesContext();
+
   return (
     <div className={styles.hero}>
       <div className={styles.content}>
-        {!!heroMovie && (
-          <div className={styles.imageWrapper}>
-            <Image
-              src={createImageUrl(heroMovie.backdrop_path, 'w1280')}
-              alt={heroMovie.title}
-              fill
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-            />
-            <Link
-              className={styles.imageCover}
-              href={`/movies/${heroMovie.id}`}
-            />
-            <div className={styles.movieOverview}>
-              <div className={styles.title}>
-                <span className={styles.mainTitle}>{heroMovie.title}</span>
-                <span className={styles.year}>
-                  ({getReleaseYear(heroMovie.release_date)})
-                </span>
+        <div className={styles.imageWrapper}>
+          <Image
+            src={HeroBg}
+            alt={'hero background'}
+            fill
+            style={{ objectFit: 'cover' }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+          />
+          <div className={styles.imageCover}>
+            <div className={styles.searchForm}>
+              <label className={styles.inputLabel}>
+                <BsSearch />
+                <input
+                  type="text"
+                  placeholder="Movie Title here"
+                  className={styles.input}
+                  value={inputWord}
+                  onChange={handleInputWordChange}
+                />
+              </label>
+              <button
+                className={styles.button}
+                onClick={handleSearchBtnClick}
+                disabled={!existQuery || isSearching}
+              >
+                {isSearching ? 'Searching...' : 'Search!'}
+              </button>
+              <div className={styles.note}>
+                <div className={styles.errorMsg}>errorMsg: {errorMsg}</div>
+                <div>searchWord:{searchWord}</div>
+                <div>inputWord:{inputWord}</div>
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

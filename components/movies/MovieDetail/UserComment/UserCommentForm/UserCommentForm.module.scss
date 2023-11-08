@@ -17,10 +17,8 @@
   margin-bottom: 0.6rem;
   border-radius: var(--border-radius);
 
-  &::placeholder,
-  &:-ms-input-placeholder {
+  &::placeholder {
     opacity: 0.4;
-    color: red;
   }
 }
 
