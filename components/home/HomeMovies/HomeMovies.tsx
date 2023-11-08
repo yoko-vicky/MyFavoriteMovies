@@ -4,6 +4,7 @@ import { MoviesList } from '@/components/base/MoviesList';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { movieListVariant } from '@/constants';
 import { useMoviesContext } from '@/store/MoviesContext';
+import { getMoviesWithPosterPath } from '@/utils';
 import styles from './HomeMovies.module.scss';
 
 const SliderMovies = dynamic(() => import('../SliderMovies/SliderMovies'), {
@@ -37,20 +38,20 @@ export const HomeMovies = () => {
       <SliderMovies
         reverse={true}
         title={movieListVariant.upcoming.title}
-        movies={upcomingMovies}
+        movies={getMoviesWithPosterPath(upcomingMovies)}
       />
       <SliderMovies
         title={movieListVariant.trending.title}
-        movies={trendingMovies}
+        movies={getMoviesWithPosterPath(trendingMovies)}
       />
       <SliderMovies
         reverse={true}
         title={movieListVariant.popular.title}
-        movies={popularMovies}
+        movies={getMoviesWithPosterPath(popularMovies)}
       />
       <SliderMovies
         title={movieListVariant.topRated.title}
-        movies={topRatedMovies}
+        movies={getMoviesWithPosterPath(topRatedMovies)}
       />
     </div>
   );
