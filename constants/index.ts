@@ -15,3 +15,4 @@ export const USER_BIO_MAX_LENGTH = 160;
 export const USER_REVIEW_MAX_LENGTH = 200;
 export const REGEX_URL = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
 export const REGEX_SEARCH_QUERY = /[a-zA-Z0-9\s]/;
+export const maxLengthToShowInSearchResult = 60;

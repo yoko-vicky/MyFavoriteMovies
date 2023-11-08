@@ -40,12 +40,17 @@
 
 .searchForm {
   position: relative;
+  width: 90%;
+}
+
+.searchField {
   @include centerContent;
   flex-direction: column;
   gap: 0.8rem;
 }
 
 .inputLabel {
+  width: 100%;
   border: 2px solid var(--color-white);
   border-radius: var(--border-radius);
   display: flex;
@@ -63,17 +68,18 @@
   font-family: inherit;
   font-size: 1.8rem;
   letter-spacing: 0.6px;
+  width: 100%;
 
   &::placeholder {
     opacity: 0.4;
   }
 }
 
-.note {
-  position: absolute;
-  bottom: -8rem;
-  border: 1px solid yellow;
+.errorMsg {
   width: 100%;
+  font-size: 80%;
+  opacity: 0.8;
+  padding: 1rem;
 }
 
 .button {
@@ -97,12 +103,16 @@
 
 @include mq(tab) {
   .searchForm {
-    flex-direction: row;
+    width: 60rem;
+  }
+  .searchField {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
   }
 
-  .inputLabel {
-    padding: 1rem 6rem 1rem 2rem;
-  }
+  // .inputLabel {
+  //   // padding: 1rem 6rem 1rem 2rem;
+  // }
 
   .button {
     padding: 1.2rem 2rem;

@@ -1,9 +1,8 @@
 import { ChangeEvent, useMemo, useState } from 'react';
-import { REGEX_SEARCH_QUERY, formVal } from '@/constants';
+import { REGEX_SEARCH_QUERY, formVal, msgs } from '@/constants';
 import { getMovieByTitleQuery } from '@/lib/tmdb';
-import { errorToastify } from '@/lib/toast';
 import { MovieState } from '@/types/movies';
-import { removeExtraSpaceFromStr } from '@/utils';
+import { getMoviesWithPosterPath, removeExtraSpaceFromStr } from '@/utils';
 import { logger } from '@/utils/logger';
 
 const useSearchMovie = () => {
@@ -47,12 +46,16 @@ const useSearchMovie = () => {
     try {
       const res = await getMovieByTitleQuery(searchWord);
       logger.log({ res });
-      if (res?.results) {
+      if (res?.results && res.results.length > 0) {
         setIsSearching(false);
-        setSearchedMovies(res.results);
+        const filteredMovies = getMoviesWithPosterPath(res.results);
+        setSearchedMovies(filteredMovies);
+      } else {
+        setErrorMsg(`${formVal.searchMovie.notFound}"${inputWord}"`);
+        setIsSearching(false);
       }
     } catch (error) {
-      errorToastify();
+      setErrorMsg(msgs.error.general);
       setIsSearching(false);
     }
   };

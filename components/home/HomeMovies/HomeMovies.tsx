@@ -1,5 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { MoviesList } from '@/components/base/MoviesList';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { movieListVariant } from '@/constants';
 import { useMoviesContext } from '@/store/MoviesContext';
@@ -24,13 +25,19 @@ export const HomeMovies = () => {
   }
 
   if (searchedMovies && searchedMovies.length > 0) {
-    return <SliderMovies title={'Search Result'} movies={searchedMovies} />;
+    // return <SliderMovies title={'Search Result'} movies={searchedMovies} />;
+    return (
+      <div className={styles.container}>
+        <MoviesList movies={searchedMovies} />
+      </div>
+    );
   }
   return (
     <div className={styles.container}>
       <SliderMovies
-        title={movieListVariant.topRated.title}
-        movies={topRatedMovies}
+        reverse={true}
+        title={movieListVariant.upcoming.title}
+        movies={upcomingMovies}
       />
       <SliderMovies
         title={movieListVariant.trending.title}
@@ -38,13 +45,12 @@ export const HomeMovies = () => {
       />
       <SliderMovies
         reverse={true}
-        title={movieListVariant.upcoming.title}
-        movies={upcomingMovies}
-      />
-      <SliderMovies
-        reverse={true}
         title={movieListVariant.popular.title}
         movies={popularMovies}
+      />
+      <SliderMovies
+        title={movieListVariant.topRated.title}
+        movies={topRatedMovies}
       />
     </div>
   );

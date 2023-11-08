@@ -1,3 +1,4 @@
+import { maxLengthToShowInSearchResult } from '@/constants';
 import uuid from '@/lib/uuid';
 import { MovieState, ReviewState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
@@ -55,5 +56,11 @@ export const createReviewItemsFromUserMoviesInDb = (
     movieId: um.movieId,
   })) as ReviewState[];
 
+export const getMoviesWithPosterPath = (
+  movies: MovieState[],
+  maxLength: number = maxLengthToShowInSearchResult,
+) => movies.filter((movie) => !!movie.poster_path).slice(0, maxLength);
 export const getMoviesFromUserMovies = (userMovies: UserMovieState[]) =>
-  userMovies.filter((um) => !!um.movie).map((um) => um.movie) as MovieState[];
+  userMovies
+    .filter((um) => !!um.movie?.poster_path)
+    .map((um) => um.movie) as MovieState[];
