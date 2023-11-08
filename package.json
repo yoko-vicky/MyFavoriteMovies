@@ -15,7 +15,9 @@
     "clean:next": "rm -rf ./.next",
     "seed": "npx prisma db seed",
     "studio": "npx prisma studio",
-    "push": "npx prisma db push"
+    "push": "npx prisma db push",
+    "deploy": "vercel deploy",
+    "deploy:prod": "vercel --prod"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
