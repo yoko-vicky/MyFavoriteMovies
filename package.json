@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "npm run dev",
+    "build": "npm run build",
+    "start": "npm run start",
     "lint": "next lint --fix",
     "clean:db": "rm -rf ./prisma/migrations && rm -rf ./prisma/dev.db",
     "init:db:seed": "npx prisma migrate dev --name init",
