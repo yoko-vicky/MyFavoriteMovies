@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/components/base/Button';
+// import { Button } from '@/components/base/Button';
 import { MoviesList } from '@/components/base/MoviesList';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
 import { getMoviesFromUserMovies } from '@/utils';
@@ -16,7 +16,7 @@ export const UserMovies = () => {
   } = useUserProfilePageContext();
   logger.log({ userMovies: user?.userMovies });
 
-  const maxLengthToShow = 12;
+  const maxLengthToShow = 100;
   const listedUserMoviesToShow = listedUserMovies.slice(0, maxLengthToShow);
   const listedUserMovieMovies = getMoviesFromUserMovies(listedUserMoviesToShow);
 
@@ -33,7 +33,7 @@ export const UserMovies = () => {
           movies={listedUserMovieMovies}
           userMovies={listedUserMoviesToShow}
         />
-        {listedUserMovies.length > maxLengthToShow && (
+        {/* {listedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>
             <Button
               variant={'outlined'}
@@ -42,7 +42,7 @@ export const UserMovies = () => {
               activeColor="yellow"
             />
           </div>
-        )}
+        )} */}
       </div>
       <div className={styles.list}>
         <MoviesList
@@ -50,7 +50,7 @@ export const UserMovies = () => {
           movies={watchedUserMovieMovies}
           userMovies={watchedUserMoviesToShow}
         />
-        {watchedUserMovies.length > maxLengthToShow && (
+        {/* {watchedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>
             <Button
               variant={'outlined'}
@@ -59,7 +59,7 @@ export const UserMovies = () => {
               activeColor="yellow"
             />
           </div>
-        )}
+        )} */}
       </div>
       {/* <SliderMovies title={`${user?.name}'s List`} movies={listedUserMovies} /> */}
       {/* <SliderMovies

@@ -182,7 +182,7 @@ export interface SliderBreakPointState {
 }
 
 export enum WatchedStatus {
-  UNWATCHED = 'unwatched',
+  LISTED = 'listed',
   WATCHED = 'watched',
   ALL = 'all',
 }
@@ -201,6 +201,7 @@ export type AgeState =
   | 'All';
 
 export const agesArr = [
+  'All',
   '1930',
   '1940',
   '1950',
@@ -211,7 +212,6 @@ export const agesArr = [
   '2000',
   '2010',
   '2020',
-  'All',
 ] as AgeState[];
 
 export type StarType = '0' | '1' | '2' | '3' | '4' | '5';

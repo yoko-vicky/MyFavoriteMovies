@@ -1,9 +1,11 @@
+@import '@/styles/abstracts/mixins.scss';
+
 .fields {
   display: flex;
   flex-wrap: wrap;
   gap: 2.4rem;
-  margin-bottom: 2.4rem;
-  border: 1px solid yellow;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--color-white);
 }
 
 .item {
@@ -62,5 +64,11 @@
 .label {
   &.checked {
     // font-weight: var(--font-weight-bold);
+  }
+}
+
+@include mq(tab) {
+  .fields {
+    // margin-bottom: 3.2rem;
   }
 }

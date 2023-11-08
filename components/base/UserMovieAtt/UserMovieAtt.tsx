@@ -82,7 +82,7 @@ export const UserMovieAtt = ({
           )}
         </div>
       )}
-      {!hideStars && <Stars stars={stars} />}
+      {!hideStars && watched && <Stars stars={stars} />}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useMemo } from 'react';
 import useAges from '@/hooks/ListFilter/useAges';
 import useGenres from '@/hooks/ListFilter/useGenres';
-import useStarRate from '@/hooks/ListFilter/useStarRate';
+// import useStarRate from '@/hooks/ListFilter/useStarRate';
 import useWatchedStatus from '@/hooks/ListFilter/useWatchedStatus';
 import { OptionItemState } from '@/types';
 import { MovieState } from '@/types/movies';
@@ -25,8 +25,8 @@ interface UserListPageContextType {
     genreOriginId: string,
     addOrRemove: 'add' | 'remove',
   ) => void;
-  handleChangeStarRate: (newStarRate: string) => void;
-  starRateOptions: OptionItemState[];
+  // handleChangeStarRate: (newStarRate: string) => void;
+  // starRateOptions: OptionItemState[];
   userMovieMovies: MovieState[];
 }
 
@@ -41,8 +41,8 @@ const UserListPageContext = createContext<UserListPageContextType>({
   genreOptions: [],
   isAllGenres: false,
   handleChangeGenre: () => undefined,
-  handleChangeStarRate: () => undefined,
-  starRateOptions: [],
+  // handleChangeStarRate: () => undefined,
+  // starRateOptions: [],
   userMovieMovies: [],
 });
 
@@ -64,8 +64,8 @@ export const UserListPageContextProvider = ({
   const { ageFilter, handleChangeAge, agesOptions, isAllAges } = useAges();
   const { genreOptions, isAllGenres, handleChangeGenre, genreFilter } =
     useGenres(sessionUserMovies);
-  const { starRateFilter, handleChangeStarRate, starRateOptions } =
-    useStarRate();
+  // const { starRateFilter, handleChangeStarRate, starRateOptions } =
+  //   useStarRate();
 
   const votes = sessionUserMovies
     ? sessionUserMovies.map((um) => um.movie?.vote_average)
@@ -99,8 +99,8 @@ export const UserListPageContextProvider = ({
     genreOptions,
     isAllGenres,
     handleChangeGenre,
-    handleChangeStarRate,
-    starRateOptions,
+    // handleChangeStarRate,
+    // starRateOptions,
     userMovieMovies,
   };
 

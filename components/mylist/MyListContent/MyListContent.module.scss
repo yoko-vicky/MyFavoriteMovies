@@ -3,4 +3,22 @@
 .container {
   @include container;
   // border: 1px solid;
+  // border: 1px solid yellow;
+  padding-top: 3rem;
+}
+
+.title {
+  @include subTitle;
+}
+
+.button {
+  &.hide {
+    margin-bottom: 2rem;
+  }
+}
+
+@include mq(tab) {
+  .button {
+    width: 24rem;
+  }
 }
