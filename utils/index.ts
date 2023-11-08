@@ -60,6 +60,7 @@ export const getMoviesWithPosterPath = (
   movies: MovieState[],
   maxLength: number = maxLengthToShowInSearchResult,
 ) => movies.filter((movie) => !!movie.poster_path).slice(0, maxLength);
+
 export const getMoviesFromUserMovies = (userMovies: UserMovieState[]) =>
   userMovies
     .filter((um) => !!um.movie?.poster_path)
