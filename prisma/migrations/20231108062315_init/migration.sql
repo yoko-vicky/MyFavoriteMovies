@@ -56,7 +56,7 @@ CREATE TABLE "Movie" (
 CREATE TABLE "Genre" (
     "id" SERIAL NOT NULL,
     "originGenreId" INTEGER NOT NULL,
-    "title" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
 
     CONSTRAINT "Genre_pkey" PRIMARY KEY ("id")
 );

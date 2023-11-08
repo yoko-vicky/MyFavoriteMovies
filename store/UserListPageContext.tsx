@@ -8,6 +8,7 @@ import { MovieState } from '@/types/movies';
 import { UserMovieState, UserState } from '@/types/user';
 import { getMoviesFromUserMovies } from '@/utils';
 import { logger } from '@/utils/logger';
+import { useUserSessionDataContext } from './UserSessionDataContext';
 // import { logger } from '@/utils/logger';
 
 interface UserListPageContextType {
@@ -48,12 +49,12 @@ const UserListPageContext = createContext<UserListPageContextType>({
 export const UserListPageContextProvider = ({
   children,
   user,
-  userMovies: originUserMovies,
 }: {
   children: ReactNode;
   user: UserState;
-  userMovies: UserMovieState[];
 }) => {
+  const { sessionUserMovies } = useUserSessionDataContext();
+
   const {
     watchedStatusFilter,
     watchedStatusOptionItems,
@@ -62,20 +63,24 @@ export const UserListPageContextProvider = ({
 
   const { ageFilter, handleChangeAge, agesOptions, isAllAges } = useAges();
   const { genreOptions, isAllGenres, handleChangeGenre, genreFilter } =
-    useGenres(originUserMovies);
+    useGenres(sessionUserMovies);
   const { starRateFilter, handleChangeStarRate, starRateOptions } =
     useStarRate();
 
-  const votes = originUserMovies.map((um) => um.movie?.vote_average);
-  logger.log({ originUserMovies, votes });
+  const votes = sessionUserMovies
+    ? sessionUserMovies.map((um) => um.movie?.vote_average)
+    : [];
+  logger.log({ sessionUserMovies, votes });
 
   const userMovies = useMemo(
     () =>
-      originUserMovies
-        .filter(watchedStatusFilter)
-        .filter(ageFilter)
-        .filter(genreFilter),
-    [ageFilter, genreFilter, originUserMovies, watchedStatusFilter],
+      sessionUserMovies
+        ? sessionUserMovies
+            .filter(watchedStatusFilter)
+            .filter(ageFilter)
+            .filter(genreFilter)
+        : [],
+    [ageFilter, genreFilter, sessionUserMovies, watchedStatusFilter],
   );
 
   const userMovieMovies = useMemo(

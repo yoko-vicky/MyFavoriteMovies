@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { CheckboxOptionItemState } from '@/types';
+import { OptionItemState } from '@/types';
 import { WatchedStatus } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 
@@ -8,7 +8,7 @@ const useWatchedStatus = () => {
   const [watchedStatus, setWatchedStatus] =
     useState<WatchedStatus>(defaultWatchedStatus);
 
-  const watchedStatusOptionItems: CheckboxOptionItemState[] = [
+  const watchedStatusOptionItems: OptionItemState[] = [
     {
       label: 'Unwatched',
       value: 'unwatched',

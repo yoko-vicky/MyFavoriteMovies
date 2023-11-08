@@ -4,23 +4,23 @@ import { MovieGenreState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 // import { logger } from '@/utils/logger';
 
-const useGenres = (originUserMovies: UserMovieState[]) => {
+const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
   const allGenreItem = {
     id: 0,
     originGenreId: 0,
-    title: 'All',
+    name: 'All',
   };
 
   const [genres, setGenres] = useState<number[]>([allGenreItem.originGenreId]);
 
   const duplicatedGenres = useMemo(() => {
-    return (
-      (originUserMovies
-        .filter((um) => !!um.movie && !!um.movie.genres)
-        .map((um) => um.movie?.genres)
-        .flat()
-        .filter((dg) => !!dg?.originGenreId) as MovieGenreState[]) || []
-    );
+    return originUserMovies
+      ? (originUserMovies
+          .filter((um) => !!um.movie && !!um.movie.genres)
+          .map((um) => um.movie?.genres)
+          .flat()
+          .filter((dg) => !!dg?.originGenreId) as MovieGenreState[])
+      : [];
   }, [originUserMovies]);
 
   const isAllGenres = genres.includes(allGenreItem.originGenreId);
@@ -45,7 +45,7 @@ const useGenres = (originUserMovies: UserMovieState[]) => {
           genres.includes(allGenreItem.originGenreId) ||
           genres.includes(op.originGenreId);
         return {
-          label: op.title,
+          label: op.name,
           value: op.originGenreId.toString(),
           checked,
         };

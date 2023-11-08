@@ -41,7 +41,7 @@ export const UserSessionDataContextProvider = ({
 
   const sessionUser: UserState | undefined = sessionData?.user;
   const sessionUserMovies: UserMovieState[] | undefined =
-    sessionUser?.userMovies;
+    sessionUser?.userMovies?.filter((um) => um.watched || um.listed);
 
   const updateSession = async (data?: any) => {
     try {

@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
 import { MovieState, SliderBreakPointState } from '@/types/movies';
-// import { logger } from '@/utils/logger';
 import { FreeMode, Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -83,7 +82,6 @@ export const MovieSlider = ({
                     style={{ objectFit: 'contain' }}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw"
                   />
-                  {/* <h2 className={styles.title}>{movie.title}</h2> */}
                 </div>
               </Link>
             </SwiperSlide>

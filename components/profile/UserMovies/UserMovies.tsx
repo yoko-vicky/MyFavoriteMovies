@@ -17,12 +17,12 @@ export const UserMovies = () => {
   logger.log({ userMovies: user?.userMovies });
 
   const maxLengthToShow = 12;
-  const listedUserMoviesToShow = getMoviesFromUserMovies(
-    listedUserMovies.slice(0, maxLengthToShow),
-  );
+  const listedUserMoviesToShow = listedUserMovies.slice(0, maxLengthToShow);
+  const listedUserMovieMovies = getMoviesFromUserMovies(listedUserMoviesToShow);
 
-  const watchedUserMoviesToShow = getMoviesFromUserMovies(
-    watchedUserMovies.slice(0, maxLengthToShow),
+  const watchedUserMoviesToShow = watchedUserMovies.slice(0, maxLengthToShow);
+  const watchedUserMovieMovies = getMoviesFromUserMovies(
+    watchedUserMoviesToShow,
   );
 
   return (
@@ -30,7 +30,8 @@ export const UserMovies = () => {
       <div className={styles.list}>
         <MoviesList
           title={`${user?.name}'s List`}
-          movies={listedUserMoviesToShow}
+          movies={listedUserMovieMovies}
+          userMovies={listedUserMoviesToShow}
         />
         {listedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>
@@ -46,7 +47,8 @@ export const UserMovies = () => {
       <div className={styles.list}>
         <MoviesList
           title={`${user?.name}'s Watched Movies`}
-          movies={watchedUserMoviesToShow}
+          movies={watchedUserMovieMovies}
+          userMovies={watchedUserMoviesToShow}
         />
         {watchedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>

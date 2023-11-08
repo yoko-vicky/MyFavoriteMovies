@@ -22,21 +22,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       user: shapeData(session.user),
-      userMovies: shapeData(session.user.userMovies),
     },
   };
 }
 
 const MyListPage = ({
-      user,
-      userMovies,
-    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  if (!user || !userMovies) {
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  if (!user) {
     return <LoadingSpinner />;
   }
 
   return (
-    <UserListPageContextProvider user={user} userMovies={userMovies}>
+    <UserListPageContextProvider user={user}>
       <MyListContent />
     </UserListPageContextProvider>
   );

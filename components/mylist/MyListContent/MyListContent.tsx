@@ -5,11 +5,12 @@ import styles from './MyListContent.module.scss';
 import { Filter } from '../Filter';
 
 export const MyListContent = () => {
-  const { userMovieMovies } = useUserListPageContext();
+  const { userMovieMovies, userMovies } = useUserListPageContext();
+
   return (
     <div className={styles.container}>
       <Filter />
-      <MoviesList movies={userMovieMovies} />
+      <MoviesList movies={userMovieMovies} userMovies={userMovies} />
     </div>
   );
 };
