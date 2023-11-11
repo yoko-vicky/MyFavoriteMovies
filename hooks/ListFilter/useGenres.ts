@@ -43,10 +43,11 @@ const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
         // logger.log({ op });
         const checked =
           genres.includes(allGenreItem.originGenreId) ||
-          genres.includes(op.originGenreId);
+          (!!op?.originGenreId && genres.includes(op.originGenreId));
+
         return {
           label: op.name,
-          value: op.originGenreId.toString(),
+          value: op?.originGenreId ? op.originGenreId.toString() : '',
           checked,
         };
       }),

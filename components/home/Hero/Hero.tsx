@@ -1,7 +1,10 @@
 import React from 'react';
 import Image from 'next/image';
+import clsx from 'clsx';
+import { GenrePills } from '@/components/base/GenrePills';
 import HeroBg from '@/public/images/hero-bg.jpg';
 import { useMoviesContext } from '@/store/MoviesContext';
+import { logger } from '@/utils/logger';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 import styles from './Hero.module.scss';
@@ -11,15 +14,23 @@ export const Hero = () => {
     handleInputWordChange,
     handleClearInputWord,
     // searchWord,
-    errorMsg,
     handleSearchBtnClick,
+    searchedMovies,
     existQuery,
     inputWord,
     isSearching,
+    genres,
+    errorMsg,
   } = useMoviesContext();
 
+  logger.log({ genres });
   return (
-    <div className={styles.hero}>
+    <div
+      className={clsx(
+        styles.hero,
+        !!searchedMovies?.length || !!errorMsg ? styles.short : '',
+      )}
+    >
       <div className={styles.content}>
         <div className={styles.imageWrapper}>
           <Image
@@ -57,7 +68,11 @@ export const Hero = () => {
                   {isSearching ? 'Searching...' : 'Search'}
                 </button>
               </div>
-              {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
+              {!searchedMovies?.length && !errorMsg && (
+                <div className={styles.genreContainer}>
+                  <GenrePills genres={genres} inHome={true} />
+                </div>
+              )}
             </div>
           </div>
         </div>

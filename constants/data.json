@@ -60,7 +60,7 @@
     "searchMovie": {
       "inputLetters": "Search query can only contain letters, numbers, and ' '.",
       "queryRequired": "Please input search query first.",
-      "notFound": "Sorry... could not find movie with the query: "
+      "notFound": "Could not find the movie related to: "
     }
   },
   "components": {

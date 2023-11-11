@@ -9,6 +9,7 @@ import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { YouTubePlayerModal } from '@/components/modals/YouTubePlayerModal';
 import { createImageUrl } from '@/lib/tmdb';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
+import { MovieGenrePillState } from '@/types/movies';
 import { getReleaseYear } from '@/utils';
 import { ImYoutube2 } from 'react-icons/im';
 import { Credits } from './Credits';
@@ -29,6 +30,13 @@ export const MovieDetail = () => {
     openYouTubeModal,
     movieReviewsToShow,
   } = useMovieDetailContext();
+
+  const movieGenreForPills = movie?.genres
+    ?.map((genre) => ({
+      id: genre.originGenreId,
+      name: genre.name,
+    }))
+    .filter((mv) => !!mv.id) as MovieGenrePillState[];
 
   const handleYoutubeModalOpenBtnClick = () => {
     openYouTubeModal();
@@ -105,7 +113,7 @@ export const MovieDetail = () => {
               <div className={styles.release}>
                 <span>{getReleaseYear(movie.release_date) || ''}</span>
               </div>
-              <GenrePills genres={movie.genres} />
+              {movieGenreForPills && <GenrePills genres={movie.genres} />}
               <Vote voteAvg={movie.vote_average} voteCount={movie.vote_count} />
 
               {!!movieReviewsToShow.length && (

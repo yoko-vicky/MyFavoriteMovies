@@ -21,10 +21,20 @@ export const HomeMovies = () => {
     isSearching,
     searchedMovies,
     inputWord,
+    errorMsg,
   } = useMoviesContext();
 
   if (isSearching) {
     return <LoadingSpinner />;
+  }
+
+  if (errorMsg) {
+    return (
+      <div className={styles.container}>
+        <SubTitle title={'Sorry... Could not find a film'} />
+        <div className={styles.errorMsg}>{errorMsg}</div>
+      </div>
+    );
   }
 
   if (searchedMovies && searchedMovies.length > 0) {

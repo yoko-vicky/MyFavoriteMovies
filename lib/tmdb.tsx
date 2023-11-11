@@ -1,5 +1,20 @@
 import { logger } from '@/utils/logger';
 
+export type AppendsState =
+  | 'images'
+  | 'videos'
+  | 'credits'
+  | 'reviews'
+  | 'recommendations';
+
+const appendsDefaultArray = [
+  'images',
+  'videos',
+  'credits',
+  'reviews',
+  'recommendations',
+] as AppendsState[];
+
 const getTmdbOptions = () => ({
   method: 'GET',
   headers: {
@@ -26,12 +41,12 @@ const defaultLang = 'en-US';
 
 export const getApiUrl = ({
   path,
-  appends = ['images', 'videos', 'credits', 'reviews', 'recommendations'],
+  appends = appendsDefaultArray,
   lang = defaultLang,
   query,
 }: {
   path: string;
-  appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
+  appends?: AppendsState[];
   lang?: string;
   query?: string;
 }) => {
@@ -49,10 +64,10 @@ export const getApiUrl = ({
 
 export const getApiUrlToDiscoverByGenreId = ({
   genreId,
-  appends = ['images', 'videos', 'credits', 'reviews', 'recommendations'],
+  appends = appendsDefaultArray,
 }: {
   genreId: number;
-  appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
+  appends?: AppendsState[];
 }) => {
   const appendToResponse =
     !!appends && appends.length > 0
@@ -70,7 +85,7 @@ const getApiData = async ({
   query = '',
 }: {
   path?: string;
-  appends?: ('images' | 'videos' | 'credits' | 'reviews' | 'recommendations')[];
+  appends?: AppendsState[];
   lang?: string;
   genreId?: number;
   query?: string;
@@ -123,6 +138,7 @@ export const paths = {
     const language = lang ? `?language=${lang}` : '';
     return `/movie/${movieId}/watch/providers${language}`;
   },
+  genres: () => '/genre/movie/list',
 };
 
 export const getMovieById = async (movieId: number) =>
@@ -133,6 +149,8 @@ export const getMovieByTitleQuery = async (query: string) =>
 
 export const getCreditById = async (creditId: number) =>
   await getApiData({ path: paths.creditById(creditId) });
+
+export const getGenres = async () => await getApiData({ path: paths.genres() });
 
 export const getMovieImagesById = async (movieId: number) =>
   await getApiData({ path: paths.movieImagesById(movieId) });

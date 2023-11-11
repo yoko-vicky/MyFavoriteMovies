@@ -1,10 +1,15 @@
 @import '@/styles/abstracts/mixins.scss';
 
 .hero {
-  height: 64vh;
+  height: 100vh;
   width: 100%;
   margin-bottom: 2rem;
-  min-height: 37.2rem;
+  min-height: 64.8rem;
+
+  &.short {
+    height: 40vh;
+    min-height: 38rem;
+  }
 }
 
 .title {
@@ -68,6 +73,7 @@
   @include centerContent;
   flex-direction: column;
   gap: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .inputLabel {
@@ -96,14 +102,6 @@
   }
 }
 
-.errorMsg {
-  width: 100%;
-  max-width: 60rem;
-  opacity: 0.8;
-  margin-top: 2rem;
-  line-height: 1.1;
-}
-
 .button {
   padding: 0.8rem;
   width: 100%;
@@ -125,14 +123,24 @@
 }
 
 @include mq(tab) {
-  // .searchForm {
-  //   width: 100%;
-  //   margin: 0 auto;
-  // }
-
   .hero {
     height: 40vh;
-    min-height: 32rem;
+    min-height: 42rem;
+
+    &.short {
+      height: 40vh;
+      min-height: 32rem;
+    }
+  }
+
+  .searchForm {
+    top: 3rem;
+  }
+
+  .genreContainer {
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
   }
 
   .title {
@@ -144,7 +152,7 @@
     display: grid;
     width: 60rem;
     grid-template-columns: 3fr 1fr;
-    margin: 0 auto;
+    margin: 0 auto 2rem;
   }
 
   // .inputLabel {
@@ -160,7 +168,7 @@
 @include mq(pc) {
   .hero {
     height: 40vh;
-    min-height: 40rem;
+    min-height: 46rem;
   }
   .title {
     font-size: 5.2rem;
