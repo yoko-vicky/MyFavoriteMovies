@@ -54,7 +54,7 @@ export const Hero = () => {
                   onClick={handleSearchBtnClick}
                   disabled={!existQuery || isSearching}
                 >
-                  {isSearching ? 'Searching...' : 'Search!'}
+                  {isSearching ? 'Searching...' : 'Search'}
                 </button>
               </div>
               {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
