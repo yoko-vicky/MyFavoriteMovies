@@ -19,6 +19,7 @@ interface MoviesContextType {
   inputWord: string;
   isSearching: boolean;
   searchedMovies: MovieState[] | null;
+  handleClearInputWord: () => void;
 }
 
 const MoviesContext = createContext<MoviesContextType>({
@@ -36,6 +37,7 @@ const MoviesContext = createContext<MoviesContextType>({
   existQuery: false,
   isSearching: false,
   searchedMovies: null,
+  handleClearInputWord: () => undefined,
 });
 
 export const MoviesContextProvider = ({
@@ -60,6 +62,7 @@ export const MoviesContextProvider = ({
     inputWord,
     isSearching,
     searchedMovies,
+    handleClearInputWord,
   } = useSearchMovie();
 
   const allMovies = [
@@ -88,6 +91,7 @@ export const MoviesContextProvider = ({
     inputWord,
     isSearching,
     searchedMovies,
+    handleClearInputWord,
   };
 
   // logger.log({ heroMovie, allMovies });

@@ -2,10 +2,24 @@
 
 .errorBoundary {
   height: 100vh;
-  border: 1px solid;
+  // border: 1px solid;
   @include centerContent;
+}
+
+.content {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .title {
   font-size: 3rem;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.btn {
+  max-width: 20rem;
+  margin: 0 auto;
+  justify-content: center;
 }

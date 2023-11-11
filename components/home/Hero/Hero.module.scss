@@ -1,9 +1,26 @@
 @import '@/styles/abstracts/mixins.scss';
 
 .hero {
-  height: 46vh;
+  height: 64vh;
   width: 100%;
   margin-bottom: 2rem;
+  min-height: 37.2rem;
+}
+
+.title {
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  font-size: 3.6rem;
+  text-align: center;
+  margin: 10rem auto 2rem;
+}
+.clearBtn {
+  cursor: pointer;
+  transition: var(--transition-default);
+
+  &:hover {
+    color: var(--color-yellow);
+  }
 }
 
 .content {
@@ -41,6 +58,10 @@
 .searchForm {
   position: relative;
   width: 90%;
+  margin: 0 auto;
+  // text-align: center;
+  @include centerContent;
+  flex-direction: column;
 }
 
 .searchField {
@@ -77,9 +98,10 @@
 
 .errorMsg {
   width: 100%;
-  font-size: 80%;
+  max-width: 60rem;
   opacity: 0.8;
-  padding: 1rem;
+  margin-top: 2rem;
+  line-height: 1.1;
 }
 
 .button {
@@ -102,12 +124,26 @@
 }
 
 @include mq(tab) {
-  .searchForm {
-    width: 60rem;
+  // .searchForm {
+  //   width: 100%;
+  //   margin: 0 auto;
+  // }
+
+  .hero {
+    height: 40vh;
+    min-height: 32rem;
   }
+
+  .title {
+    font-size: 4.2rem;
+    margin: 0 auto 2rem;
+  }
+
   .searchField {
     display: grid;
+    width: 60rem;
     grid-template-columns: 3fr 1fr;
+    margin: 0 auto;
   }
 
   // .inputLabel {
@@ -122,6 +158,11 @@
 
 @include mq(pc) {
   .hero {
-    height: 60vh;
+    height: 40vh;
+    min-height: 40rem;
+  }
+  .title {
+    font-size: 5.2rem;
+    margin: 0 auto 2.4rem;
   }
 }

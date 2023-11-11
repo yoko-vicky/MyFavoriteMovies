@@ -16,7 +16,7 @@ import useUserRate from '@/hooks/useUserRate';
 import { UserRateType } from '@/types';
 import { MovieState, ReviewState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
-import { Logger, logger } from '@/utils/logger';
+import { logger } from '@/utils/logger';
 import { useUserSessionDataContext } from './UserSessionDataContext';
 
 interface MovieDetailContextType {
@@ -93,7 +93,7 @@ export const MovieDetailContextProvider = ({
   movieReviewsInDb: ReviewState[];
 }) => {
   const { sessionUser } = useUserSessionDataContext();
-  const videoId = movie.videos?.results[0].key;
+  const videoId = movie.videos?.results[0]?.key;
   const movieId = movie.id;
   const targetUserMovie = sessionUser?.userMovies?.find(
     (um) => um.movieId === movieId,

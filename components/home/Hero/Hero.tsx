@@ -2,12 +2,14 @@ import React from 'react';
 import Image from 'next/image';
 import HeroBg from '@/public/images/hero-bg.jpg';
 import { useMoviesContext } from '@/store/MoviesContext';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 import styles from './Hero.module.scss';
 
 export const Hero = () => {
   const {
     handleInputWordChange,
+    handleClearInputWord,
     // searchWord,
     errorMsg,
     handleSearchBtnClick,
@@ -29,6 +31,7 @@ export const Hero = () => {
           />
           <div className={styles.imageCover}>
             <div className={styles.searchForm}>
+              <h1 className={styles.title}>Discover the perfect film</h1>
               <div className={styles.searchField}>
                 <label className={styles.inputLabel}>
                   <BsSearch />
@@ -39,6 +42,12 @@ export const Hero = () => {
                     value={inputWord}
                     onChange={handleInputWordChange}
                   />
+                  <span
+                    onClick={handleClearInputWord}
+                    className={styles.clearBtn}
+                  >
+                    <AiOutlineCloseCircle />
+                  </span>
                 </label>
                 <button
                   className={styles.button}

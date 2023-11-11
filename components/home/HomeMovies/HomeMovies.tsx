@@ -1,6 +1,7 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { MoviesList } from '@/components/base/MoviesList';
+import { SubTitle } from '@/components/base/SubTitle';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { movieListVariant } from '@/constants';
 import { useMoviesContext } from '@/store/MoviesContext';
@@ -19,6 +20,7 @@ export const HomeMovies = () => {
     popularMovies,
     isSearching,
     searchedMovies,
+    inputWord,
   } = useMoviesContext();
 
   if (isSearching) {
@@ -29,6 +31,7 @@ export const HomeMovies = () => {
     // return <SliderMovies title={'Search Result'} movies={searchedMovies} />;
     return (
       <div className={styles.container}>
+        <SubTitle title={`Titles related to: ${inputWord}`} />
         <MoviesList movies={searchedMovies} />
       </div>
     );

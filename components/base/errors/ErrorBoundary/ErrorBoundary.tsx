@@ -29,14 +29,17 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="">
+        <div className="container">
           <div className={styles.errorBoundary}>
-            <h1 className={styles.title}>Sorry... there was an error.</h1>
-            <Button
-              onClick={() => this.setState({ hasError: false })}
-              variant={'outlined'}
-              label={'Try Again'}
-            />
+            <div className={styles.content}>
+              <h1 className={styles.title}>Sorry... there was an error.</h1>
+              <Button
+                onClick={() => this.setState({ hasError: false })}
+                variant={'outlined'}
+                label={'Try Again'}
+                className={styles.btn}
+              />
+            </div>
           </div>
         </div>
       );

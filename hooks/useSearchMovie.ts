@@ -60,6 +60,11 @@ const useSearchMovie = () => {
     }
   };
 
+  const handleClearInputWord = () => {
+    setInputWord('');
+    setSearchedMovies(null);
+  };
+
   return {
     handleInputWordChange,
     searchWord,
@@ -69,6 +74,7 @@ const useSearchMovie = () => {
     inputWord,
     isSearching,
     searchedMovies,
+    handleClearInputWord,
   };
 };
 
