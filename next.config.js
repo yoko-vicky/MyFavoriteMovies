@@ -18,6 +18,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'platform-lookaside.fbsbx.com',
+        pathname: '/platform/profilepic/**',
       },
     ],
   },
