@@ -188,7 +188,7 @@ export const getSimilarMoviesById = async (movieId: number) =>
 export const getPopularMovies = async ({ page }: { page?: number }) => {
   try {
     const data = await getApiData({ path: paths.popularMovies(), page });
-    return data.results;
+    return data;
   } catch (error) {
     return error;
   }
@@ -197,8 +197,8 @@ export const getPopularMovies = async ({ page }: { page?: number }) => {
 export const getMoviesByGenreId = async (genreId: number, page?: number) => {
   try {
     const data = await getApiData({ genreId, page });
-    logger.log('AAAA', { data });
-    return data.results;
+    // logger.log('AAAA', { data });
+    return data;
   } catch (error) {
     return error;
   }
@@ -211,7 +211,7 @@ export const getTopRatedMovies = async ({ page }: { page?: number }) => {
       page,
       // appends: ['images', 'videos', 'credits', 'reviews', 'recommendations'],
     });
-    return data.results;
+    return data;
   } catch (error) {
     return error;
   }
@@ -231,7 +231,7 @@ export const getTrendingMovies = async ({
       path: paths.trendingMovies(mediaType, timeWindow),
       page,
     });
-    return await data.results;
+    return await data;
   } catch (error) {
     return error;
   }
@@ -251,7 +251,7 @@ export const getUpcomingMovies = async ({
       path: paths.upcomingMovies(lang, region),
       page,
     });
-    return await data.results;
+    return await data;
   } catch (error) {
     return error;
   }

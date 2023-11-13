@@ -225,7 +225,7 @@ export type StarRateState = '0' | '1' | '2' | '3' | '4' | '5' | 'All';
 export const starRateArr = ['1', '2', '3', '4', '5', 'All'] as StarRateState[];
 
 export enum MovieCollectionState {
-  TOP_RATED = 'topRated',
+  TOP_RATED = 'top_rated',
   POPULAR = 'popular',
   TRENDING = 'trending',
   UPCOMING = 'upcoming',

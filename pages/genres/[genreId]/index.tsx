@@ -8,6 +8,7 @@ import { logger } from '@/utils/logger';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const genreId = context.query.genreId;
+  const page = context.query.page;
 
   if (!genreId) {
     return {
@@ -17,11 +18,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   try {
     const movies = await getMoviesByGenreId(+genreId);
-
+    const currentPage = page ? +page : 1;
+    const totalPages = movies.total_pages;
+    logger.log('asas', { movies });
     return {
       props: {
-        movies: shapeData(movies),
+        movies: shapeData(movies.results) || [],
         genreId: +genreId,
+        currentPage: currentPage || null,
+        totalPages: totalPages || null,
       },
     };
   } catch (error) {
@@ -35,12 +40,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const DiscoverMoviesByGenreId = ({
   movies,
   genreId,
+  currentPage,
+  totalPages,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { findGenreNameById } = useMovieCommonDataContext();
   const genreName = findGenreNameById(genreId) || '';
 
   return (
-    <CollectionPageContent movies={movies} title={`Movies in "${genreName}"`} />
+    <CollectionPageContent
+      movies={movies}
+      title={`Movies in ${genreName}`}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      pathToPage={`/genres/${genreId}`}
+    />
   );
 };
 

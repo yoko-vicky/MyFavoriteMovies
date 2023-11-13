@@ -10,7 +10,6 @@ import {
   getUpcomingMovies,
 } from '@/lib/tmdb';
 import { MoviesContextProvider } from '@/store/MoviesContext';
-import { MovieState } from '@/types/movies';
 import { shapeData } from '@/utils';
 import { getLayoutFn } from '@/utils/getLayoutFn';
 import { logger } from '@/utils/logger';
@@ -21,23 +20,18 @@ const Hero = dynamic(() => import('@/components/home/Hero/Hero'), {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  let topRatedMovies: MovieState[] = [];
-  let popularMovies: MovieState[] = [];
-  let trendingMovies: MovieState[] = [];
-  let upcomingMovies: MovieState[] = [];
-
   try {
-    topRatedMovies = await getTopRatedMovies({});
-    popularMovies = await getPopularMovies({});
-    trendingMovies = await getTrendingMovies({});
-    upcomingMovies = await getUpcomingMovies({});
+    const topRatedMovies = await getTopRatedMovies({});
+    const popularMovies = await getPopularMovies({});
+    const trendingMovies = await getTrendingMovies({});
+    const upcomingMovies = await getUpcomingMovies({});
 
     return {
       props: {
-        topRatedMovies: shapeData(topRatedMovies),
-        popularMovies: shapeData(popularMovies),
-        trendingMovies: shapeData(trendingMovies),
-        upcomingMovies: shapeData(upcomingMovies),
+        topRatedMovies: shapeData(topRatedMovies.results) || [],
+        popularMovies: shapeData(popularMovies.results) || [],
+        trendingMovies: shapeData(trendingMovies.results) || [],
+        upcomingMovies: shapeData(upcomingMovies.results) || [],
       },
     };
   } catch (error) {

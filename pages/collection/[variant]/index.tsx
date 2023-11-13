@@ -6,7 +6,7 @@ import {
   getTrendingMovies,
   getUpcomingMovies,
 } from '@/lib/tmdb';
-import { MovieCollectionState, MovieState } from '@/types/movies';
+import { MovieCollectionState } from '@/types/movies';
 import { shapeData } from '@/utils';
 import { getLayoutFn } from '@/utils/getLayoutFn';
 import { logger } from '@/utils/logger';
@@ -27,6 +27,9 @@ const titleOnCollectionVariant = {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const variant = context.query.variant;
+  const page = context.query.page;
+
+  logger.log('HHH', { query: context.query });
 
   const isTopRated = variant === MovieCollectionState.TOP_RATED;
   const isPopular = variant === MovieCollectionState.POPULAR;
@@ -40,13 +43,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  let movies: MovieState[] = [];
   try {
-    movies = await methodToGetMovies[variant]()({});
+    const currentPage = page ? +page : 1;
+    const movies = await methodToGetMovies[variant]()({ page: currentPage });
+    const totalPages = movies.total_pages;
+
     return {
       props: {
-        movies: shapeData(movies),
+        movies: shapeData(movies.results),
         title: titleOnCollectionVariant[variant](),
+        currentPage,
+        totalPages,
+        variant,
       },
     };
   } catch (error) {
@@ -58,11 +66,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MovieCollectionPage = ({
-      movies,
-      title,
-    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  // logger.log({ movies, title });
-  return <CollectionPageContent movies={movies} title={title} />;
+  movies,
+  title,
+  currentPage,
+  totalPages,
+  variant,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  return (
+    <CollectionPageContent
+      movies={movies}
+      title={title}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      pathToPage={`/collection/${variant}`}
+    />
+  );
 };
 
 export default MovieCollectionPage;
