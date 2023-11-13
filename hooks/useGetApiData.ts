@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { logger } from '@/utils/logger';
 
 const useGetApiData = (fetchFn: any, props?: any) => {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<any>(null);
-  const fetchedRef = useRef<boolean>(false);
+  const [isFetched, setIsFetched] = useState<boolean>(false);
 
   useEffect(() => {
-    if (fetchedRef.current || data) return;
+    if (isFetched || data) return;
 
     const getData = async () => {
       setIsLoading(true);
@@ -27,10 +27,11 @@ const useGetApiData = (fetchFn: any, props?: any) => {
     };
 
     getData();
-    fetchedRef.current = true;
+    setIsFetched(true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchedRef.current, data, fetchFn, props]);
+    // TODO: Replace Ref with useCallback or UseState
+  }, [isFetched, data, fetchFn, props]);
 
   return {
     data,

@@ -4,7 +4,6 @@ import {
   FormEvent,
   SetStateAction,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import { USER_REVIEW_MAX_LENGTH, formVal } from '@/constants';
@@ -47,7 +46,7 @@ const useReviewField = ({
   const [reviewMsg, setReviewMsg] = useState<ValidateMsgState | null>(null);
   const [isPublicReview, setIsPublicReview] = useState<boolean>(false);
   const [isUpdatingReview, setIsUpdatingReview] = useState<boolean>(false);
-  const timeToGetReviewsRef = useRef<boolean>(false);
+  const [isTimeToGetReviews, setIsTimeToGetReviews] = useState<boolean>(false);
 
   const isReviewOkay =
     review === initialReview ||
@@ -131,7 +130,7 @@ const useReviewField = ({
         }, 1000);
 
         if (shouldUpdateUserReviewsAfterSucceeded) {
-          timeToGetReviewsRef.current = true;
+          setIsTimeToGetReviews(true);
         }
       }
     } catch (error) {
@@ -167,32 +166,32 @@ const useReviewField = ({
     errorToastify(reviewMsg.msg);
   }, [reviewMsg, reviewMsg?.msg, reviewMsg?.type]);
 
-  const getNewReviewsInDb = async () => {
-    try {
-      const res = await getData(`/api/userMovies/${movie.id}`);
-      if (res.status === 200) {
-        logger.log({ res });
-
-        const filteredReviewsToShow = res.data.data.filter(
-          (um: UserMovieState) => um.watched && um.isPublicReview,
-        );
-        const reviewItems = createReviewItemsFromUserMoviesInDb(
-          filteredReviewsToShow,
-        );
-        updateMovieReviewsInDb(reviewItems);
-      }
-    } catch (error) {
-      logger.log(error);
-    } finally {
-      timeToGetReviewsRef.current = false;
-    }
-  };
-
   useEffect(() => {
-    if (!timeToGetReviewsRef.current) return;
+    if (!isTimeToGetReviews) return;
+
+    const getNewReviewsInDb = async () => {
+      try {
+        const res = await getData(`/api/userMovies/${movie.id}`);
+        if (res.status === 200) {
+          logger.log({ res });
+
+          const filteredReviewsToShow = res.data.data.filter(
+            (um: UserMovieState) => um.watched && um.isPublicReview,
+          );
+          const reviewItems = createReviewItemsFromUserMoviesInDb(
+            filteredReviewsToShow,
+          );
+          updateMovieReviewsInDb(reviewItems);
+        }
+      } catch (error) {
+        logger.log(error);
+      } finally {
+        setIsTimeToGetReviews(false);
+      }
+    };
+
     getNewReviewsInDb();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeToGetReviewsRef.current]);
+  }, [isTimeToGetReviews, movie.id, updateMovieReviewsInDb]);
 
   return {
     review,

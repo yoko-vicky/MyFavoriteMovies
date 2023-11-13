@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import uuid from '@/lib/uuid';
 import { OptionItemState } from '@/types';
-// import { logger } from '@/utils/logger';
 import styles from './CheckboxFields.module.scss';
 
 interface CheckboxFieldsPropsType {

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { updateData } from '@/lib/axios';
 import { errorToastify, successToastify } from '@/lib/toast';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
@@ -11,7 +11,7 @@ import useNameField from './useNameField';
 import useAlertBeforeClosingWindow from '../useAlertBeforeClosingWindow';
 
 export const useUserProfileEdit = () => {
-  const clickedSubmitForm = useRef<boolean>(false);
+  const [clickedSubmitForm, setClickedSubmitForm] = useState<boolean>(false);
   const { user, isUpdatingProfile, updateIsUpdatingProfile, closeEditModal } =
     useUserProfilePageContext();
   const { updateSession } = useUserSessionDataContext();
@@ -96,41 +96,7 @@ export const useUserProfileEdit = () => {
   const handleSubmit = () => {
     logger.log('Clicked handleSubmit');
     validateAllFields();
-    clickedSubmitForm.current = true;
-  };
-
-  const submitForm = () => {
-    if (!user || !user.id) {
-      return;
-    }
-
-    const newUserData = {
-      id: user.id, // unchangeable
-      email: user.email, // unchangeable
-      image: user.image, // unchangeable
-      name,
-      bio,
-      twitter,
-      instagram,
-      facebook,
-    } as UserState;
-
-    logger.log(newUserData);
-
-    try {
-      updateUserProfile(newUserData);
-    } catch (error) {
-      logger.warn('something wrong', {
-        isNameOkay,
-        isBioOkay,
-        isTwitterOkay,
-        isFacebookOkay,
-        isInstagramOkay,
-      });
-      logger.error('Could not update profile', error);
-    } finally {
-      clickedSubmitForm.current = false;
-    }
+    setClickedSubmitForm(true);
   };
 
   const updateUserProfile = async (newUserProfile: UserState) => {
@@ -161,10 +127,45 @@ export const useUserProfileEdit = () => {
   };
 
   useEffect(() => {
-    if (!isReadyToSubmitForm || !clickedSubmitForm.current) return;
+    if (!isReadyToSubmitForm || !clickedSubmitForm) return;
+
+    const submitForm = () => {
+      if (!user || !user.id) {
+        return;
+      }
+
+      const newUserData = {
+        id: user.id, // unchangeable
+        email: user.email, // unchangeable
+        image: user.image, // unchangeable
+        name,
+        bio,
+        twitter,
+        instagram,
+        facebook,
+      } as UserState;
+
+      logger.log(newUserData);
+
+      try {
+        updateUserProfile(newUserData);
+      } catch (error) {
+        logger.warn('something wrong', {
+          isNameOkay,
+          isBioOkay,
+          isTwitterOkay,
+          isFacebookOkay,
+          isInstagramOkay,
+        });
+        logger.error('Could not update profile', error);
+      } finally {
+        setClickedSubmitForm(false);
+      }
+    };
+
     submitForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isReadyToSubmitForm, clickedSubmitForm.current]);
+  }, [isReadyToSubmitForm, clickedSubmitForm]);
 
   logger.log({ name, bio });
 

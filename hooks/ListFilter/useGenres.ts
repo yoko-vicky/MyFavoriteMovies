@@ -2,7 +2,6 @@ import { useCallback, useMemo, useState } from 'react';
 import { OptionItemState } from '@/types';
 import { MovieGenreState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
-// import { logger } from '@/utils/logger';
 
 const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
   const allGenreItem = {
@@ -47,7 +46,10 @@ const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
 
         return {
           label: op.name,
-          value: op?.originGenreId ? op.originGenreId.toString() : '',
+          value:
+            op?.originGenreId || op?.originGenreId === 0
+              ? op.originGenreId.toString()
+              : '',
           checked,
         };
       }),
@@ -79,6 +81,8 @@ const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [genres],
   );
+
+  // logger.log({ genres });
 
   return { genreOptions, isAllGenres, handleChangeGenre, genreFilter };
 };
