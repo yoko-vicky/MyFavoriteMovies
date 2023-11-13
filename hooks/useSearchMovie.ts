@@ -1,24 +1,23 @@
-import { ChangeEvent, useMemo, useState } from 'react';
-import { REGEX_SEARCH_QUERY, formVal, msgs } from '@/constants';
-import { getMovieByTitleQuery } from '@/lib/tmdb';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { REGEX_SEARCH_QUERY, formVal } from '@/constants';
 import { MovieState } from '@/types/movies';
-import { getMoviesWithPosterPath, removeExtraSpaceFromStr } from '@/utils';
-import { logger } from '@/utils/logger';
+import { removeExtraSpaceFromStr } from '@/utils';
 
-const useSearchMovie = () => {
+const useSearchMovie = (
+  initialSearchQuery: string,
+  initialMovies: MovieState[] | null,
+) => {
+  const router = useRouter();
   const [inputWord, setInputWord] = useState<string>('');
-  const [errorMsg, setErrorMsg] = useState<string>('');
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [searchedMovies, setSearchedMovies] = useState<MovieState[] | null>(
     null,
   );
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
-  const searchWord = useMemo(() => {
-    const removedExtraSpace = removeExtraSpaceFromStr(inputWord);
-    return removedExtraSpace.toLowerCase().replaceAll(' ', '+');
-  }, [inputWord]);
-
-  const existQuery = !!searchWord && searchWord.length > 0;
+  const existQuery = !!searchQuery && searchQuery.length > 0;
 
   const handleInputWordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setErrorMsg('');
@@ -42,32 +41,36 @@ const useSearchMovie = () => {
     }
 
     setIsSearching(true);
-
-    try {
-      const res = await getMovieByTitleQuery(searchWord);
-      logger.log({ res });
-      if (res?.results && res.results.length > 0) {
-        setIsSearching(false);
-        const filteredMovies = getMoviesWithPosterPath(res.results);
-        setSearchedMovies(filteredMovies);
-      } else {
-        setErrorMsg(`${formVal.searchMovie.notFound}"${inputWord}"`);
-        setIsSearching(false);
-      }
-    } catch (error) {
-      setErrorMsg(msgs.error.general);
-      setIsSearching(false);
-    }
+    router.push(`/search/${searchQuery}?page=1`);
   };
 
   const handleClearInputWord = () => {
     setInputWord('');
     setSearchedMovies(null);
+    router.push('/search');
   };
+
+  useEffect(() => {
+    if (!inputWord) return;
+    const removedExtraSpace = removeExtraSpaceFromStr(inputWord);
+    const newSearchQuery = removedExtraSpace.toLowerCase().replaceAll(' ', '+');
+    setSearchQuery(newSearchQuery);
+  }, [inputWord]);
+
+  useEffect(() => {
+    if (!initialSearchQuery || !!searchQuery) return;
+
+    setSearchQuery(initialSearchQuery);
+  }, [initialSearchQuery, searchQuery]);
+
+  useEffect(() => {
+    if (!initialMovies) return;
+    setSearchedMovies(initialMovies);
+  }, [initialMovies]);
 
   return {
     handleInputWordChange,
-    searchWord,
+    searchQuery,
     errorMsg,
     handleSearchBtnClick,
     existQuery,

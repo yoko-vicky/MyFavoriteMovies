@@ -3,7 +3,7 @@ import { MoviesList } from '@/components/base/MoviesList';
 import { MovieState } from '@/types/movies';
 import { logger } from '@/utils/logger';
 import styles from './CollectionPageContent.module.scss';
-import Pagenation from '../Pagenation/Pagenation';
+import Pagenation from '../../base/Pagenation/Pagenation';
 
 interface CollectionPageContentPropsType {
   movies: MovieState[];
@@ -18,7 +18,7 @@ export const CollectionPageContent = ({
   title,
   currentPage,
   totalPages,
-  pathToPage
+  pathToPage,
 }: CollectionPageContentPropsType) => {
   logger.log({ currentPage, totalPages });
   return (
@@ -27,7 +27,11 @@ export const CollectionPageContent = ({
         {title && <h2 className={styles.title}>{title}</h2>}
         <MoviesList movies={movies} />
         {currentPage && totalPages && (
-          <Pagenation currentPage={currentPage} totalPages={totalPages} pathToPage={pathToPage} />
+          <Pagenation
+            currentPage={currentPage}
+            totalPages={totalPages}
+            pathToPage={pathToPage}
+          />
         )}
       </div>
     </div>

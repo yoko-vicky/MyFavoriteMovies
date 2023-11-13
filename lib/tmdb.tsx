@@ -154,8 +154,8 @@ export const paths = {
 export const getMovieById = async (movieId: number) =>
   await getApiData({ path: paths.movieById(movieId) });
 
-export const getMovieByTitleQuery = async (query: string) =>
-  await getApiData({ path: paths.movieByQuery(), query });
+export const getMovieByTitleQuery = async (query: string, page?: number) =>
+  await getApiData({ path: paths.movieByQuery(), query, page });
 
 export const getCreditById = async (creditId: number) =>
   await getApiData({ path: paths.creditById(creditId) });
@@ -197,7 +197,7 @@ export const getPopularMovies = async ({ page }: { page?: number }) => {
 export const getMoviesByGenreId = async (genreId: number, page?: number) => {
   try {
     const data = await getApiData({ genreId, page });
-    // logger.log('AAAA', { data });
+
     return data;
   } catch (error) {
     return error;

@@ -1,5 +1,4 @@
-import { ChangeEvent, ReactNode, createContext, useContext } from 'react';
-import useSearchMovie from '@/hooks/useSearchMovie';
+import { ReactNode, createContext, useContext } from 'react';
 import { MovieState } from '@/types/movies';
 import { getRandomNum } from '@/utils';
 
@@ -10,15 +9,6 @@ interface MoviesContextType {
   popularMovies: MovieState[];
   heroMovie: MovieState | undefined;
   allMovies: MovieState[];
-  handleInputWordChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  searchWord: string;
-  errorMsg: string;
-  handleSearchBtnClick: () => void;
-  existQuery: boolean;
-  inputWord: string;
-  isSearching: boolean;
-  searchedMovies: MovieState[] | null;
-  handleClearInputWord: () => void;
 }
 
 const MoviesContext = createContext<MoviesContextType>({
@@ -28,15 +18,6 @@ const MoviesContext = createContext<MoviesContextType>({
   popularMovies: [],
   heroMovie: undefined,
   allMovies: [],
-  handleInputWordChange: () => undefined,
-  searchWord: '',
-  errorMsg: '',
-  inputWord: '',
-  handleSearchBtnClick: () => undefined,
-  existQuery: false,
-  isSearching: false,
-  searchedMovies: null,
-  handleClearInputWord: () => undefined,
 });
 
 export const MoviesContextProvider = ({
@@ -52,18 +33,6 @@ export const MoviesContextProvider = ({
   upcomingMovies: MovieState[];
   popularMovies: MovieState[];
 }) => {
-  const {
-    handleInputWordChange,
-    searchWord,
-    errorMsg,
-    handleSearchBtnClick,
-    existQuery,
-    inputWord,
-    isSearching,
-    searchedMovies,
-    handleClearInputWord,
-  } = useSearchMovie();
-
   const allMovies = [
     ...topRatedMovies,
     ...upcomingMovies,
@@ -82,18 +51,7 @@ export const MoviesContextProvider = ({
     popularMovies,
     heroMovie,
     allMovies,
-    handleInputWordChange,
-    searchWord,
-    errorMsg,
-    handleSearchBtnClick,
-    existQuery,
-    inputWord,
-    isSearching,
-    searchedMovies,
-    handleClearInputWord,
   };
-
-  // logger.log({ heroMovie, allMovies });
 
   return (
     <MoviesContext.Provider value={context}>{children}</MoviesContext.Provider>

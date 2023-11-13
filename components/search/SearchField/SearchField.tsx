@@ -4,13 +4,12 @@ import clsx from 'clsx';
 import { GenrePills } from '@/components/base/GenrePills';
 import HeroBg from '@/public/images/hero-bg.jpg';
 import { useMovieCommonDataContext } from '@/store/MovieCommonDataContext';
-import { useMoviesContext } from '@/store/MoviesContext';
-// import { logger } from '@/utils/logger';
+import { useSearchContext } from '@/store/SearchContext';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
-import styles from './Hero.module.scss';
+import styles from './SearchField.module.scss';
 
-export const Hero = () => {
+export const SearchField = () => {
   const {
     handleInputWordChange,
     handleClearInputWord,
@@ -21,14 +20,13 @@ export const Hero = () => {
     inputWord,
     isSearching,
     errorMsg,
-  } = useMoviesContext();
+  } = useSearchContext();
   const { genres } = useMovieCommonDataContext();
 
-  // logger.log({ genres });
   return (
     <div
       className={clsx(
-        styles.hero,
+        styles.container,
         !!searchedMovies?.length || !!errorMsg ? styles.short : '',
       )}
     >
@@ -82,4 +80,4 @@ export const Hero = () => {
   );
 };
 
-export default Hero;
+export default SearchField;

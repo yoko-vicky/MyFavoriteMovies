@@ -1,0 +1,31 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.pagenation {
+  @include centerContent;
+  margin: 3rem auto;
+  gap: 1.6rem;
+}
+
+.prev,
+.next {
+  svg {
+    font-size: 2.4rem;
+    transition: var(--transition-default);
+  }
+
+  &:hover {
+    color: var(--color-yellow);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+
+    &:hover {
+      color: var(--color-white);
+    }
+  }
+}
+
+// .page {
+// }

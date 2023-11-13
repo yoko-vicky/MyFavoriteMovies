@@ -8,9 +8,9 @@
     }
   },
   "og": {
-    "siteName": "My Favorite Movies",
-    "title": "My Favorite Movies - Find and share your lovely movies!",
-    "description": "Find and share your favorite movies with everyone!",
+    "siteName": "Moviees",
+    "title": "Moviees - Find and share your lovely movies!",
+    "description": "Clip and share your favorite movies!",
     "url": "http://localhost:3000/",
     "imageUrl": "http://localhost:3000/",
     "imageWidth": 1200,

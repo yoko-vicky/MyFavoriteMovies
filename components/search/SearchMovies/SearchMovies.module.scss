@@ -1,0 +1,5 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.container {
+  @include container;
+}

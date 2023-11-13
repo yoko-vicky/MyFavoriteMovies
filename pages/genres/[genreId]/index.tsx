@@ -20,7 +20,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const movies = await getMoviesByGenreId(+genreId);
     const currentPage = page ? +page : 1;
     const totalPages = movies.total_pages;
-    logger.log('asas', { movies });
+    // logger.log('asas', { movies });
     return {
       props: {
         movies: shapeData(movies.results) || [],
@@ -38,11 +38,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const DiscoverMoviesByGenreId = ({
-  movies,
-  genreId,
-  currentPage,
-  totalPages,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      movies,
+      genreId,
+      currentPage,
+      totalPages,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { findGenreNameById } = useMovieCommonDataContext();
   const genreName = findGenreNameById(genreId) || '';
 

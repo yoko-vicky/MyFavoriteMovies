@@ -29,8 +29,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const variant = context.query.variant;
   const page = context.query.page;
 
-  logger.log('HHH', { query: context.query });
-
   const isTopRated = variant === MovieCollectionState.TOP_RATED;
   const isPopular = variant === MovieCollectionState.POPULAR;
   const isTrending = variant === MovieCollectionState.TRENDING;
@@ -66,12 +64,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MovieCollectionPage = ({
-  movies,
-  title,
-  currentPage,
-  totalPages,
-  variant,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+      movies,
+      title,
+      currentPage,
+      totalPages,
+      variant,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <CollectionPageContent
       movies={movies}
