@@ -3,6 +3,7 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import { GenrePills } from '@/components/base/GenrePills';
 import HeroBg from '@/public/images/hero-bg.jpg';
+import { useMovieCommonDataContext } from '@/store/MovieCommonDataContext';
 import { useMoviesContext } from '@/store/MoviesContext';
 import { logger } from '@/utils/logger';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -19,11 +20,11 @@ export const Hero = () => {
     existQuery,
     inputWord,
     isSearching,
-    genres,
     errorMsg,
   } = useMoviesContext();
+  const { genres } = useMovieCommonDataContext();
 
-  logger.log({ genres });
+  // logger.log({ genres });
   return (
     <div
       className={clsx(

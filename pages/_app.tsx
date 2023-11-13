@@ -6,6 +6,7 @@ import { ErrorBoundary } from '@/components/base/errors/ErrorBoundary';
 
 import 'react-toastify/dist/ReactToastify.css';
 import '@/styles/globals.scss';
+import { MovieCommonDataContextProvider } from '@/store/MovieCommonDataContext';
 import { UserSessionDataContextProvider } from '@/store/UserSessionDataContext';
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
@@ -22,7 +23,11 @@ export default function App({ Component, pageProps }:AppWithLayoutProps) {
   return (
     <SessionProvider session={pageProps.session} refetchInterval={0}>
       <UserSessionDataContextProvider>
-        <ErrorBoundary>{getLayout(<Component {...pageProps} />)}</ErrorBoundary>
+        <MovieCommonDataContextProvider>
+          <ErrorBoundary>
+            {getLayout(<Component {...pageProps} />)}
+          </ErrorBoundary>
+        </MovieCommonDataContextProvider>
       </UserSessionDataContextProvider>
     </SessionProvider>
   );

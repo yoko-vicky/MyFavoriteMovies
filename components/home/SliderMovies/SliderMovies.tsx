@@ -10,6 +10,7 @@ interface SliderMoviesPropsType {
   reverse?: boolean;
   movies: MovieState[];
   breakPoints?: SliderBreakPointState;
+  link?: string;
 }
 
 export const SliderMovies = ({
@@ -18,10 +19,11 @@ export const SliderMovies = ({
   reverse = false,
   movies,
   breakPoints,
+  link,
 }: SliderMoviesPropsType) => {
   return (
     <div className={styles.slider}>
-      {!!title && !!movies && <SubTitle title={title} tag={'h2'} />}
+      {!!title && !!movies && <SubTitle title={title} tag={'h2'} link={link} />}
       <MovieSlider
         movies={movies}
         delay={delay}

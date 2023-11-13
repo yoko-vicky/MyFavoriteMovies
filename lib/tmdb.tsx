@@ -187,7 +187,7 @@ export const getPopularMovies = async () => {
 export const getMoviesByGenreId = async (genreId: number) => {
   try {
     const data = await getApiData({ genreId });
-    logger.log({ data });
+    logger.log('AAAA', { data });
     return data.results;
   } catch (error) {
     return error;

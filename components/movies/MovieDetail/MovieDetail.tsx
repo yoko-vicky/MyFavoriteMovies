@@ -113,7 +113,7 @@ export const MovieDetail = () => {
               <div className={styles.release}>
                 <span>{getReleaseYear(movie.release_date) || ''}</span>
               </div>
-              {movieGenreForPills && <GenrePills genres={movie.genres} />}
+              {movieGenreForPills && <GenrePills genres={movieGenreForPills} />}
               <Vote voteAvg={movie.vote_average} voteCount={movie.vote_count} />
 
               {!!movieReviewsToShow.length && (

@@ -5,4 +5,20 @@
   font-weight: 700;
   margin-bottom: 1rem;
   @include subTitle;
+
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  a {
+    svg {
+      font-size: 1.8rem;
+      transition: var(--transition-default);
+    }
+    &:hover {
+      svg {
+        color: var(--color-yellow);
+      }
+    }
+  }
 }

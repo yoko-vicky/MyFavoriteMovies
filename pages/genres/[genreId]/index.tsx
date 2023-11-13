@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-// import { MovieDetail } from '@/components/movies/MovieDetail';
+import { CollectionPageContent } from '@/components/collection/CollectionPageContent';
 import { getMoviesByGenreId } from '@/lib/tmdb';
-import uuid from '@/lib/uuid';
-import { MovieState } from '@/types/movies';
+import { useMovieCommonDataContext } from '@/store/MovieCommonDataContext';
 import { shapeData } from '@/utils';
+import { getLayoutFn } from '@/utils/getLayoutFn';
 import { logger } from '@/utils/logger';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -21,6 +21,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       props: {
         movies: shapeData(movies),
+        genreId: +genreId,
       },
     };
   } catch (error) {
@@ -32,17 +33,16 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const DiscoverMoviesByGenreId = ({
-      movies,
-    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  movies,
+  genreId,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { findGenreNameById } = useMovieCommonDataContext();
+  const genreName = findGenreNameById(genreId) || '';
+
   return (
-    <>
-      {movies.map((movie: MovieState) => (
-        // TODO: replace MovieDetail with MovieListItem
-        // <MovieDetail key={uuid()} />
-        <div key={uuid()}>{movie.title}</div>
-      ))}
-    </>
+    <CollectionPageContent movies={movies} title={`Movies in "${genreName}"`} />
   );
 };
 
 export default DiscoverMoviesByGenreId;
+DiscoverMoviesByGenreId.getLayout = getLayoutFn('page');

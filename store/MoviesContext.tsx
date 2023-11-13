@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode, createContext, useContext } from 'react';
 import useSearchMovie from '@/hooks/useSearchMovie';
-import { MovieGenreState, MovieState } from '@/types/movies';
+import { MovieState } from '@/types/movies';
 import { getRandomNum } from '@/utils';
 
 interface MoviesContextType {
@@ -19,7 +19,6 @@ interface MoviesContextType {
   isSearching: boolean;
   searchedMovies: MovieState[] | null;
   handleClearInputWord: () => void;
-  genres: MovieGenreState[];
 }
 
 const MoviesContext = createContext<MoviesContextType>({
@@ -38,7 +37,6 @@ const MoviesContext = createContext<MoviesContextType>({
   isSearching: false,
   searchedMovies: null,
   handleClearInputWord: () => undefined,
-  genres: [],
 });
 
 export const MoviesContextProvider = ({
@@ -47,14 +45,12 @@ export const MoviesContextProvider = ({
   upcomingMovies,
   trendingMovies,
   popularMovies,
-  genres,
 }: {
   children: ReactNode;
   topRatedMovies: MovieState[];
   trendingMovies: MovieState[];
   upcomingMovies: MovieState[];
   popularMovies: MovieState[];
-  genres: MovieGenreState[];
 }) => {
   const {
     handleInputWordChange,
@@ -95,7 +91,6 @@ export const MoviesContextProvider = ({
     isSearching,
     searchedMovies,
     handleClearInputWord,
-    genres,
   };
 
   // logger.log({ heroMovie, allMovies });
