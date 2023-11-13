@@ -1,0 +1,16 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.modal {
+  @include centerContent;
+}
+
+.inner {
+  @include centerContent;
+  flex-direction: column;
+  position: relative;
+  top: -2rem;
+}
+
+.title {
+  color: var(--color-black);
+}

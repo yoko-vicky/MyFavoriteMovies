@@ -42,7 +42,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   let movies: MovieState[] = [];
   try {
-    movies = await methodToGetMovies[variant]()();
+    movies = await methodToGetMovies[variant]()({});
     return {
       props: {
         movies: shapeData(movies),
@@ -58,10 +58,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MovieCollectionPage = ({
-  movies,
-  title,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  logger.log({ movies, title });
+      movies,
+      title,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // logger.log({ movies, title });
   return <CollectionPageContent movies={movies} title={title} />;
 };
 

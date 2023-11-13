@@ -5,7 +5,7 @@ import { GenrePills } from '@/components/base/GenrePills';
 import HeroBg from '@/public/images/hero-bg.jpg';
 import { useMovieCommonDataContext } from '@/store/MovieCommonDataContext';
 import { useMoviesContext } from '@/store/MoviesContext';
-import { logger } from '@/utils/logger';
+// import { logger } from '@/utils/logger';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 import styles from './Hero.module.scss';

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { ConfirmModal } from '@/components/modals/ConfirmModal';
+import useModal from '@/hooks/useModal';
 import useUserMovieState from '@/hooks/useUserMovieState';
 import uuid from '@/lib/uuid';
-import { MovieState, UserMovieListedWatchedState } from '@/types/movies';
+import { MovieState } from '@/types/movies';
 import { AiFillStar } from 'react-icons/ai';
-import { StatusIcon } from './StatusIcon';
 import styles from './UserMovieAtt.module.scss';
+import { StatusIcon } from '../StatusIcon';
 
 interface UserMovieAttPropsType {
   showStatus?: boolean;
@@ -39,6 +41,8 @@ export const UserMovieAtt = ({
   movie,
   stars,
 }: UserMovieAttPropsType) => {
+  const { isModalOpen, closeModal, openModal } = useModal();
+
   const {
     state: watched,
     handleButtonClick: handleWatchedButtonClick,
@@ -56,34 +60,51 @@ export const UserMovieAtt = ({
     key: 'listed',
   });
 
-  const handleClickIcon = (variant: UserMovieListedWatchedState) => {
-    variant === 'watched'
-      ? handleWatchedButtonClick()
-      : handleListedButtonClick();
-  };
+  const variant = useMemo(() => {
+    if (listed && !watched) {
+      return 'listed';
+    }
+
+    return 'watched';
+  }, [listed, watched]);
+
+  const handleOpenConfirmModal = () => openModal();
 
   return (
-    <div className={styles.container}>
-      {showStatus && (
-        <div className={styles.status}>
-          {listed && !watched && (
-            <StatusIcon
-              variant={'listed'}
-              onClick={handleClickIcon}
-              isUpdating={isUpdatingListed}
-            />
-          )}
-          {watched && (
-            <StatusIcon
-              variant={'watched'}
-              onClick={handleClickIcon}
-              isUpdating={isUpdatingWatched}
-            />
-          )}
-        </div>
+    <>
+      <div className={styles.container}>
+        {showStatus && (
+          <div className={styles.status}>
+            {listed && !watched && (
+              <StatusIcon
+                variant={'listed'}
+                onClick={handleOpenConfirmModal}
+                isUpdating={isUpdatingListed}
+              />
+            )}
+            {watched && (
+              <StatusIcon
+                variant={'watched'}
+                onClick={handleOpenConfirmModal}
+                isUpdating={isUpdatingWatched}
+              />
+            )}
+          </div>
+        )}
+        {!hideStars && watched && stars && <Stars stars={stars} />}
+      </div>
+      {isModalOpen && (
+        <ConfirmModal
+          closeModal={closeModal}
+          handleBtnClick={
+            variant === 'watched'
+              ? handleWatchedButtonClick
+              : handleListedButtonClick
+          }
+          variant={variant}
+        />
       )}
-      {!hideStars && watched && <Stars stars={stars} />}
-    </div>
+    </>
   );
 };
 

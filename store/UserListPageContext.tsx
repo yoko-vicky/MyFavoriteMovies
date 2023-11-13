@@ -91,7 +91,6 @@ export const UserListPageContextProvider = ({
     genreOptions,
     isAllGenres,
     handleChangeGenre,
-
     userMovieMovies,
   };
 

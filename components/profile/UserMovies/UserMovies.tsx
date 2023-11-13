@@ -31,7 +31,6 @@ export const UserMovies = () => {
         <MoviesList
           title={`${user?.name}'s List`}
           movies={listedUserMovieMovies}
-          userMovies={listedUserMoviesToShow}
         />
         {/* {listedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>
@@ -48,7 +47,6 @@ export const UserMovies = () => {
         <MoviesList
           title={`${user?.name}'s Watched Movies`}
           movies={watchedUserMovieMovies}
-          userMovies={watchedUserMoviesToShow}
         />
         {/* {watchedUserMovies.length > maxLengthToShow && (
           <div className={styles.btnWrapper}>

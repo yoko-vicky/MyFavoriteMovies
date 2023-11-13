@@ -27,10 +27,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let upcomingMovies: MovieState[] = [];
 
   try {
-    topRatedMovies = await getTopRatedMovies();
-    popularMovies = await getPopularMovies();
-    trendingMovies = await getTrendingMovies();
-    upcomingMovies = await getUpcomingMovies();
+    topRatedMovies = await getTopRatedMovies({});
+    popularMovies = await getPopularMovies({});
+    trendingMovies = await getTrendingMovies({});
+    upcomingMovies = await getUpcomingMovies({});
 
     return {
       props: {

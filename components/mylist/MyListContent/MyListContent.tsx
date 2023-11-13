@@ -8,7 +8,7 @@ import styles from './MyListContent.module.scss';
 import { Filter } from '../Filter';
 
 export const MyListContent = () => {
-  const { userMovieMovies, userMovies } = useUserListPageContext();
+  const { userMovieMovies } = useUserListPageContext();
   const [showFilter, setShowFilter] = useState<boolean>(false);
 
   return (
@@ -23,7 +23,7 @@ export const MyListContent = () => {
         iconSize="sm"
       />
       {showFilter && <Filter />}
-      <MoviesList movies={userMovieMovies} userMovies={userMovies} />
+      <MoviesList movies={userMovieMovies} />
     </div>
   );
 };

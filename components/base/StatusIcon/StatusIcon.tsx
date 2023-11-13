@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { UserMovieListedWatchedState } from '@/types/movies';
 import { AiFillCheckSquare, AiOutlinePaperClip } from 'react-icons/ai';
 import styles from './StatusIcon.module.scss';
-import { Spinner } from '../../loading/Spinner';
+import { Spinner } from '../loading/Spinner';
 
 interface StatusIconPropsType {
   variant: UserMovieListedWatchedState;
@@ -28,7 +28,9 @@ export const StatusIcon = ({
       {isUpdating ? (
         <Spinner size="xsm" />
       ) : variant === 'watched' ? (
-        <AiFillCheckSquare />
+        <AiFillCheckSquare className={styles.active} />
+      ) : variant === 'listed' ? (
+        <AiOutlinePaperClip className={styles.active} />
       ) : (
         <AiOutlinePaperClip />
       )}

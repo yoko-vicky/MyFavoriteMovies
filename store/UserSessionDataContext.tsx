@@ -12,14 +12,13 @@ import { getSession, useSession } from 'next-auth/react';
 import { UserMovieState, UserState } from '@/types/user';
 import { logger } from '@/utils/logger';
 
-// import { logger } from '@/utils/logger';
-
 interface UserSessionDataContextType {
   sessionData: Session | null;
   updateSession: (data?: any) => void;
   getNewSessionToUpdateUserData: () => void;
   sessionUserMovies: UserMovieState[] | undefined;
   sessionUser: UserState | undefined;
+  getTargetUserMovie: (movieId: number) => UserMovieState | undefined;
 }
 
 const UserSessionDataContext = createContext<UserSessionDataContextType>({
@@ -28,6 +27,7 @@ const UserSessionDataContext = createContext<UserSessionDataContextType>({
   getNewSessionToUpdateUserData: () => undefined,
   sessionUserMovies: undefined,
   sessionUser: undefined,
+  getTargetUserMovie: () => undefined,
 });
 
 export const UserSessionDataContextProvider = ({
@@ -42,6 +42,9 @@ export const UserSessionDataContextProvider = ({
   const sessionUser: UserState | undefined = sessionData?.user;
   const sessionUserMovies: UserMovieState[] | undefined =
     sessionUser?.userMovies?.filter((um) => um.watched || um.listed);
+
+  const getTargetUserMovie = (movieId: number) =>
+    sessionUserMovies?.find((um) => um.movieId === movieId);
 
   const updateSession = async (data?: any) => {
     try {
@@ -95,9 +98,8 @@ export const UserSessionDataContextProvider = ({
     getNewSessionToUpdateUserData,
     sessionUserMovies,
     sessionUser,
+    getTargetUserMovie,
   };
-
-  // logger.log({ heroMovie, allMovies });
 
   return (
     <UserSessionDataContext.Provider value={context}>

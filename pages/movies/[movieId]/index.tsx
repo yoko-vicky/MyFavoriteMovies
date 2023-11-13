@@ -30,7 +30,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   let movieReviewsInDb: Partial<ReviewState>[] = [];
 
-  logger.log({ movie, movieId });
+  // logger.log({ movie, movieId });
   const userMovies: UserMovieState[] | undefined =
     (await prisma.userMovie.findMany({
       where: {
@@ -48,7 +48,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     })) as unknown as UserMovieState[];
 
-  logger.log({ userMovies });
+  // logger.log({ userMovies });
   if (userMovies && !!userMovies.length) {
     movieReviewsInDb = createReviewItemsFromUserMoviesInDb(userMovies);
   }
@@ -62,10 +62,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const MovieDetailPage = ({
-  movie,
-  movieReviewsInDb,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  logger.log({ movieGenres: movie?.genres });
+      movie,
+      movieReviewsInDb,
+    }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // logger.log({ movieGenres: movie?.genres });
   if (!movie) {
     return <LoadingSpinner />;
   }

@@ -105,7 +105,7 @@ export const MovieDetailContextProvider = ({
   const updateMovieReviewsInDb = (newMovieReviewsInDb: ReviewState[]) =>
     setMovieReviewsInDb(newMovieReviewsInDb);
 
-  logger.log({ movie });
+  // logger.log({ movie });
   const {
     state: watched,
     handleButtonClick: handleWatchedButtonClick,
@@ -148,7 +148,7 @@ export const MovieDetailContextProvider = ({
 
   const movieReviewsToShow = useMemo(() => {
     const tmdbReviews = movie?.reviews?.results || [];
-    logger.log({ movieReviewsInDb, tmdbReviews: movie?.reviews?.results });
+    // logger.log({ movieReviewsInDb, tmdbReviews: movie?.reviews?.results });
     return [...movieReviewsInDb, ...tmdbReviews];
   }, [movie?.reviews?.results, movieReviewsInDb]);
 

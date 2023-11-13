@@ -2,14 +2,18 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
+import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
 import { MovieState, SliderBreakPointState } from '@/types/movies';
 import { FreeMode, Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import styles from './MovieSlider.module.scss';
+import MovieAtt from '../MovieAtt/MovieAtt';
+import { UserMovieAtt } from '../UserMovieAtt';
+
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-import styles from './MovieSlider.module.scss';
 
 const defaultBreakPoints = {
   320: {
@@ -51,7 +55,7 @@ export const MovieSlider = ({
   reverse = false,
   breakPoints = defaultBreakPoints,
 }: MovieSliderPropsType) => {
-  // logger.log({ movies });
+  const { getTargetUserMovie } = useUserSessionDataContext();
   return (
     <>
       <Swiper
@@ -71,9 +75,10 @@ export const MovieSlider = ({
         loop={true}
       >
         {!!movies &&
-          movies.map((movie) => (
-            <SwiperSlide key={movie.id}>
-              <Link href={`/movies/${movie.id}`}>
+          movies.map((movie) => {
+            const targetUserMovie = getTargetUserMovie(movie.id);
+            return (
+              <SwiperSlide key={movie.id} className={styles.slide}>
                 <div className={styles.imageWrapper}>
                   <Image
                     src={createImageUrl(movie.poster_path)}
@@ -83,9 +88,18 @@ export const MovieSlider = ({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw"
                   />
                 </div>
-              </Link>
-            </SwiperSlide>
-          ))}
+                {targetUserMovie?.movie ? (
+                  <UserMovieAtt
+                    movie={targetUserMovie.movie}
+                    stars={targetUserMovie.stars}
+                  />
+                ) : (
+                  <MovieAtt movie={movie} />
+                )}
+                <Link href={`/movies/${movie.id}`} className={styles.link} />
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
     </>
   );

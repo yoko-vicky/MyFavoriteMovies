@@ -5,6 +5,7 @@ import { createImageUrl } from '@/lib/tmdb';
 import { MovieState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 import styles from './MoviesListItem.module.scss';
+import MovieAtt from '../MovieAtt/MovieAtt';
 import { UserMovieAtt } from '../UserMovieAtt';
 
 export const MoviesListItem = ({
@@ -27,8 +28,10 @@ export const MoviesListItem = ({
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw"
       />
       <Link href={`/movies/${movie?.id}`} className={styles.link} />
-      {userMovie?.movie && (
+      {userMovie?.movie ? (
         <UserMovieAtt movie={userMovie.movie} stars={userMovie.stars} />
+      ) : (
+        <MovieAtt movie={movie} />
       )}
     </div>
   );

@@ -44,37 +44,45 @@ export const getApiUrl = ({
   appends = appendsDefaultArray,
   lang = defaultLang,
   query,
+  page,
 }: {
   path: string;
   appends?: AppendsState[];
   lang?: string;
   query?: string;
+  page?: number;
 }) => {
   const appendToResponse =
     !!appends && appends.length > 0
       ? `&append_to_response=${appends.join(',')}`
       : '';
+
+  const pageToGet = page && page !== 1 ? `&page=${page}` : '';
 
   return `${
     process.env.NEXT_PUBLIC_TMDB_API_URL
   }${path}?api_key=${tmdbApiKey}?language=${lang}${appendToResponse}${
     query ? `&query=${query}` : ''
-  }`;
+  }${pageToGet}`;
 };
 
 export const getApiUrlToDiscoverByGenreId = ({
   genreId,
   appends = appendsDefaultArray,
+  page,
 }: {
   genreId: number;
   appends?: AppendsState[];
+  page?: number;
 }) => {
   const appendToResponse =
     !!appends && appends.length > 0
       ? `&append_to_response=${appends.join(',')}`
       : '';
 
-  return `${process.env.NEXT_PUBLIC_TMDB_API_URL}/discover/movie?api_key=${tmdbApiKey}&with_genres=${genreId}${appendToResponse}`;
+  const pageToGet = page && page !== 1 ? `&page=${page}` : '';
+
+  return `${process.env.NEXT_PUBLIC_TMDB_API_URL}/discover/movie?api_key=${tmdbApiKey}&with_genres=${genreId}${appendToResponse}${pageToGet}`;
 };
 
 const getApiData = async ({
@@ -83,16 +91,18 @@ const getApiData = async ({
   lang = defaultLang,
   genreId,
   query = '',
+  page,
 }: {
   path?: string;
   appends?: AppendsState[];
   lang?: string;
   genreId?: number;
   query?: string;
+  page?: number;
 }) => {
   const url = genreId
-    ? getApiUrlToDiscoverByGenreId({ genreId, appends })
-    : getApiUrl({ path: path || '', query, appends, lang });
+    ? getApiUrlToDiscoverByGenreId({ genreId, appends, page })
+    : getApiUrl({ path: path || '', query, appends, lang, page });
 
   try {
     const res = await fetch(url, getTmdbOptions());
@@ -175,18 +185,18 @@ export const getMovieRecommendationsById = async (movieId: number) =>
 export const getSimilarMoviesById = async (movieId: number) =>
   await getApiData({ path: paths.similarMoviesById(movieId) });
 
-export const getPopularMovies = async () => {
+export const getPopularMovies = async ({ page }: { page?: number }) => {
   try {
-    const data = await getApiData({ path: paths.popularMovies() });
+    const data = await getApiData({ path: paths.popularMovies(), page });
     return data.results;
   } catch (error) {
     return error;
   }
 };
 
-export const getMoviesByGenreId = async (genreId: number) => {
+export const getMoviesByGenreId = async (genreId: number, page?: number) => {
   try {
-    const data = await getApiData({ genreId });
+    const data = await getApiData({ genreId, page });
     logger.log('AAAA', { data });
     return data.results;
   } catch (error) {
@@ -194,11 +204,11 @@ export const getMoviesByGenreId = async (genreId: number) => {
   }
 };
 
-export const getTopRatedMovies = async () => {
+export const getTopRatedMovies = async ({ page }: { page?: number }) => {
   try {
     const data = await getApiData({
       path: paths.topRatedMovies(),
-
+      page,
       // appends: ['images', 'videos', 'credits', 'reviews', 'recommendations'],
     });
     return data.results;
@@ -207,13 +217,19 @@ export const getTopRatedMovies = async () => {
   }
 };
 
-export const getTrendingMovies = async (
-  mediaType: MediaType = 'movie',
-  timeWindow: TimeWindowType = 'week',
-) => {
+export const getTrendingMovies = async ({
+  page,
+  mediaType = 'movie',
+  timeWindow = 'week',
+}: {
+  page?: number;
+  mediaType?: MediaType;
+  timeWindow?: TimeWindowType;
+}) => {
   try {
     const data = await getApiData({
       path: paths.trendingMovies(mediaType, timeWindow),
+      page,
     });
     return await data.results;
   } catch (error) {
@@ -221,13 +237,19 @@ export const getTrendingMovies = async (
   }
 };
 
-export const getUpcomingMovies = async (
-  lang?: string | undefined,
-  region?: string | undefined,
-) => {
+export const getUpcomingMovies = async ({
+  lang,
+  region,
+  page,
+}: {
+  lang?: string | undefined;
+  region?: string | undefined;
+  page?: number;
+}) => {
   try {
     const data = await getApiData({
       path: paths.upcomingMovies(lang, region),
+      page,
     });
     return await data.results;
   } catch (error) {

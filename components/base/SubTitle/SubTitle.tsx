@@ -1,17 +1,35 @@
 import React from 'react';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { BsFillCaretRightFill } from 'react-icons/bs';
 import styles from './SubTitle.module.scss';
 
 interface SubTitlePropsType {
   title: string;
-  tag?: 'h2' | 'h3' | 'div';
+  tag?: 'h1' | 'h2' | 'h3' | 'div';
   link?: string;
+  className?: string;
 }
-export const SubTitle = ({ title, tag, link }: SubTitlePropsType) => {
+export const SubTitle = ({
+  title,
+  tag,
+  link,
+  className,
+}: SubTitlePropsType) => {
+  if (tag === 'h1')
+    return (
+      <h1 className={clsx(styles.title, className ? className : '')}>
+        <span>{title}</span>
+        {!!link && (
+          <Link href={link}>
+            <BsFillCaretRightFill />
+          </Link>
+        )}
+      </h1>
+    );
   if (tag === 'h2')
     return (
-      <h2 className={styles.title}>
+      <h2 className={clsx(styles.title, className ? className : '')}>
         <span>{title}</span>
         {!!link && (
           <Link href={link}>
@@ -22,7 +40,7 @@ export const SubTitle = ({ title, tag, link }: SubTitlePropsType) => {
     );
   if (tag === 'h3')
     return (
-      <h3 className={styles.title}>
+      <h3 className={clsx(styles.title, className ? className : '')}>
         <span>{title}</span>
         {!!link && (
           <Link href={link}>
@@ -33,7 +51,7 @@ export const SubTitle = ({ title, tag, link }: SubTitlePropsType) => {
     );
 
   return (
-    <div className={styles.title}>
+    <div className={clsx(styles.title, className ? className : '')}>
       <span>{title}</span>
       {!!link && (
         <Link href={link}>

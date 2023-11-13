@@ -167,7 +167,7 @@ export enum SliderDelay {
   FAST = 2200,
 }
 
-export type UserMovieListedWatchedState = 'listed' | 'watched';
+export type UserMovieListedWatchedState = 'unlisted' | 'listed' | 'watched';
 
 export interface UpdateUserMovieStatusState {
   listed?: boolean;
