@@ -1,10 +1,10 @@
 @import '@/styles/abstracts/mixins.scss';
 
 .container {
-  height: 100vh;
   width: 100%;
   margin-bottom: 2rem;
-  min-height: 64.8rem;
+  height: 100vh;
+  min-height: 80rem;
 
   &.short {
     height: 40vh;
@@ -40,13 +40,28 @@
   overflow: hidden;
 
   img {
+    position: relative;
     transition: var(--transition-default);
+    z-index: 1;
   }
 
-  &:hover {
-    img {
-      transform: scale(1.1);
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+
+    z-index: 2;
+    background: linear-gradient(
+      -45deg,
+      rgba(238, 119, 83, 0.3),
+      rgba(232, 61, 127, 0.3),
+      rgba(36, 167, 214, 0.3),
+      rgba(36, 214, 173, 0.3)
+    );
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
   }
 }
 
@@ -58,6 +73,7 @@
   height: 100%;
   @include blackGradientBgTopAndBottom;
   @include centerContent;
+  z-index: 999;
 }
 
 .searchForm {
@@ -73,7 +89,7 @@
   @include centerContent;
   flex-direction: column;
   gap: 0.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .inputLabel {
@@ -124,7 +140,8 @@
 
 @include mq(tab) {
   .container {
-    height: 40vh;
+    height: 100vh;
+    // height: calc(100vh - 12.8rem);
     min-height: 42rem;
 
     &.short {
@@ -166,12 +183,24 @@
 }
 
 @include mq(pc) {
-  .container {
-    height: 40vh;
-    min-height: 46rem;
-  }
+  // .container {
+  //   height: 40vh;
+  //   min-height: 46rem;
+  // }
   .title {
     font-size: 5.2rem;
     margin: 0 auto 2.4rem;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

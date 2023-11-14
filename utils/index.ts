@@ -6,7 +6,8 @@ import { UserMovieState } from '@/types/user';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const getRandomNum = (max = 10) => Math.floor(Math.random() * max);
 export const shapeData = (data: any) => JSON.parse(JSON.stringify(data));
-export const getReleaseYear = (date: string) => !!date && date.split('-')[0];
+export const getReleaseYear = (releaseDate: string) =>
+  !!releaseDate && releaseDate.split('-')[0];
 export const excerptText = (text: string, maxLength = 40) => {
   const tail = '...';
   if (text.length > maxLength) {
@@ -59,9 +60,12 @@ export const createReviewItemsFromUserMoviesInDb = (
 export const getMoviesWithPosterPath = (
   movies: MovieState[],
   maxLength: number = maxLengthToShowInSearchResult,
-) => movies.filter((movie) => !!movie.poster_path).slice(0, maxLength);
+) =>
+  movies
+    .filter((movie) => !!movie.poster_path && !movie.adult)
+    .slice(0, maxLength);
 
 export const getMoviesFromUserMovies = (userMovies: UserMovieState[]) =>
   userMovies
-    .filter((um) => !!um.movie?.poster_path)
+    .filter((um) => !!um.movie?.poster_path && !um.movie.adult)
     .map((um) => um.movie) as MovieState[];

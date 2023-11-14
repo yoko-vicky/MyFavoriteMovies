@@ -40,9 +40,9 @@ export const MoviesContextProvider = ({
     ...popularMovies,
   ];
 
-  const heroMovie: MovieState = allMovies.filter((movie) => !movie.adult)[
-    getRandomNum()
-  ];
+  const heroMovie: MovieState = [...upcomingMovies, ...trendingMovies].filter(
+    (movie) => !movie.adult && !!movie.backdrop_path,
+  )[getRandomNum()];
 
   const context: MoviesContextType = {
     topRatedMovies,

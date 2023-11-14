@@ -9,13 +9,15 @@ const useSearchMovie = (
   initialMovies: MovieState[] | null,
 ) => {
   const router = useRouter();
-  const [inputWord, setInputWord] = useState<string>('');
-  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [inputWord, setInputWord] = useState<string>(
+    initialSearchQuery.replaceAll('+', ' '),
+  );
   const [searchedMovies, setSearchedMovies] = useState<MovieState[] | null>(
     null,
   );
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearchQuery);
   const [errorMsg, setErrorMsg] = useState<string>('');
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const existQuery = !!searchQuery && searchQuery.length > 0;
 
@@ -35,7 +37,7 @@ const useSearchMovie = (
   };
 
   const handleSearchBtnClick = async () => {
-    if (!existQuery) {
+    if (!searchQuery || !searchQuery.length) {
       setErrorMsg(formVal.searchMovie.queryRequired);
       return;
     }
@@ -58,12 +60,6 @@ const useSearchMovie = (
   }, [inputWord]);
 
   useEffect(() => {
-    if (!initialSearchQuery || !!searchQuery) return;
-
-    setSearchQuery(initialSearchQuery);
-  }, [initialSearchQuery, searchQuery]);
-
-  useEffect(() => {
     if (!initialMovies) return;
     setSearchedMovies(initialMovies);
   }, [initialMovies]);
@@ -75,9 +71,9 @@ const useSearchMovie = (
     handleSearchBtnClick,
     existQuery,
     inputWord,
-    isSearching,
     searchedMovies,
     handleClearInputWord,
+    isSearching,
   };
 };
 

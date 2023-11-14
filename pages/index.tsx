@@ -1,8 +1,6 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
-// import dynamic from 'next/dynamic';
 import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
-import { HomeMovies } from '@/components/home/HomeMovies';
-import { OgHead } from '@/layout/OgHead';
+import { HomePageContent } from '@/components/home/HomePageContent';
 import {
   getPopularMovies,
   getTopRatedMovies,
@@ -13,10 +11,6 @@ import { MoviesContextProvider } from '@/store/MoviesContext';
 import { shapeData } from '@/utils';
 import { getLayoutFn } from '@/utils/getLayoutFn';
 import { logger } from '@/utils/logger';
-
-// const Hero = dynamic(() => import('@/components/home/Hero/Hero'), {
-//   ssr: false,
-// });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -59,11 +53,7 @@ export default function HomePage({
       trendingMovies={trendingMovies}
       upcomingMovies={upcomingMovies}
     >
-      <>
-        <OgHead />
-        {/* <Hero /> */}
-        <HomeMovies />
-      </>
+      <HomePageContent />
     </MoviesContextProvider>
   );
 }

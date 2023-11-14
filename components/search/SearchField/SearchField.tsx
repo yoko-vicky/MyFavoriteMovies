@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { GenrePills } from '@/components/base/GenrePills';
+import { Spinner } from '@/components/base/loading/Spinner';
 import HeroBg from '@/public/images/hero-bg.jpg';
 import { useMovieCommonDataContext } from '@/store/MovieCommonDataContext';
 import { useSearchContext } from '@/store/SearchContext';
@@ -13,7 +14,6 @@ export const SearchField = () => {
   const {
     handleInputWordChange,
     handleClearInputWord,
-    // searchWord,
     handleSearchBtnClick,
     searchedMovies,
     existQuery,
@@ -64,7 +64,7 @@ export const SearchField = () => {
                   onClick={handleSearchBtnClick}
                   disabled={!existQuery || isSearching}
                 >
-                  {isSearching ? 'Searching...' : 'Search'}
+                  {isSearching ? <Spinner size={'xsm'} /> : <span>Search</span>}
                 </button>
               </div>
               {!searchedMovies?.length && !errorMsg && (

@@ -2,28 +2,12 @@ import React from 'react';
 import { MoviesList } from '@/components/base/MoviesList';
 import Pagenation from '@/components/base/Pagenation/Pagenation';
 import { SubTitle } from '@/components/base/SubTitle';
-import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { useSearchContext } from '@/store/SearchContext';
 import styles from './SearchMovies.module.scss';
 
 export const SearchMovies = () => {
-  const {
-    handleInputWordChange,
-    searchQuery,
-    errorMsg,
-    handleSearchBtnClick,
-    existQuery,
-    inputWord,
-    isSearching,
-    searchedMovies,
-    handleClearInputWord,
-    currentPage,
-    totalPages,
-  } = useSearchContext();
-
-  if (isSearching) {
-    return <LoadingSpinner />;
-  }
+  const { searchQuery, errorMsg, searchedMovies, currentPage, totalPages } =
+    useSearchContext();
 
   if (errorMsg) {
     return (
@@ -35,7 +19,6 @@ export const SearchMovies = () => {
   }
 
   if (searchedMovies && searchedMovies.length > 0) {
-    // return <SliderMovies title={'Search Result'} movies={searchedMovies} />;
     return (
       <div className={styles.container}>
         <SubTitle

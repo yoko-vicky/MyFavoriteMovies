@@ -1,0 +1,78 @@
+@import '@/styles/abstracts/mixins.scss';
+
+.container {
+  height: 60vh;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.content {
+  height: 100%;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+
+  img {
+    transition: var(--transition-default);
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.imageCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  @include blackGradientBgTopAndBottom;
+  @include centerContent;
+}
+
+.att {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 1.4rem;
+  text-align: right;
+  max-width: 80%;
+}
+
+.title {
+  font-weight: var(--font-weight-bold);
+}
+
+.year {
+  font-style: italic;
+  opacity: 0.6;
+  &::before {
+    content: 'ー';
+    margin-right: 1rem;
+  }
+}
+
+@include mq(tab) {
+  .container {
+    height: 40vh;
+    min-height: 42rem;
+  }
+  .att {
+    max-width: 30rem;
+  }
+}
+
+@include mq(pc) {
+  .container {
+    height: 40vh;
+    min-height: 46rem;
+  }
+}

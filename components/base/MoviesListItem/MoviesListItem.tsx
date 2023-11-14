@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createImageUrl } from '@/lib/tmdb';
+import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
 import { MovieState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 import styles from './MoviesListItem.module.scss';
@@ -15,6 +16,7 @@ export const MoviesListItem = ({
   movie: MovieState | undefined;
   userMovie: UserMovieState | undefined;
 }) => {
+  const { sessionUser } = useUserSessionDataContext();
   if (!movie) {
     return <></>;
   }
@@ -28,7 +30,7 @@ export const MoviesListItem = ({
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw"
       />
       <Link href={`/movies/${movie?.id}`} className={styles.link} />
-      {userMovie?.movie ? (
+      {sessionUser && userMovie?.movie ? (
         <UserMovieAtt movie={userMovie.movie} stars={userMovie.stars} />
       ) : (
         <MovieAtt movie={movie} />

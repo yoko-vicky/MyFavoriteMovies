@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import LogoImage from '@/public/images/logo.png';
-// import { HiMenu } from 'react-icons/hi';
+import { CiSearch } from 'react-icons/ci';
 import styles from './Header.module.scss';
-// import { MainNav } from '../MainNav';
 import { UserNav } from '../UserNav';
 
 export enum HeaderVariantType {
@@ -19,17 +18,9 @@ interface HeaderPropsType {
 export const Header = ({
   variant = HeaderVariantType.DEFAULT,
 }: HeaderPropsType) => {
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-
   return (
     <header className={clsx(styles.header, styles[variant])}>
       <div className={styles.container}>
-        {/* <button
-          className={styles.mobMenu}
-          onClick={() => setOpenMenu((prev) => !prev)}
-        >
-          <HiMenu />
-        </button> */}
         <Link href={'/'} className={styles.logo}>
           <Image
             src={LogoImage}
@@ -39,8 +30,14 @@ export const Header = ({
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 20vw"
           />
         </Link>
-        {/* <MainNav openMenu={openMenu} /> */}
-        <UserNav />
+
+        <div className={styles.right}>
+          <Link href={'/search'} className={styles.searchLink}>
+            <CiSearch />
+            <span>Search</span>
+          </Link>
+          <UserNav />
+        </div>
       </div>
     </header>
   );

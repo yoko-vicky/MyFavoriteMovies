@@ -51,10 +51,11 @@ interface MovieSliderPropsType {
 
 export const MovieSlider = ({
   movies,
-  delay = 2500,
+  delay = 4000,
   reverse = false,
   breakPoints = defaultBreakPoints,
 }: MovieSliderPropsType) => {
+  const { sessionUser } = useUserSessionDataContext();
   const { getTargetUserMovie } = useUserSessionDataContext();
   return (
     <>
@@ -88,7 +89,8 @@ export const MovieSlider = ({
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 30vw"
                   />
                 </div>
-                {targetUserMovie?.movie ? (
+                <Link href={`/movies/${movie.id}`} className={styles.link} />
+                {sessionUser && targetUserMovie?.movie ? (
                   <UserMovieAtt
                     movie={targetUserMovie.movie}
                     stars={targetUserMovie.stars}
@@ -96,7 +98,6 @@ export const MovieSlider = ({
                 ) : (
                   <MovieAtt movie={movie} />
                 )}
-                <Link href={`/movies/${movie.id}`} className={styles.link} />
               </SwiperSlide>
             );
           })}

@@ -8,7 +8,6 @@ import { MovieDetailContextProvider } from '@/store/MovieDetailContext';
 import { MovieState, ReviewState } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 import { createReviewItemsFromUserMoviesInDb, shapeData } from '@/utils';
-import { logger } from '@/utils/logger';
 import { getLayoutFn } from '../../../utils/getLayoutFn';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

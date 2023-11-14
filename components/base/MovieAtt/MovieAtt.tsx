@@ -1,5 +1,7 @@
 import React from 'react';
+import { signIn } from 'next-auth/react';
 import useUserMovieState from '@/hooks/useUserMovieState';
+import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
 import { MovieState } from '@/types/movies';
 import styles from './MovieAtt.module.scss';
 import { StatusIcon } from '../StatusIcon';
@@ -9,6 +11,8 @@ interface UserMovieAttPropsType {
 }
 
 export const UserMovieAtt = ({ movie }: UserMovieAttPropsType) => {
+  const { sessionUser } = useUserSessionDataContext();
+
   const { state: watched } = useUserMovieState({
     movie,
     key: 'watched',
@@ -22,13 +26,17 @@ export const UserMovieAtt = ({ movie }: UserMovieAttPropsType) => {
     key: 'listed',
   });
 
+  const handleSignIn = () => {
+    signIn();
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.status}>
         {!listed && !watched && (
           <StatusIcon
             variant={'unlisted'}
-            onClick={handleListedButtonClick}
+            onClick={sessionUser ? handleListedButtonClick : handleSignIn}
             isUpdating={isUpdatingListed}
           />
         )}

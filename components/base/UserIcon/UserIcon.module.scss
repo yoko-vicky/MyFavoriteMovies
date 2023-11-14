@@ -15,6 +15,16 @@
     object-fit: cover;
   }
 
+  svg {
+    transition: var(--transition-default);
+  }
+
+  &:hover {
+    svg {
+      color: var(--color-yellow);
+    }
+  }
+
   &.clickable {
     cursor: pointer;
     &:hover,

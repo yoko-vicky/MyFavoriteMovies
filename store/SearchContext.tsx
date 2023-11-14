@@ -9,11 +9,11 @@ interface SearchContextType {
   handleSearchBtnClick: () => void;
   existQuery: boolean;
   inputWord: string;
-  isSearching: boolean;
   searchedMovies: MovieState[] | null;
   handleClearInputWord: () => void;
   currentPage: number;
   totalPages: number;
+  isSearching: boolean;
 }
 
 const SearchContext = createContext<SearchContextType>({
@@ -23,11 +23,11 @@ const SearchContext = createContext<SearchContextType>({
   inputWord: '',
   handleSearchBtnClick: () => undefined,
   existQuery: false,
-  isSearching: false,
   searchedMovies: null,
   handleClearInputWord: () => undefined,
   currentPage: 1,
   totalPages: 1,
+  isSearching: false,
 });
 
 export const SearchContextProvider = ({
@@ -49,10 +49,10 @@ export const SearchContextProvider = ({
     handleSearchBtnClick,
     existQuery,
     inputWord,
-    isSearching,
     searchedMovies,
     handleClearInputWord,
     errorMsg,
+    isSearching,
   } = useSearchMovie(initialSearchQuery, initialMovies);
 
   const context: SearchContextType = {
@@ -62,11 +62,11 @@ export const SearchContextProvider = ({
     handleSearchBtnClick,
     existQuery,
     inputWord,
-    isSearching,
     searchedMovies,
     handleClearInputWord,
     currentPage,
     totalPages,
+    isSearching,
   };
 
   return (

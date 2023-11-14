@@ -16,7 +16,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: var(--gap-lg);
   position: relative;
 
@@ -37,6 +37,34 @@
   position: relative;
   width: 10rem;
   height: 4rem;
+  transition: var(--transition-default);
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.right {
+  @include centerContent;
+  gap: 2.4rem;
+}
+
+.searchLink {
+  @include centerContent;
+  gap: 0.6rem;
+  transition: var(--transition-default);
+
+  svg {
+    font-size: 2.4rem;
+  }
+
+  span {
+    font-size: 1.4rem;
+  }
+
+  &:hover {
+    color: var(--color-yellow);
+  }
 }
 
 @include mq(spc) {
@@ -45,6 +73,20 @@
   }
   .mobMenu {
     display: none;
+  }
+
+  .right {
+    gap: 3.6rem;
+  }
+
+  .searchLink {
+    svg {
+      font-size: 3rem;
+    }
+
+    span {
+      font-size: 1.6rem;
+    }
   }
 
   .logo {

@@ -2,7 +2,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { CollectionPageContent } from '@/components/collection/CollectionPageContent';
 import { getMoviesByGenreId } from '@/lib/tmdb';
 import { useMovieCommonDataContext } from '@/store/MovieCommonDataContext';
-import { shapeData } from '@/utils';
+import { getMoviesWithPosterPath, shapeData } from '@/utils';
 import { getLayoutFn } from '@/utils/getLayoutFn';
 import { logger } from '@/utils/logger';
 
@@ -20,10 +20,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const movies = await getMoviesByGenreId(+genreId);
     const currentPage = page ? +page : 1;
     const totalPages = movies.total_pages;
-    // logger.log('asas', { movies });
+
     return {
       props: {
-        movies: shapeData(movies.results) || [],
+        movies: shapeData(getMoviesWithPosterPath(movies.results)) || [],
         genreId: +genreId,
         currentPage: currentPage || null,
         totalPages: totalPages || null,

@@ -7,7 +7,7 @@ import {
   getUpcomingMovies,
 } from '@/lib/tmdb';
 import { MovieCollectionState } from '@/types/movies';
-import { shapeData } from '@/utils';
+import { getMoviesWithPosterPath, shapeData } from '@/utils';
 import { getLayoutFn } from '@/utils/getLayoutFn';
 import { logger } from '@/utils/logger';
 
@@ -48,7 +48,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     return {
       props: {
-        movies: shapeData(movies.results),
+        movies: shapeData(getMoviesWithPosterPath(movies.results)),
         title: titleOnCollectionVariant[variant](),
         currentPage,
         totalPages,
