@@ -15,6 +15,14 @@ export const successToastify = (message: string = successMsgs.general) =>
     hideProgressBar: false,
     closeOnClick: true,
     autoClose: 3000,
+  } );
+
+export const infoToastify = (message: string) =>
+  toast(message, {
+    type: 'info',
+    hideProgressBar: false,
+    closeOnClick: true,
+    autoClose: 3000,
   });
 
 export const loadingToastify = (msg: string = 'Updating') => toast.loading(msg);

@@ -91,7 +91,7 @@ export const UserMovieAtt = ({
             )}
           </div>
         )}
-        {!hideStars && watched && stars && <Stars stars={stars} />}
+        {!hideStars && watched && !!stars && <Stars stars={stars} />}
       </div>
       {isModalOpen && (
         <ConfirmModal

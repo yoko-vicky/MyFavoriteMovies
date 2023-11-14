@@ -19,7 +19,11 @@ const useUserMovieState = ({
   const targetUserMovie = sessionUserMovies?.find(
     (um) => um.movieId === movieId,
   );
-  const [state, setState] = useState<boolean>(false);
+
+  // logger.log({ targetUserMovie });
+  const [state, setState] = useState<boolean>(
+    targetUserMovie ? targetUserMovie[key] : false,
+  );
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
   const updateState = async (

@@ -30,16 +30,18 @@ export const UserMovieAtt = ({ movie }: UserMovieAttPropsType) => {
     signIn();
   };
 
+  if (listed || watched) {
+    return <></>;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.status}>
-        {!listed && !watched && (
-          <StatusIcon
-            variant={'unlisted'}
-            onClick={sessionUser ? handleListedButtonClick : handleSignIn}
-            isUpdating={isUpdatingListed}
-          />
-        )}
+        <StatusIcon
+          variant={'unlisted'}
+          onClick={sessionUser ? handleListedButtonClick : handleSignIn}
+          isUpdating={isUpdatingListed}
+        />
       </div>
     </div>
   );

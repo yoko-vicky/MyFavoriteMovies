@@ -15,7 +15,8 @@ export const StatusIcon = ({
   variant,
   onClick,
   isUpdating,
-}: StatusIconPropsType) => {
+}: StatusIconPropsType ) => {
+  
   const handleOnClick = () => {
     onClick && onClick(variant);
   };

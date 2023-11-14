@@ -8,9 +8,14 @@
   gap: 1.6rem;
 }
 
-.editBtn {
-  display: inline-block;
-  width: auto;
+.btns {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.btn {
+  justify-content: flex-start !important;
 }
 
 .left {
