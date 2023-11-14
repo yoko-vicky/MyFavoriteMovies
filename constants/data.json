@@ -11,8 +11,8 @@
     "siteName": "Moviees",
     "title": "Moviees - Find and share your lovely movies!",
     "description": "Clip and share your favorite movies!",
-    "url": "http://localhost:3000/",
-    "imageUrl": "http://localhost:3000/",
+    "url": "https://www.moviees.life/",
+    "imageUrl": "https://www.moviees.life/",
     "imageWidth": 1200,
     "imageHeight": 630,
     "twitterUsername": ""
