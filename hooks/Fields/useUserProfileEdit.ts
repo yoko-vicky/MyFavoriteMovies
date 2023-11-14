@@ -35,6 +35,7 @@ export const useUserProfileEdit = () => {
     validateBio,
     clearBioField,
     isBioOkay,
+    escapedBio,
   } = useBioField(user?.bio);
   const {
     link: twitter,
@@ -139,7 +140,7 @@ export const useUserProfileEdit = () => {
         email: user.email, // unchangeable
         image: user.image, // unchangeable
         name,
-        bio,
+        bio: escapedBio || '',
         twitter,
         instagram,
         facebook,

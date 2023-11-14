@@ -24,6 +24,7 @@
     "@prisma/client": "^5.5.2",
     "axios": "^1.5.1",
     "clsx": "^2.0.0",
+    "lodash": "^4.17.21",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
@@ -36,6 +37,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.201",
     "@types/node": "^20.8.4",
     "@types/react": "^18.2.27",
     "@types/react-dom": "^18.2.12",

@@ -2,15 +2,21 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { USER_BIO_MAX_LENGTH, formVal } from '@/constants';
 import { ValidateMsgState, ValidateMsgTypeState } from '@/types';
 import { removeExtraSpaceFromStr } from '@/utils';
+import { logger } from '@/utils/logger';
+import _ from 'lodash';
 
-const useBioField = (initialBio: string | null | undefined) => {
+const useBioField = (defaultBio: string | null | undefined) => {
+  const initialBio = defaultBio ? _.unescape(defaultBio) : '';
   const [bio, setBio] = useState<string>(initialBio || '');
   const [bioMsg, setBioMsg] = useState<ValidateMsgState | null>(null);
 
+  logger.log({ defaultBio, initialBio, bio });
   const isBioOkay =
     bio === initialBio ||
     bio.length === 0 ||
     bioMsg?.type === ValidateMsgTypeState.OK;
+
+  const escapedBio = !!bio && isBioOkay && _.escape(bio);
 
   const handleChangeBio = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setBioMsg(null);
@@ -64,6 +70,7 @@ const useBioField = (initialBio: string | null | undefined) => {
     validateBio,
     clearBioField,
     isBioOkay,
+    escapedBio,
   };
 };
 

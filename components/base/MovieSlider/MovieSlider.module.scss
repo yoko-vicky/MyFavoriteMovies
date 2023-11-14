@@ -2,6 +2,11 @@
 
 .slide {
   position: relative;
+  &:hover {
+    img {
+      transform: scale(1.14);
+    }
+  }
 }
 
 .link {
@@ -22,12 +27,6 @@
 
   img {
     transition: var(--transition-default);
-  }
-
-  &:hover {
-    img {
-      transform: scale(1.14);
-    }
   }
 }
 

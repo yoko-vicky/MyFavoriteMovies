@@ -5,6 +5,7 @@ import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { UserProfileEditModal } from '@/components/modals/UserProfileEditModal';
 import { useUserProfilePageContext } from '@/store/UserProfilePageContext';
 import { logger } from '@/utils/logger';
+import _ from 'lodash';
 import { BsFillPencilFill } from 'react-icons/bs';
 import styles from './ProfileOverview.module.scss';
 import { SocialLinks } from '../SocialLinks';
@@ -36,7 +37,9 @@ export const ProfileOverview = () => {
           ) : (
             <>
               <div className={styles.name}>{user?.name}</div>
-              {!!user?.bio && <div className={styles.bio}>{user.bio}</div>}
+              {!!user?.bio && (
+                <div className={styles.bio}>{_.unescape(user.bio)}</div>
+              )}
               {!!user && <SocialLinks user={user} />}
             </>
           )}
