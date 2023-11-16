@@ -55,7 +55,6 @@ CREATE TABLE "Movie" (
 -- CreateTable
 CREATE TABLE "Genre" (
     "id" SERIAL NOT NULL,
-    "originGenreId" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "Genre_pkey" PRIMARY KEY ("id")
@@ -88,9 +87,6 @@ CREATE UNIQUE INDEX "accounts_provider_provider_account_id_key" ON "accounts"("p
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Genre_originGenreId_key" ON "Genre"("originGenreId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserMovie_userId_movieId_key" ON "UserMovie"("userId", "movieId");

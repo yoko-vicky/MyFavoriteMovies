@@ -59,10 +59,10 @@ export default async function handler(
     const movieGenres = movie.genres
       ? movie.genres.map((genre) => ({
           where: {
-            originGenreId: genre.id,
+            id: genre.id,
           },
           create: {
-            originGenreId: genre.id,
+            id: genre.id,
             name: genre.name,
           },
         }))

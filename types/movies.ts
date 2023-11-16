@@ -16,12 +16,6 @@ export interface VideoState {
 
 export interface MovieGenreState {
   id: number;
-  originGenreId?: number;
-  name: string;
-}
-
-export interface MovieGenrePillState {
-  id: number; // to be originGenreId
   name: string;
 }
 

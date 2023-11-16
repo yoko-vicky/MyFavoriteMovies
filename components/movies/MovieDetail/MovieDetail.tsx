@@ -9,7 +9,7 @@ import { LoadingSpinner } from '@/components/base/loading/LoadingSpinner';
 import { YouTubePlayerModal } from '@/components/modals/YouTubePlayerModal';
 import { createImageUrl } from '@/lib/tmdb';
 import { useMovieDetailContext } from '@/store/MovieDetailContext';
-import { MovieGenrePillState } from '@/types/movies';
+import { MovieGenreState } from '@/types/movies';
 import { getReleaseYear } from '@/utils';
 import { ImYoutube2 } from 'react-icons/im';
 import { Credits } from './Credits';
@@ -33,10 +33,10 @@ export const MovieDetail = () => {
 
   const movieGenreForPills = movie?.genres
     ?.map((genre) => ({
-      id: genre.originGenreId,
+      id: genre.id,
       name: genre.name,
     }))
-    .filter((mv) => !!mv.id) as MovieGenrePillState[];
+    .filter((mv) => !!mv.id) as MovieGenreState[];
 
   const handleYoutubeModalOpenBtnClick = () => {
     openYouTubeModal();

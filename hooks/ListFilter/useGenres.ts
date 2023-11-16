@@ -6,11 +6,10 @@ import { UserMovieState } from '@/types/user';
 const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
   const allGenreItem = {
     id: 0,
-    originGenreId: 0,
     name: 'All',
   };
 
-  const [genres, setGenres] = useState<number[]>([allGenreItem.originGenreId]);
+  const [genres, setGenres] = useState<number[]>([allGenreItem.id]);
 
   const duplicatedGenres = useMemo(() => {
     return originUserMovies
@@ -18,17 +17,17 @@ const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
           .filter((um) => !!um.movie && !!um.movie.genres)
           .map((um) => um.movie?.genres)
           .flat()
-          .filter((dg) => !!dg?.originGenreId) as MovieGenreState[])
+          .filter((dg) => !!dg?.id) as MovieGenreState[])
       : [];
   }, [originUserMovies]);
 
-  const isAllGenres = genres.includes(allGenreItem.originGenreId);
+  const isAllGenres = genres.includes(allGenreItem.id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const originGenreOptions: MovieGenreState[] = [allGenreItem];
 
   duplicatedGenres.forEach((dg) => {
     const isExistItem = !!originGenreOptions.find(
-      (go) => go.originGenreId === dg.originGenreId,
+      (go) => go.id === dg.id,
     );
 
     if (!isExistItem) {
@@ -41,19 +40,19 @@ const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
       originGenreOptions.map((op) => {
         // logger.log({ op });
         const checked =
-          genres.includes(allGenreItem.originGenreId) ||
-          (!!op?.originGenreId && genres.includes(op.originGenreId));
+          genres.includes(allGenreItem.id) ||
+          (!!op?.id && genres.includes(op.id));
 
         return {
           label: op.name,
           value:
-            op?.originGenreId || op?.originGenreId === 0
-              ? op.originGenreId.toString()
+            op?.id || op?.id === 0
+              ? op.id.toString()
               : '',
           checked,
         };
       }),
-    [allGenreItem.originGenreId, genres, originGenreOptions],
+    [allGenreItem.id, genres, originGenreOptions],
   );
 
   const handleChangeGenre = (
@@ -67,12 +66,12 @@ const useGenres = (originUserMovies: UserMovieState[] | undefined) => {
 
   const genreFilter = useCallback(
     (userMovie: UserMovieState) => {
-      if (genres.includes(allGenreItem.originGenreId)) {
+      if (genres.includes(allGenreItem.id)) {
         return true;
       } else {
         return genres.some((genre) => {
           const userMovieGenreIds = userMovie.movie?.genres?.map(
-            (ge) => ge.originGenreId,
+            (ge) => ge.id,
           );
           return userMovieGenreIds?.includes(genre);
         });

@@ -76,7 +76,6 @@ model Movie{
 
 model Genre {
   id Int @id @default(autoincrement())
-  originGenreId Int @unique
   name String
   movies Movie[]
 }
