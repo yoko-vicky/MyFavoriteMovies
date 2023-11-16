@@ -69,17 +69,23 @@ const useUserMovieState = ({
 
   const handleButtonClick = () => {
     setIsUpdating(true);
+    logger.log({
+      movieGenreIds: movie.genre_ids,
+      genres: movie.genres,
+      allGenres,
+    });
     const movieWithGenres: MovieState =
       !!movie.genres && !!movie.genres.length
         ? movie
         : {
             ...movie,
-            genres: movie.genre_ids.map((id) => ({
-              id,
-              name: allGenres.find((genre) => genre.name)?.name || '',
-            })) as MovieGenreState[],
+            genres: movie.genre_ids.map((id) => {
+              const genre = allGenres.find((gen) => gen.id === id);
+              return genre;
+            }) as MovieGenreState[],
           };
     const newStateObj = { status: { [key]: !state }, movie: movieWithGenres };
+    logger.log({ movieWithGenres });
     updateState(newStateObj);
   };
 
