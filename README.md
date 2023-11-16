@@ -1,6 +1,7 @@
 # Moviees for Movie lovers
 
-![Screenshots](./screenshot.png)
+![screenshot](./screenshot.png)
+![search](./moviees-search.gif)
 
 ## About the Project
 
