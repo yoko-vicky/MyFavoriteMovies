@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import { updateUserMovie } from '@/lib/axios';
 import { errorToastify } from '@/lib/toast';
+import { useMovieCommonDataContext } from '@/store/MovieCommonDataContext';
 import { useUserSessionDataContext } from '@/store/UserSessionDataContext';
-import { MovieState, UpdateUserMovieState } from '@/types/movies';
+import {
+  MovieGenreState,
+  MovieState,
+  UpdateUserMovieState,
+} from '@/types/movies';
 import { logger } from '@/utils/logger';
 
 const useUserMovieState = ({
@@ -13,6 +18,7 @@ const useUserMovieState = ({
   key: 'watched' | 'listed';
 }) => {
   const movieId = movie.id;
+  const { genres: allGenres } = useMovieCommonDataContext();
   const { updateSession, sessionUser, sessionUserMovies } =
     useUserSessionDataContext();
 
@@ -63,7 +69,17 @@ const useUserMovieState = ({
 
   const handleButtonClick = () => {
     setIsUpdating(true);
-    const newStateObj = { status: { [key]: !state }, movie };
+    const movieWithGenres: MovieState =
+      !!movie.genres && !!movie.genres.length
+        ? movie
+        : {
+            ...movie,
+            genres: movie.genre_ids.map((id) => ({
+              id,
+              name: allGenres.find((genre) => genre.name)?.name || '',
+            })) as MovieGenreState[],
+          };
+    const newStateObj = { status: { [key]: !state }, movie: movieWithGenres };
     updateState(newStateObj);
   };
 
