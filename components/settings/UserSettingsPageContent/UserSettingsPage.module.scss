@@ -1,11 +1,5 @@
 @import '@/styles/abstracts/mixins.scss';
 
 .container {
-  margin: 3rem auto;
   @include container;
-}
-
-.title {
-  @include subTitle;
-  margin: 2rem auto;
 }

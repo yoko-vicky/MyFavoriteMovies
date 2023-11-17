@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signIn, signOut } from 'next-auth/react';
 import { UserIcon } from '@/components/base/UserIcon';
@@ -47,6 +48,9 @@ export const UserNav = () => {
               <button className={styles.link} onClick={handleClickToMyList}>
                 My List
               </button>
+              <Link className={styles.link} href="/settings">
+                Settings
+              </Link>
               <button onClick={() => signOut()} className={styles.link}>
                 Sign Out
               </button>

@@ -35,6 +35,7 @@ $breakpoints: (
   width: var(--width-mob);
   margin: 0 auto;
   max-width: 60rem;
+  padding-top: 3rem;
 
   @include mq(tab) {
     width: var(--width-tab);
