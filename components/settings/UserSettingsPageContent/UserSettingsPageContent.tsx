@@ -7,6 +7,8 @@ export const UserSettingsPageContent = () => {
   return (
     <div className={styles.container}>
       <SubTitle title={'Settings'} />
+      <div>Delete Account</div>
+      <div>Change visibility of my profile</div>
     </div>
   );
 };

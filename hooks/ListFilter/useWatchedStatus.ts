@@ -4,11 +4,16 @@ import { WatchedStatus } from '@/types/movies';
 import { UserMovieState } from '@/types/user';
 
 const useWatchedStatus = () => {
-  const defaultWatchedStatus = WatchedStatus.LISTED;
+  const defaultWatchedStatus = WatchedStatus.ALL;
   const [watchedStatus, setWatchedStatus] =
     useState<WatchedStatus>(defaultWatchedStatus);
 
   const watchedStatusOptionItems: OptionItemState[] = [
+    {
+      label: 'All',
+      value: 'all',
+      checked: watchedStatus === WatchedStatus.ALL,
+    },
     {
       label: 'Listed',
       value: 'listed',
@@ -18,11 +23,6 @@ const useWatchedStatus = () => {
       label: 'Watched',
       value: 'watched',
       checked: watchedStatus === WatchedStatus.WATCHED,
-    },
-    {
-      label: 'All',
-      value: 'all',
-      checked: watchedStatus === WatchedStatus.ALL,
     },
   ];
 

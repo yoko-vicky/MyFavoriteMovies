@@ -48,9 +48,9 @@ export const UserNav = () => {
               <button className={styles.link} onClick={handleClickToMyList}>
                 My List
               </button>
-              <Link className={styles.link} href="/settings">
+              {/* <Link className={styles.link} href="/settings">
                 Settings
-              </Link>
+              </Link> */}
               <button onClick={() => signOut()} className={styles.link}>
                 Sign Out
               </button>

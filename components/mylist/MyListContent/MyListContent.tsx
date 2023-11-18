@@ -15,7 +15,7 @@ export const MyListContent = () => {
     <div className={styles.container}>
       <h2 className={styles.title}>My Movie&apos;s List</h2>
       <Button
-        variant={'simple'}
+        variant={'simpleOutlined'}
         label={showFilter ? 'Hide Filter' : 'Show Filter'}
         className={clsx(styles.button, showFilter ? '' : styles.hide)}
         onClick={() => setShowFilter((prev) => !prev)}
