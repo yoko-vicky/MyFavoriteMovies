@@ -7,7 +7,7 @@
 
 This is a fullstack application built with Next.js, Prisma, and Supabase.
 
-In this app, you can clip and share your reviews on movies.
+In this app, you can collect and share your reviews on movies.
 
 You can search the movie you want to add it to your private or public reviews or just to clip it to your list once you login with Google accounts.
 
