@@ -23,9 +23,9 @@ A list of commonly used resources that I find helpful is listed in the acknowled
 - Prisma
 - Supabase
 
-## Live App
+<!-- ## Live App
 
-[Live App Link](https://www.moviees.life/)
+[Live App Link](https://www.moviees.life/) -->
 
 <!-- ## Getting Started
 
