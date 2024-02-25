@@ -5,13 +5,9 @@
 
 ## About the Project
 
-This is a fullstack application built with Next.js, Prisma, and Supabase.
+Experience a full-stack application developed with Next.js, Prisma, and Supabase. This versatile platform allows users to collect and share movie reviews seamlessly.
 
-In this app, you can collect and share your reviews on movies.
-
-You can search the movie you want to add it to your private or public reviews or just to clip it to your list once you login with Google accounts.
-
-You can share your profile link to others and your favorite and watched films to others.
+Features include searching for movies, adding them to private or public reviews, or saving them to a personal list after logging in with Google accounts. Users can also share their profile links and favorite/watched films with others.
 
 A list of commonly used resources that I find helpful is listed in the acknowledgments.
 
