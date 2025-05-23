@@ -1,23 +1,38 @@
-# Moviees for Movie lovers
+# 🎬 Moviees – For Curious Movie Lovers
+
+A full-stack movie app designed for people who love to discover, collect, and share films — with clean UI, smooth UX, and clear structure.
 
 ![screenshot](./screenshot.png)
 ![search](./moviees-search.gif)
 
-## About the Project
+---
 
-Experience a full-stack application developed with Next.js, Prisma, and Supabase. This versatile platform allows users to collect and share movie reviews seamlessly.
+## 🌟 About the Project
 
-Features include searching for movies, adding them to private or public reviews, or saving them to a personal list after logging in with Google accounts. Users can also share their profile links and favorite/watched films with others.
+**Moviees** is a self-initiated movie library app built with **Next.js**, **TypeScript**, and **Supabase**.  
+It allows users to:
 
-A list of commonly used resources that I find helpful is listed in the acknowledgments.
+- 🔍 **Search** and browse movies with responsive result filtering  
+- 💬 **Review** films (privately or publicly)  
+- ❤️ **Favorite & collect** titles into a personal list  
+- 🔐 **Login with Google** to personalize your experience  
+- 📣 **Share your public profile** with friends
 
-## Built With
+### 🧠 UX Highlights
+- Focused on **search experience** — responsive layout, minimal friction
+- Designed with **result readability** and cognitive clarity in mind
+- Structured the user flow to feel light and intuitive: search → action → feedback
+- Integrated login with NextAuth for seamless personalization
 
-- Next.js
-- TypeScript
-- SCSS
-- Prisma
-- Supabase
+This project blends frontend execution with UX thinking — from interaction flow to UI behavior — aiming to turn simple functionality into a pleasant, thoughtful user experience.
+
+---
+
+## 🚀 Tech Stack
+
+- **Frontend**: Next.js / TypeScript / SCSS
+- **Backend**: Supabase / Prisma
+- **Auth**: NextAuth
 
 <!-- ## Live App
 
@@ -42,9 +57,10 @@ To get a local copy up and running follow these simple example steps.
 ## Author
 
 👤 **Yoko Saka**
-
-- GitHub: [@yocosaka](https://github.com/yocosaka)
-- LinkedIn: [Yoko Saka](https://www.linkedin.com/in/yokosaka)
+Frontend Developer & UX-Informed Thinker
+- GitHub: [yoko-vicky](https://github.com/yoko-vicky)
+- LinkedIn: [Yoko Saka](https://www.linkedin.com/in/yoko-vicky/)
+- Portfolio: [View My Work](https://abiding-snap-e4c.notion.site/Yoko-UX-Informed-Frontend-Development-Structuring-Portfolio-1cb994322fd580deab65d69fbfa3ddba)
 
 ## Contributing
 
@@ -57,9 +73,9 @@ Feel free to check the [issues page](../../issues).
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## Show your support
+## Support
 
-Give a ⭐️ if you like this project!
+If you like this project, please consider giving it a star!
 
 <!-- ## License
 
