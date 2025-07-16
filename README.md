@@ -1,4 +1,4 @@
-# 🎬 Moviees – For Curious Movie Lovers
+# 🎬 My Favorite Movies – Searchable Movie Library
 
 A full-stack movie app designed for people who love to discover, collect, and share films — with clean UI, smooth UX, and clear structure.
 
