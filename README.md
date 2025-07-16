@@ -1,6 +1,6 @@
-# 🎬 My Favorite Movies – Searchable Movie Library
+# 🎬 Moviees – For Curious Movie Lovers
 
-A full-stack movie app designed for people who love to discover, collect, and share films — with clean UI, smooth UX, and clear structure.
+A fullstack movie app for people who love to discover, collect, and share films — built to showcase secure authentication, database modeling, and smooth search UX.
 
 ![screenshot](./screenshot.png)
 ![search](./moviees-search.gif)
@@ -9,80 +9,99 @@ A full-stack movie app designed for people who love to discover, collect, and sh
 
 ## 🌟 About the Project
 
-**Moviees** is a self-initiated movie library app built with **Next.js**, **TypeScript**, and **Supabase**.  
+**Moviees** is a solo-developed movie library app built with **Next.js**, **TypeScript**, **Supabase**, and **Prisma**.  
+It was designed to practice *end-to-end* product thinking — from **secure Google login and database schema design** to **API integration and frontend UX**.
+
 It allows users to:
 
-- 🔍 **Search** and browse movies with responsive result filtering  
+- 🔍 **Search** and browse movies with responsive filtering  
 - 💬 **Review** films (privately or publicly)  
-- ❤️ **Favorite & collect** titles into a personal list  
-- 🔐 **Login with Google** to personalize your experience  
-- 📣 **Share your public profile** with friends
+- ❤️ **Favorite & collect** titles into personal lists  
+- 🔐 **Login with Google** for a personalized experience  
+- 📣 **Share public profiles** with friends
 
-### 🧠 UX Highlights
-- Focused on **search experience** — responsive layout, minimal friction
-- Designed with **result readability** and cognitive clarity in mind
-- Structured the user flow to feel light and intuitive: search → action → feedback
-- Integrated login with NextAuth for seamless personalization
+### 🧠 UX and Data Integration Highlights
 
-This project blends frontend execution with UX thinking — from interaction flow to UI behavior — aiming to turn simple functionality into a pleasant, thoughtful user experience.
+- Focused on **clear search experience** — minimal friction, responsive design
+- Designed **Next.js API routes** with Prisma for structured Postgres data access
+- Integrated **Supabase** as a scalable backend for authentication and storage
+- Managed **user sessions** and secure Google login with NextAuth
+- Balanced **data modeling** with **clean, intuitive UI**
+
+This project demonstrates my approach to **connecting UI design with API and database architecture** to deliver usable, maintainable fullstack apps.
 
 ---
 
 ## 🚀 Tech Stack
 
 - **Frontend**: Next.js / TypeScript / SCSS
-- **Backend**: Supabase / Prisma
+- **Backend**: Supabase (Postgres) / Prisma
 - **Auth**: NextAuth
+- **Hosting**: Vercel
 
-<!-- ## Live App
+---
 
-[Live App Link](https://www.moviees.life/) -->
+## ✅ Key Features
 
-<!-- ## Getting Started
+- 🔐 Secure Google login with NextAuth
+- 📚 Browse and search movies with responsive UI
+- ❤️ Favorite & collect movies into personal lists
+- 💬 Leave private or public reviews
+- 🌐 Public profiles to share collections
+- 🗂 Well-defined Postgres schema modeled via Prisma
 
-To get a local copy up and running follow these simple example steps.
+---
 
-1. On the project GitHub page, navigate to the main page of the repository.
-2. Under the repository name, locate and click on a green button named `Code`.
-3. Copy the project URL as displayed.
-4. If you're running the Windows Operating System, open your command prompt. On Linux, Open your terminal.
-5. Change the current working directory to the location where you want the cloned directory to be made. Leave as it is if the current location is where you want the project to be.
-6. Type git clone, and then paste the URL you copied in Step 3. <br>
-   e.g. $ git clone https://github.com/yourUsername/yourProjectName
-7. Press Enter. Your local copy will be created.
-8. Go to helpers/baseUrl.js and rewrite the baseUrl like `http://localhost:3001/` so you can run this project in your local environment
-9. To run the server, run `npm start`
-10. To run the tests, run `npm test` -->
+## 🔗 Live App
 
-## Author
+*(Optional if you have a live demo — add the link here)*
 
-👤 **Yoko Saka**
-Frontend Developer & UX-Informed Thinker
+---
+
+## 👤 Author
+
+**Yoko Saka**  
+Frontend Developer × UX Thinker
+
 - GitHub: [yoko-vicky](https://github.com/yoko-vicky)
 - LinkedIn: [Yoko Saka](https://www.linkedin.com/in/yoko-vicky/)
 - Portfolio: [View My Work](https://www.yokoworks.dev/)
 
-## Contributing
+---
 
-Contributions, issues, and feature requests are welcome!
-Feel free to check the [issues page](../../issues).
+## 🤝 Contributing
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+1. Fork the project  
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)  
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)  
+4. Push to the branch (`git push origin feature/AmazingFeature`)  
 5. Open a Pull Request
 
-## Support
+---
+
+## ⭐️ Support
 
 If you like this project, please consider giving it a star!
 
-<!-- ## License
+---
 
-This project is [MIT](./LICENSE) licensed except for the design above -->
+## 📝 License
 
-## Acknowledgements
+This project is [MIT](./LICENSE) licensed.
 
-- [Next auth](https://next-auth.js.org/)
+---
+
+## 🙏 Acknowledgements
+
+- [NextAuth](https://next-auth.js.org/)
 - [Prisma](https://www.prisma.io/)
 - [Supabase](https://supabase.com/)
+- [TMDB API](https://www.themoviedb.org/documentation/api)
+- [Icons8](https://icons8.com/)
+- [Unsplash](https://unsplash.com/)
+
+---
+
+## ⚡️ Notes
+
+> This project was built as a personal learning exercise to practice **fullstack integration** — demonstrating how **frontend UX**, **API design**, and **database modeling** can work together to create a seamless experience.
