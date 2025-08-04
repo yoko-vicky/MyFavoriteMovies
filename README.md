@@ -1,6 +1,7 @@
 # 🎬 Moviees – For Curious Movie Lovers
+(*The double "e" is intentional — because one "e" just wasn’t enough for movie lovers.*)
 
-A fullstack movie app for people who love to discover, collect, and share films — built to showcase secure authentication, database modeling, and smooth search UX.
+A fullstack movie app for people who love to discover, collect, and share films — built to explore secure authentication, database modeling, and smooth search UX.
 
 ![screenshot](./screenshot.png)
 ![search](./moviees-search.gif)
@@ -20,7 +21,7 @@ It allows users to:
 - 🔐 **Login with Google** for a personalized experience  
 - 📣 **Share public profiles** with friends
 
-### 🧠 UX and Data Integration Highlights
+### 🧠 UX–Data Flow Highlights *(Bridging interface design and backend logic)*
 
 - Focused on **clear search experience** — minimal friction, responsive design
 - Designed **Next.js API routes** with Prisma for structured Postgres data access
@@ -34,10 +35,10 @@ This project demonstrates my approach to **connecting UI design with API and dat
 
 ## 🚀 Tech Stack
 
-- **Frontend**: Next.js / TypeScript / SCSS
-- **Backend**: Supabase (Postgres) / Prisma
-- **Auth**: NextAuth
-- **Hosting**: Vercel
+- **Frontend**: Next.js / TypeScript / SCSS  
+- **Backend**: Supabase (Postgres) / Prisma  
+- **Authentication**: NextAuth  
+- **Deployment**: Vercel
 
 ---
 
@@ -49,12 +50,6 @@ This project demonstrates my approach to **connecting UI design with API and dat
 - 💬 Leave private or public reviews
 - 🌐 Public profiles to share collections
 - 🗂 Well-defined Postgres schema modeled via Prisma
-
----
-
-## 🔗 Live App
-
-*(Optional if you have a live demo — add the link here)*
 
 ---
 
@@ -104,4 +99,4 @@ This project is [MIT](./LICENSE) licensed.
 
 ## ⚡️ Notes
 
-> This project was built as a personal learning exercise to practice **fullstack integration** — demonstrating how **frontend UX**, **API design**, and **database modeling** can work together to create a seamless experience.
+> This project was built as a personal learning exercise to practice **fullstack integration** to demonstrate how thoughtful UX, well-structured APIs, and clean data design come together to deliver a seamless user experience.
